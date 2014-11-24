@@ -9,7 +9,8 @@ var NodeSchema = new Schema({
   children: [{type: Schema.Types.ObjectId, ref: 'Node'}],
   ancestors: [{type: Schema.Types.ObjectId, ref: 'Node'}],
   author: {type: Schema.Types.ObjectId, ref: 'User'},
-  isPublic: Boolean
+  isPublic: Boolean, 
+  firstNode: Boolean
 });
 
 module.exports = mongoose.model('Node', NodeSchema);

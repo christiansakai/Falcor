@@ -28,12 +28,17 @@ require('./config/socketio')(socketio);
 require('./config/express')(app);
 require('./routes')(app);
 
+console.log('sockets', socketio.sockets)
+
 // Start server
 server.listen(config.port, config.ip, function () {
   console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
 });
 
+// //array of users
 // var usernames = {}; 
+// //array of rooms 
+// var rooms = [];
 
 // //add socket to user document
 // //User.findByIdAndUpdate(req.user._id, {$push: {sockets: socket}}, function(err, user))...
@@ -51,8 +56,8 @@ server.listen(config.port, config.ip, function () {
 // 	})
 // })
 
-//to broadcast information to all sockets in a given room 
-//io.sockets.in('roomNum').emit('function', 'data1', 'data2'); 
+// //to broadcast information to all sockets in a given room 
+// //io.sockets.in('roomNum').emit('function', 'data1', 'data2'); 
 
 // Expose app
 exports = module.exports = app;
