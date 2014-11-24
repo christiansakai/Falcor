@@ -33,5 +33,26 @@ server.listen(config.port, config.ip, function () {
   console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
 });
 
+// var usernames = {}; 
+
+// //add socket to user document
+// //User.findByIdAndUpdate(req.user._id, {$push: {sockets: socket}}, function(err, user))...
+// //{}
+
+// io.sockets.on('connection', function(socket){
+// 	//addUser click event 
+// 	socket.on('addUser', function(username){
+// 		//store username in the socket session for this client
+// 		socket.username = username; 
+// 		usernames[username] = username;
+// 		//store the room name in the socket session for this client
+// 		socket.room = 'room1' // add object here
+
+// 	})
+// })
+
+//to broadcast information to all sockets in a given room 
+//io.sockets.in('roomNum').emit('function', 'data1', 'data2'); 
+
 // Expose app
 exports = module.exports = app;
