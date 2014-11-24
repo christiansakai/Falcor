@@ -6,6 +6,7 @@ angular.module('storyHubApp')
       .state('story', {
         url: '/story',
         templateUrl: 'app/story/story.html',
-        controller: 'StoryCtrl'
+        controller: 'StoryCtrl',
+        authenticate: true
       });
   });
