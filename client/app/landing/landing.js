@@ -6,7 +6,7 @@ angular.module('storyHubApp')
       .state('landing', {
         url: '/landing',
         templateUrl: 'app/landing/landing.html',
-        controller: 'LandingCtrl as write',
-        authenticate: true
+        controller: 'LandingCtrl as write'
+        // authenticate: true
       });
   });
