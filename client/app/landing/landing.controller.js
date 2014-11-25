@@ -16,7 +16,7 @@ angular.module('storyHubApp')
   		//create function that sets the story name 
   		io.sockets.on('connection', function(socket){
   			socket.join('roomTitle')
-  		}
+  		})
   	}
 
   	vm.startStory = function(storyName){
@@ -54,4 +54,4 @@ angular.module('storyHubApp')
   	});
 
 
-  	socket.on('notificaton')
+  	// socket.on('notificaton')
