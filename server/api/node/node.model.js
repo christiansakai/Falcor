@@ -9,11 +9,11 @@ var NodeSchema = new Schema({
   children: [{type: Schema.Types.ObjectId, ref: 'Node'}],
   ancestors: [{type: Schema.Types.ObjectId, ref: 'Node'}],
   author: {type: Schema.Types.ObjectId, ref: 'User'},
-  isPublic: {type: Boolean, default: true}, 
+  isPrivate: {type: Boolean, default: false}, 
   firstNode: {type: Boolean, default: false},
   parentId: {type: Schema.Types.ObjectId, ref: 'Node'},
   date: {type: Date, default: Date.now}, 
-  storyId: String
+  storyId: String,
 });
 
 // NodeSchema.methods.sortNodes = function(){

@@ -5,8 +5,16 @@ var Node = require('./node.model');
 
 // Get list of nodes
 exports.index = function(req, res) {
-  //configure this recursive call for all nodes that are children of this root node 
-  Node.find({storyId: req.query}, function (err, nodes) {
+  //configure this recursive call for all nodes that are children of this root node
+  //Node.find({storyId: req.query}) 
+  // Node.find({storyId: req.query}, function (err, nodes) {
+  console.log(req.query);
+  var findCriteria = {
+    firstNode: JSON.parse(req.query.firstNode),
+    isPrivate: JSON.parse(req.query.isPrivate)
+  };
+
+  Node.find(findCriteria, function (err, nodes) {
     if(err) { return handleError(res, err); }
     return res.json(200, nodes);
   });
@@ -24,7 +32,13 @@ exports.show = function(req, res) {
 // Creates a new node in the DB.
 exports.create = function(req, res) {
   //amend this create
+  console.log(req.body);
   Node.create(req.body, function(err, node) {
+    var node = new Node();
+    node.text = req.body.story.input;
+    node.isPrivate = req.body.story.isPrivate;
+    node.firstNode = true;
+    node.save();
     if(err) { return handleError(res, err); }
     return res.json(201, node);
   });

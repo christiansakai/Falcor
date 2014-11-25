@@ -1,0 +1,25 @@
+#bg{
+  z-index: -999;
+  min-height: 100%;
+  min-width: 1024px;
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.mainTitle{
+	padding-left: 10%;
+	padding-top: 7%;
+	h1{
+		color: white;
+		font-size: 5em;
+
+	}
+}
+
+.center{
+	margin: 0 auto;
+	float: none;
+}
