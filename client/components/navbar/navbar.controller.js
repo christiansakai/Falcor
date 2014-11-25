@@ -4,7 +4,7 @@ angular.module('storyHubApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
     $scope.menu = [{
       'title': 'Home',
-      'link': '/'
+      'link': '/landing'
     }];
 
     $scope.isCollapsed = true;
