@@ -40,18 +40,15 @@ server.listen(config.port, config.ip, function () {
 // //array of rooms 
 // var rooms = [];
 
-// //add socket to user document
-// //User.findByIdAndUpdate(req.user._id, {$push: {sockets: socket}}, function(err, user))...
-// //{}
 
 // io.sockets.on('connection', function(socket){
 // 	//addUser click event 
-// 	socket.on('addUser', function(username){
+// 	socket.on('startRoom', function(username, storyName){
 // 		//store username in the socket session for this client
 // 		socket.username = username; 
 // 		usernames[username] = username;
 // 		//store the room name in the socket session for this client
-// 		socket.room = 'room1' // add object here
+// 		socket.room = 'roomTitle' // add object here
 
 // 	})
 // })
