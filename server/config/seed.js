@@ -7,6 +7,7 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Story = require('../api/story/story.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -42,8 +43,14 @@ User.find({}).remove(function() {
     name: 'Admin',
     email: 'admin@admin.com',
     password: 'admin'
-  }, function() {
-      console.log('finished populating users');
-    }
-  );
+  });
+});
+
+Story.find({}).remove(function(err, story){
+  Story.create({
+    name: 'Our first story', 
+    active: true
+  }, function(err) {
+      console.log('finished populating users', err);
+    }); 
 });

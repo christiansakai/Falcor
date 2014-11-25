@@ -7,6 +7,11 @@
 var Story = require('./story.model');
 
 exports.register = function(socket) {
+	socket.on('test', function() {
+		console.log("heelo");
+	});
+
+	
   Story.schema.post('save', function (doc) {
     onSave(socket, doc);
   });

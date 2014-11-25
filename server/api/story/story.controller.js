@@ -25,6 +25,8 @@ exports.create = function(req, res) {
   Story.create(req.body, function(err, story) {
     if(err) { return handleError(res, err); }
     return res.json(201, story);
+
+    //socket.room = story._id
   });
 };
 

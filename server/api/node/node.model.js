@@ -5,12 +5,20 @@ var mongoose = require('mongoose'),
 
 var NodeSchema = new Schema({
   text: String,
-  likes: Number,
+  likes: {type: Number, default: 0},
   children: [{type: Schema.Types.ObjectId, ref: 'Node'}],
   ancestors: [{type: Schema.Types.ObjectId, ref: 'Node'}],
   author: {type: Schema.Types.ObjectId, ref: 'User'},
-  isPrivate: Boolean, 
-  firstNode: Boolean
+  isPrivate: {type: Boolean, default: false}, 
+  firstNode: {type: Boolean, default: false},
+  parentId: {type: Schema.Types.ObjectId, ref: 'Node'},
+  date: {type: Date, default: Date.now}, 
+  storyId: String,
 });
+
+// NodeSchema.methods.sortNodes = function(){
+
+// }
+
 
 module.exports = mongoose.model('Node', NodeSchema);

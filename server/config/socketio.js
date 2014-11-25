@@ -18,9 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
-  require('../api/story/story.socket').register(socket);
-  require('../api/node/node.socket').register(socket);
-  require('../api/thing/thing.socket').register(socket);
+  
 }
 
 module.exports = function (socketio) {
@@ -38,6 +36,16 @@ module.exports = function (socketio) {
   //   secret: config.secrets.session,
   //   handshake: true
   // }));
+
+
+  // require('../api/story/story.socket').register(socketio);
+  require('../api/node/node.socket').register(socketio);
+  // require('../api/thing/thing.socket').register(socketio);
+
+  // setInterval(function() {
+  //   console.log(socketio.sockets.adapter.rooms)
+  //   socketio.to('5474e5ec7ef8165d7c7312c2').emit('foobar',{hi:'there'});
+  // },1000)
 
   socketio.on('connection', function (socket) {
     socket.address = socket.handshake.address !== null ?

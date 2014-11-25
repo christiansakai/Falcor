@@ -7,9 +7,9 @@ var auth = require('../../auth/auth.service');
 
 var router = express.Router();
 
-// router.use(auth.isAuthenticated(), function(req, res, next) {
-//     next();
-// });
+router.use(auth.isAuthenticated(), function(req, res, next) {
+    next();
+});
 
 router.get('/', auth.hasRole('admin'), controller.index);
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
