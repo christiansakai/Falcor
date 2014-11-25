@@ -9,7 +9,7 @@ var NodeSchema = new Schema({
   children: [{type: Schema.Types.ObjectId, ref: 'Node'}],
   ancestors: [{type: Schema.Types.ObjectId, ref: 'Node'}],
   author: {type: Schema.Types.ObjectId, ref: 'User'},
-  isPublic: Boolean, 
+  isPrivate: Boolean, 
   firstNode: Boolean
 });
 

@@ -22,7 +22,12 @@ exports.show = function(req, res) {
 
 // Creates a new node in the DB.
 exports.create = function(req, res) {
+  console.log(req.body);
   Node.create(req.body, function(err, node) {
+    var node = new Node();
+    node.text = req.body.story.input;
+    node.isPrivate = req.body.story.isPrivate;
+    node.save();
     if(err) { return handleError(res, err); }
     return res.json(201, node);
   });
