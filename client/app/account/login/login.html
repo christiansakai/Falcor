@@ -1,5 +1,54 @@
+<img src="/assets/images/forest-sm.jpg" id="bg">
 <div ng-include="'components/navbar/navbar.html'"></div>
 
+
+
+<div class="col-lg-12 text-center">
+<div class="col-lg-6 center loginbox">
+  <form class="form" name="form" ng-submit="login(form)" novalidate>
+
+    <div class="form-group  text-left">
+      <label>Email</label>
+
+      <input type="email" name="email" class="form-control" ng-model="user.email" required>
+    </div>
+
+    <div class="form-group  text-left">
+      <label>Password</label>
+
+      <input type="password" name="password" class="form-control" ng-model="user.password" required>
+    </div>
+
+    <div class="form-group has-error">
+      <p class="help-block" ng-show="form.email.$error.required && form.password.$error.required && submitted">
+         Please enter your email and password.
+      </p>
+      <p class="help-block" ng-show="form.email.$error.email && submitted">
+         Please enter a valid email.
+      </p>
+
+      <p class="help-block">{{ errors.other }}</p>
+    </div>
+
+    <div>
+      <button class="btn1 loginbuttons" ui-sref="landing" type="submit">
+        Login
+      </button>
+      <button class="btn1" ui-sref="landing" type="submit">
+        Register
+      </button>
+
+    </div>
+
+
+
+  </form>
+
+</div>
+</div>
+
+
+<!-- 
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
@@ -42,8 +91,10 @@
           </a>
         </div>
 
-        <hr>
-        <div>
+        <hr> -->
+
+
+      <!--   <div>
           <a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
             <i class="fa fa-facebook"></i> Connect with Facebook
           </a>
@@ -53,9 +104,9 @@
           <a class="btn btn-twitter" href="" ng-click="loginOauth('twitter')">
             <i class="fa fa-twitter"></i> Connect with Twitter
           </a>
-        </div>
-      </form>
-    </div>
+        </div> -->
+      <!-- </form> -->
+<!--     </div>
   </div>
   <hr>
-</div>
+</div> -->
