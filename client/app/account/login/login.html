@@ -4,7 +4,7 @@
 
 
 <div class="col-lg-12 text-center">
-<div class="col-lg-6 center loginbox">
+<div class="col-lg-6 col-md-6 col-sm-12 center loginbox">
   <form class="form" name="form" ng-submit="login(form)" novalidate>
 
     <div class="form-group  text-left">
@@ -30,11 +30,11 @@
       <p class="help-block">{{ errors.other }}</p>
     </div>
 
-    <div>
-      <button class="btn1 loginbuttons" ui-sref="landing" type="submit">
+    <div class="text-center">
+      <button class="btn1 loginbuttons" type="submit">
         Login
       </button>
-      <button class="btn1" ui-sref="landing" type="submit">
+      <button class="btn1" href="/signup" type="submit">
         Register
       </button>
 
