@@ -5,7 +5,14 @@ var Node = require('./node.model');
 
 // Get list of nodes
 exports.index = function(req, res) {
-  Node.find(function (err, nodes) {
+  console.log(req.query);
+
+  var findCriteria = {
+    firstNode: JSON.parse(req.query.firstNode),
+    isPrivate: JSON.parse(req.query.isPrivate)
+  };
+
+  Node.find(findCriteria, function (err, nodes) {
     if(err) { return handleError(res, err); }
     return res.json(200, nodes);
   });
@@ -27,6 +34,7 @@ exports.create = function(req, res) {
     var node = new Node();
     node.text = req.body.story.input;
     node.isPrivate = req.body.story.isPrivate;
+    node.firstNode = true;
     node.save();
     if(err) { return handleError(res, err); }
     return res.json(201, node);
