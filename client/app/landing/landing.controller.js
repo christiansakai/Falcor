@@ -5,9 +5,7 @@ angular.module('storyHubApp')
 
   	var vm = this; 
     $scope.username = Auth.getCurrentUser().name
-    console.log(Auth.getCurrentUser())
-    // console.log('socket', socket)
-
+  
     //final cut of function will pass in the roomId
   	vm.joinStory = function(){
       console.log('in event')
@@ -20,25 +18,11 @@ angular.module('storyHubApp')
 
     //register those who have joined the room
     socket.socket.on('joinedRoom', function(data) {
-      console.log('im here', data)
+      console.log(data)
     })
 
-  	vm.joinStory = function(roomTitle){
-  		var socket = io(); 
-  		//create function that sets the story name 
-  		io.sockets.on('connection', function(socket){
-  			socket.join('roomTitle')
-  		})
-  	}
-
-  	vm.startStory = function(storyName){
-      var obj = {
-        name: storyName
-      }
-  		socket.socket.emit('newStory', obj, username)
-  	}
-  })
-  	.controller('WriteStoryCtrl', function ($scope){
+  	
+  	}).controller('WriteStoryCtrl', function ($scope){
   		var vm = this;
 
       $scope.nodes = []
@@ -52,31 +36,25 @@ angular.module('storyHubApp')
   		//every node in every story will have a submit button that's hooked up to a click event 
   		vm.submitWriting = function(text, parentId, roomId){
 
-        //$scope.data = data; 
+        //$scope.data = data
 
         //add this node to the children array 
         var obj = {
           text: text,
-          author: Auth.getCurrentUser()._id
+          author: Auth.getCurrentUser()._id, 
+          parentId: parentId, 
+          roomId: roomId
         }
   			
-  			io.sockets.on('connection', function(socket){
-  				socket.emit('nodeAdded', obj, parentId, roomId)
-  			})
+  			socket.socket.emit('nodeAdded', obj)
+  		
 
         io.sockets.on('addNodeToDom', function(node){
           //add node to dom
+          //initiate get request for all nodes associated with the story id
+          //$scope.story = results; 
+          //ng-repeat over results
         })
   		}
 
-  		vm.createStory = function(storyName){
-	  		var socket = io('/name-of-story')
-	  				
-  		}
-
-
-
   	});
-
-
-  	// socket.on('notificaton')
