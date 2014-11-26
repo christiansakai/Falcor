@@ -1,0 +1,36 @@
+form{
+	::-webkit-input-placeholder {
+	   color: #333;
+	   font-size: 26px;
+	   font-family: 'Museo Sans', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+
+	}
+
+	:-moz-placeholder { /* Firefox 18- */
+	   color: black;  
+	}
+
+	::-moz-placeholder {  /* Firefox 19+ */
+	   color: black;  
+	}
+
+	:-ms-input-placeholder {  
+	   color: black;  
+	}
+	
+	div{
+		input{
+		background-color: rgba(255, 255, 255, 0.0);
+		border: none;
+		height: 40px;
+		margin: 5px;
+		font-size: 26px;
+		font-family: 'Museo Sans', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		}
+		input:focus{
+			outline: 0;
+		}
+	}
+
+	
+}
