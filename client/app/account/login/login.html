@@ -4,40 +4,40 @@
 
 
 <div class="col-lg-12 text-center">
-<div class="col-lg-6 col-md-6 col-sm-12 loginbox">
-  <form class="form" name="form" ng-submit="login(form)" novalidate>
+<div class="col-lg-4 col-md-6 col-sm-8 loginbox clearfix">
+  <form class="form" name="form" novalidate>
+    <div>
+      <div class="form-group  text-center">
 
-    <div class="form-group  text-left">
-      <label>Email</label>
+        <input type="email" name="email" placeholder="email" class="text-center col-lg-12" ng-model="user.email" required>
+      </div>
 
-      <input type="email" name="email" class="form-control" ng-model="user.email" required>
+      <div class="form-group text-center">
+
+        <input type="password" name="password" placeholder="password" class="text-center col-lg-12" ng-model="user.password" required>
+      </div>
+
+      <div class="form-group has-error">
+        <p class="help-block" ng-show="form.email.$error.required && form.password.$error.required && submitted">
+           Please enter your email and password.
+        </p>
+        <p class="help-block" ng-show="form.email.$error.email && submitted">
+           Please enter a valid email.
+        </p>
+
+        <p class="help-block">{{ errors.other }}</p>
+      </div>
     </div>
-
-    <div class="form-group  text-left">
-      <label>Password</label>
-
-      <input type="password" name="password" class="form-control" ng-model="user.password" required>
-    </div>
-
-    <div class="form-group has-error">
-      <p class="help-block" ng-show="form.email.$error.required && form.password.$error.required && submitted">
-         Please enter your email and password.
-      </p>
-      <p class="help-block" ng-show="form.email.$error.email && submitted">
-         Please enter a valid email.
-      </p>
-
-      <p class="help-block">{{ errors.other }}</p>
-    </div>
-
-    <div class="text-center">
-      <button class="btn1 loginbuttons" type="submit">
+    <div class="text-center loginbuttons">
+<!--       <button class="btn1" type="submit">
         Login
       </button>
       <button class="btn1" href="/signup" type="submit">
         Register
       </button>
+ -->
 
+      <a ng-click="login(form)">Login</a>
     </div>
 
 

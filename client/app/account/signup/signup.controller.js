@@ -16,7 +16,7 @@ angular.module('storyHubApp')
         })
         .then( function() {
           // Account created, redirect to home
-          $location.path('/');
+          $location.path('/landing');
         })
         .catch( function(err) {
           err = err.data;
