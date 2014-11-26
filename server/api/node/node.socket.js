@@ -7,18 +7,10 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
-var Story = require('../story/story.model').schema; 
+var Story = require('../story/story.model'); 
 var Node = require('./node.model');
-// var server = require('http').createServer(app);
-// var socketio = require('socket.io')(server, {
-//   serveClient: (config.env === 'production') ? false : true,
-//   path: '/socket.io-client'
-// });
 
 exports.register = function(socketio) {
-	//this is broken... undefined 
-	// socket.on('connection', function(socket){
-
 		//join room functionality
 
 		socketio.on('connection', function(socket) {
@@ -28,44 +20,36 @@ exports.register = function(socketio) {
 						socket.leave(room)
 					})
 				}
+				console.log('io', socketio.to)
 				socket.join(data.roomId)
 				var username = data.username; 
-	    	socketio.to(data.roomId).emit('joinedRoom', {username: ' joined!'});
+	    	socketio.to(data.roomId).emit('joinedRoom', {username: username + ' joined!'});
 			})
 
-			socket.on('newStory', function(obj, username){
+			socket.on('newStory', function(obj){
 				//then want to create a story here 
 				Story.create(obj, function(err, story){
 						socket.join(story._id)
-						socket.to(story._id).emit(username + ' joined')
+						socketio.to(story._id).emit('StoryCreated', story)
 				})
 			})
 
-			socket.on('nodeAdded', function(obj, parentId, roomId){
+			socket.on('nodeAdded', function(obj){
 				obj._id = mongoose.Types.ObjectId();
 
-				Node.findByIdAndUpdate(parentId, {$push: {children: obj._id}}, function(err, parentNode){
+				Node.findByIdAndUpdate(obj.parentId, {$push: {children: obj._id}}, function(err, parentNode){
 					obj.ancestors = parentNode.ancestors;
 					obj.ancestors.push(parentNode._id);
 					obj.parentId = parentNode._id;
 					obj.storyId = parent.storyId;
 					Node.create(obj, function(err, newNode){
-						socket.to(roomId).emit('addNodeToDom', newNode)
+						socketio.to(obj.roomId).emit('addNodeToDom', newNode)
 					})
 				})
 			})	
 		})
 
 		
-
-	// })
-
-  // Node.schema.post('save', function (doc) {
-  //   onSave(socket, doc);
-  // });
-  // Node.schema.post('remove', function (doc) {
-  //   onRemove(socket, doc);
-  // });
 }
 
 function onSave(socket, doc, cb) {
@@ -76,9 +60,5 @@ function onRemove(socket, doc, cb) {
   socket.emit('node:remove', doc);
 }
 
-
-
-// //to broadcast information to all sockets in a given room 
-// //io.sockets.in('roomNum').emit('function', 'data1', 'data2'); 
 
 // Expose app

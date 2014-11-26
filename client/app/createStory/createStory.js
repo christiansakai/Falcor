@@ -6,6 +6,6 @@ angular.module('storyHubApp')
       .state('createStory', {
         url: '/createStory',
         templateUrl: 'app/createStory/createStory.html',
-        controller: 'CreatestoryCtrl'
+        controller: 'CreatestoryCtrl as create'
       });
   });
