@@ -23,7 +23,7 @@ angular.module('storyHubApp')
 
     
   })
-  	.controller('WriteStoryCtrl', function ($scope){
+  	.controller('WriteStoryCtrl', function ($scope, nodeService){
   		var vm = this;
 
       $scope.nodes = []
@@ -35,27 +35,27 @@ angular.module('storyHubApp')
       // }
 
   		//every node in every story will have a submit button that's hooked up to a click event 
-  		vm.submitWriting = function(text, parentId, roomId){
+  		// vm.submitWriting = function(text, parentId, roomId){
 
-        //$scope.data = data
+    //     //$scope.data = data
 
-        //add this node to the children array 
-        var obj = {
-          text: text,
-          author: Auth.getCurrentUser()._id, 
-          parentId: parentId, 
-          roomId: roomId
-        }
+    //     //add this node to the array of children 
+    //     var obj = {
+    //       text: text,
+    //       author: Auth.getCurrentUser()._id, 
+    //       parentId: parentId, 
+    //       roomId: roomId
+    //     }
   			
-  			socket.socket.emit('nodeAdded', obj)
+  		// 	socket.socket.emit('nodeAdded', obj)
   		
 
-        io.sockets.on('addNodeToDom', function(node){
-          //add node to dom
-          //initiate get request for all nodes associated with the story id
-          //$scope.story = results; 
-          //ng-repeat over results
-        })
-  		}
+    //     io.sockets.on('addNodeToDom', function(node){
+    //       //add node to dom
+    //       //initiate get request for all nodes associated with the story id
+    //       //$scope.story = results; 
+    //       //ng-repeat over results
+    //     })
+  		// }
 
   	});

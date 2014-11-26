@@ -1,19 +1,13 @@
-// 'use strict';
+'use strict';
 
-// angular.module('storyHubApp')
-//   .factory('nodeService', function ($http) {
+angular.module('storyHubApp')
+  .factory('NodeService', function ($http) {
     
-//     function Nodes(){
+  	var Node = {
+  		nodes: [],
 
-//       var vm = this; 
-//       // gets all nodes that belong to a single story 
-//       vm.getNodes = function(callback){
-//         $http.get('api/nodes', {params: data}).success(callback)
-//       }
+  	}
 
+  	return Node
 
-
-//     }
-
-//     return Nodes()
-//   });
+  });

@@ -1,9 +1,25 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .factory('ExploreStories', function ($resource) {
+  .factory('ExploreStories', function ($resource, $http) {
     // Service logic
     // ...
-    return $resource('/api/nodes');
 
+    function ExploreStories(){
+	    return {
+  	    getStories: $resource('/api/nodes'),
+  	    
+  	    storiesInfo: {
+  	    	storyId: ''
+  	    },
+
+  	    getNodes: function(obj, callback){
+  		    $http.get('/api/nodes/getNodes/', {params: obj}).success(callback)    	
+  	    }
+	    }
+
+    	
+    }
+
+    return ExploreStories()
   });

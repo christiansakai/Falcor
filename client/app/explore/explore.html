@@ -1,4 +1,6 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div ng-repeat="story in stories"><h1>{{story.text}} </h1></div>
+<div ng-repeat="story in stories"><h1><a ng-click="joinStory(story.storyId)">{{story.text}}</a></h1>
+	{{story.storyId}}
+</div>
 
