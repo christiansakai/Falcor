@@ -7,7 +7,7 @@ angular.module('storyHubApp')
     $scope.username = Auth.getCurrentUser().name
   
     //final cut of function will pass in the roomId
-  	vm.joinStory = function(){
+  	vm.joinStory = function(){   
       console.log('in event')
       var data = {
         roomId: '5474e5ec7ef8165d7c7312c2', 
@@ -21,8 +21,9 @@ angular.module('storyHubApp')
       console.log(data)
     })
 
-  	
-  	}).controller('WriteStoryCtrl', function ($scope){
+    
+  })
+  	.controller('WriteStoryCtrl', function ($scope){
   		var vm = this;
 
       $scope.nodes = []

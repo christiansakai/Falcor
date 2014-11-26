@@ -50,13 +50,6 @@ exports.register = function(socketio) {
 		})
 
 		
-
-  Node.schema.post('save', function (doc) {
-    onSave(socket, doc);
-  });
-  Node.schema.post('remove', function (doc) {
-    onRemove(socket, doc);
-  });
 }
 
 function onSave(socket, doc, cb) {
