@@ -9,7 +9,7 @@ angular.module('storyHubApp')
     // console.log('socket', socket)
 
     //final cut of function will pass in the roomId
-  	vm.joinStory = function(){
+  	vm.joinStory = function(){   
       console.log('in event')
       var data = {
         roomId: '5474e5ec7ef8165d7c7312c2', 
@@ -23,20 +23,7 @@ angular.module('storyHubApp')
       console.log('im here', data)
     })
 
-  	vm.joinStory = function(roomTitle){
-  		var socket = io(); 
-  		//create function that sets the story name 
-  		io.sockets.on('connection', function(socket){
-  			socket.join('roomTitle')
-  		})
-  	}
-
-  	vm.startStory = function(storyName){
-      var obj = {
-        name: storyName
-      }
-  		socket.socket.emit('newStory', obj, username)
-  	}
+    
   })
   	.controller('WriteStoryCtrl', function ($scope){
   		var vm = this;
