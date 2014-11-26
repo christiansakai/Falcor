@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('JoinstoryCtrl', function ($scope) {
+  .controller('JoinstoryCtrl', function ($scope, $state, ExploreStories) {
     $scope.message = 'Hello';
 
     $scope.storyId = ''

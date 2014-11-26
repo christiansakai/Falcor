@@ -14,20 +14,16 @@ angular.module('storyHubApp')
     $scope.username = Auth.getCurrentUser().name
     $scope.userId = Auth.getCurrentUser()._id
 
-    console.log(Auth.getCurrentUser())
-
     vm.startStory = function(){
-
       var obj = {
         name: $scope.story.input, 
         author: $scope.userId
-        // isPrivate: $scope.story.isPrivate,  
-        // username: $scope.username
       }
         socket.socket.emit('newStory', obj)
     }
 
       //register those who have joined the room
+      //we'll have to remember to reset this --- wiring for switching between stories/rooms
     socket.socket.on('StoryCreated', function(data) {
       NodeService.nodes.push(data.firstNode);
       StoryService.title = data.story.name;
