@@ -13,7 +13,7 @@ var NodeSchema = new Schema({
   firstNode: {type: Boolean, default: false},
   parentId: {type: Schema.Types.ObjectId, ref: 'Node'},
   date: {type: Date, default: Date.now}, 
-  storyId: String,
+  storyId: {type: Schema.Types.ObjectId, ref: 'Story'}
 });
 
 // NodeSchema.methods.sortNodes = function(){

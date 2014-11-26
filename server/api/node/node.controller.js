@@ -8,13 +8,25 @@ exports.index = function(req, res) {
   //configure this recursive call for all nodes that are children of this root node
   //Node.find({storyId: req.query}) 
   // Node.find({storyId: req.query}, function (err, nodes) {
-  console.log(req.query);
+  // console.log(req.query);
   var findCriteria = {
     firstNode: JSON.parse(req.query.firstNode),
     isPrivate: JSON.parse(req.query.isPrivate)
   };
 
   Node.find(findCriteria, function (err, nodes) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, nodes);
+  });
+};
+
+// Get list of nodes
+exports.getNodes = function(req, res) {
+  console.log('query', req.query)
+  //configure this recursive call for all nodes that are children of this root node
+  Node.find({storyId: req.query.storyId}, function (err, nodes) {
+    console.log('nodes', nodes)
+    console.log('query', req.query);
     if(err) { return handleError(res, err); }
     return res.json(200, nodes);
   });

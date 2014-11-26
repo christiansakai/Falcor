@@ -14,6 +14,7 @@ exports.register = function(socketio) {
 		//join room functionality
 
 		socketio.on('connection', function(socket) {
+			//subscribe to a room 
 			socket.on('joinRoom', function(data){
 				if (socket.rooms.length){
 					socket.rooms.forEach(function(room){
@@ -21,29 +22,49 @@ exports.register = function(socketio) {
 					})
 				}
 				console.log('io', socketio.to)
-				socket.join(data.roomId)
-				var username = data.username; 
-	    	socketio.to(data.roomId).emit('joinedRoom', {username: username + ' joined!'});
+				socket.join(data.storyId)
+	    	socketio.to(data.storyId).emit('joinedRoom', {'announcement': data.username + ' joined!'});
 			})
 
+			//create a story as well as the first node in the story on this single submit action
 			socket.on('newStory', function(obj){
 				//then want to create a story here 
 				Story.create(obj, function(err, story){
+					var firstNode = {}; 
+					firstNode.text = obj.name; 
+					firstNode.author = obj.author;
+					firstNode.storyId = story._id; 
+					firstNode.firstNode = true; 
+					firstNode.isPrivate = false; 
+					Node.create(firstNode, function(err, firstNode){
+						console.log('firstnode', firstNode)
+						var data = {
+							story: story, 
+							firstNode: firstNode
+						}
 						socket.join(story._id)
-						socketio.to(story._id).emit('StoryCreated', story)
+						socketio.to(story._id).emit('StoryCreated', data)
+					})
 				})
 			})
 
+			//so this occurs every time a member submits a piece of writing
+			//nodes created through this socket ping will never be first nodes  
 			socket.on('nodeAdded', function(obj){
 				obj._id = mongoose.Types.ObjectId();
 
 				Node.findByIdAndUpdate(obj.parentId, {$push: {children: obj._id}}, function(err, parentNode){
+					console.log('parentnode', parentNode)
 					obj.ancestors = parentNode.ancestors;
 					obj.ancestors.push(parentNode._id);
 					obj.parentId = parentNode._id;
-					obj.storyId = parent.storyId;
+					obj.storyId = parentNode.storyId;
+					obj.firstNode = false;
+					obj.isPrivate = parentNode.isPrivate; 
+					console.log('setting obj', obj)
 					Node.create(obj, function(err, newNode){
-						socketio.to(obj.roomId).emit('addNodeToDom', newNode)
+						console.log('created node', newNode)
+						socketio.to(obj.storyId).emit('addNodeToDom', newNode)
 					})
 				})
 			})	
