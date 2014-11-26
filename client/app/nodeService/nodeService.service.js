@@ -4,7 +4,7 @@ angular.module('storyHubApp')
   .factory('NodeService', function ($http) {
     
   	var Node = {
-  		nodes: [],
+  		nodes: []
 
   	}
 

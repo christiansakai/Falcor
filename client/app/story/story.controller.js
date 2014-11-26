@@ -2,26 +2,19 @@
 
 angular.module('storyHubApp')
   .controller('StoryCtrl', function ($scope, NodeService, StoryService, Auth, socket, ExploreStories) {
-    $scope.message = 'Hello';
+
     $scope.nodes = NodeService;
     $scope.story = StoryService;
     $scope.writing = {
     	text: ''
     }
 
-
 		$scope.submitWriting = function(){
-
-      //$scope.data = data
-
-      //add this node to the array of children 
       var obj = {
         text: $scope.writing.text,
         author: Auth.getCurrentUser()._id, 
         parentId: NodeService.nodes[NodeService.nodes.length - 1]._id 
       }
-      console.log('obj', obj, 'nodeservice', NodeService.nodes)
-
 			socket.socket.emit('nodeAdded', obj)
 		}
 
@@ -34,6 +27,20 @@ angular.module('storyHubApp')
       //ng-repeat over results
     })
 
+    $scope.shareWriting = function(){
+      //this function requires the story id, and the email address
+      //of the user invited 
+      var obj = {
+        storyId: StoryService.id, 
+        email: 'ayana.d.i.wilson@gmail.com'
+      }
+
+      socket.socket.emit('invitingToStory', obj)
+    }
+
+    socket.socket.on('sentInvite', function(obj){
+      console.log('invitation sent to ' + obj.email)
+    })
 
     $scope.getNodesPerStory = function(){
     	var obj = {
@@ -48,5 +55,4 @@ angular.module('storyHubApp')
     		})    		// $scope.nodesPerStory = result;
     	})
     }();
-
   });
