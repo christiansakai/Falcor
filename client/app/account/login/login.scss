@@ -1,11 +1,54 @@
+.clearfix{
+	overflow: auto;
+}
+
 .loginbox{
 	background-color: rgba(255, 255, 255, 0.7);
-	padding: 5% 5%;
-	margin: 5% auto;
+	padding: 2% 3%;
+	margin: 8% auto;
 	float: none;
+	form{
+		::-webkit-input-placeholder {
+		   color: #333;
+		   font-size: 26px;
+		   font-family: 'Museo Sans', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+
+		}
+
+		:-moz-placeholder { /* Firefox 18- */
+		   color: black;  
+		}
+
+		::-moz-placeholder {  /* Firefox 19+ */
+		   color: black;  
+		}
+
+		:-ms-input-placeholder {  
+		   color: black;  
+		}
+
+
+		div{
+			input{
+			background-color: rgba(255, 255, 255, 0.0);
+			border: none;
+			height: 40px;
+			margin: 5px;
+			font-size: 26px;
+			font-family: 'Museo Sans', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+			}
+			input:focus{
+				outline: 0;
+			}
+		}
+		.loginbuttons{
+			padding-top: 15%;
+			height: 5%;
+			float: none;
+			margin: 0 auto;
+		}
 	}
-
-
+}
 
 
 
