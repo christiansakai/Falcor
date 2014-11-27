@@ -42,17 +42,19 @@ angular.module('storyHubApp')
       console.log('invitation sent to ' + obj.email)
     })
 
-    $scope.getNodesPerStory = function(){
-    	var obj = {
-    		storyId: ExploreStories.storiesInfo.storyId
-    	}
+    if (NodeService.nodes.length === 0){
+      $scope.getNodesPerStory = function(){
+      	var obj = {
+      		storyId: ExploreStories.storiesInfo.storyId
+      	}
 
-    	console.log('params obj', obj)
-    	ExploreStories.getNodes(obj, function(results){
-  		NodeService.nodes = [];
-    		results.forEach(function(result){
-    			NodeService.nodes.push(result)
-    		})    		// $scope.nodesPerStory = result;
-    	})
-    }();
+      	console.log('params obj', obj)
+      	ExploreStories.getNodes(obj, function(results){
+    		NodeService.nodes = [];
+      		results.forEach(function(result){
+      			NodeService.nodes.push(result)
+      		})    		
+      	})
+      }();     
+    }
   });

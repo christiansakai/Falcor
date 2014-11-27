@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('JoinstoryCtrl', function ($scope, $state, ExploreStories) {
+  .controller('JoinstoryCtrl', function ($scope, $state, ExploreStories, socket, Auth) {
     $scope.message = 'Hello';
 
     $scope.storyId = ''
+    $scope.username = Auth.getCurrentUser().name
 
 	$scope.joinStory = function(storyId){   
     console.log('in event', storyId)
@@ -18,6 +19,11 @@ angular.module('storyHubApp')
     // ExploreStories.storiesInfo.storyId = storyId
 
       socket.socket.emit('joinRoom', data)
+
+      socket.socket.on('joinedRoom', function(data){
+        console.log('hi there', data)
+      })
+
       $state.go('story')
 	}
 
