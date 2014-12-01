@@ -19,7 +19,7 @@ angular.module('storyHubApp')
 		$scope.submitWriting = function(){
       var obj = {
         text: $scope.writing.text,
-        author: Auth.getCurrentUser()._id, 
+        author: Auth.getCurrentUser()._id,
         parentId: $scope.parentId
       }
 			socket.socket.emit('nodeAdded', obj)
@@ -30,15 +30,15 @@ angular.module('storyHubApp')
     	NodeService.nodes.push(node)
       //add node to dom
       //initiate get request for all nodes associated with the story id
-      //$scope.story = results; 
+      //$scope.story = results;
       //ng-repeat over results
     })
 
     $scope.shareWriting = function(){
       //this function requires the story id, and the email address
-      //of the user invited 
+      //of the user invited
       var obj = {
-        storyId: StoryService.id, 
+        storyId: StoryService.id,
         email: 'ayana.d.i.wilson@gmail.com'
       }
 
@@ -58,10 +58,66 @@ angular.module('storyHubApp')
       	console.log('params obj', obj)
       	ExploreStories.getNodes(obj, function(results){
     		NodeService.nodes = [];
-      		results.forEach(function(result){
-      			NodeService.nodes.push(result)
-      		})    		
+      		// results.forEach(function(result){
+      			// NodeService.nodes.push(result)
+            $scope.parentId = results[results.length -1]._id;
+            // console.log(result);
+            $scope.results = results;
+      		// })
+        // #########################################################################
+        var sampleObj = {
+                          "name": "level0",
+                          "children": [
+                                        {
+                                          "name": "level1b1",
+                                          "children": [
+                                                        {
+                                                          "name": "level2b1b1",
+                                                          "children": []
+                                                        }
+                                                      ]
+                                        },
+                                        {
+                                          "name": "level1b2",
+                                          "children": [
+                                                        {
+                                                          "name": "level2b2b1",
+                                                          "children": []
+                                                        },
+                                                        {
+                                                          "name": "level2b2b2",
+                                                          "children": []
+                                                        }
+                                                      ]
+                                        }
+                                      ]
+                        };
+          buildTree(sampleObj);
+          // #########################################################################
       	})
-      }();     
+      }();
     }
+
+    // #########################################################################
+    function buildTree(treeJSON) {
+        debugger;
+
+        root = treeJSON;
+        root.x0 = h / 2;
+        root.y0 = 0;
+
+        function toggleAll(d) {
+          if (d.children) {
+            d.children.forEach(toggleAll);
+            toggle(d);
+          }
+        }
+
+        // Initialize the display to show a few nodes.
+        root.children.forEach(toggleAll);
+        toggle(root.children[1]);
+
+        update(root);
+    }
+    // #########################################################################
   });
