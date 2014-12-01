@@ -2,9 +2,10 @@ var m = [20, 120, 20, 120],
     w = 1280 - m[1] - m[3],
     h = 800 - m[0] - m[2],
     i = 0,
-    root;
+    root,
+    verticalPadding = 25;
 
-var tree = d3.layout.tree()
+var d3Tree = d3.layout.tree()
     .size([h, w]);
 
 var diagonal = d3.svg.diagonal()
@@ -44,10 +45,10 @@ function update(source) {
   var duration = d3.event && d3.event.altKey ? 5000 : 500;
 
   // Compute the new tree layout.
-  var nodes = tree.nodes(root).reverse();
+  var nodes = d3Tree.nodes(root).reverse();
 
   // Normalize for fixed-depth.
-  nodes.forEach(function(d) { d.y = d.depth * 180; });
+  nodes.forEach(function(d) { d.y = d.depth * verticalPadding; });
 
   // Update the nodes…
   var node = vis.selectAll("g.node")
@@ -67,10 +68,10 @@ function update(source) {
       .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
   // nodeEnter.append("svg:text")
-  //     .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
+  //     .attr("x", function(d) { return d.children || d._children ? -100 : 10; })
   //     .attr("dy", ".35em")
   //     .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-  //     .text(function(d) { return d.name; })
+  //     .text(function(d) { return "some text here"; })
   //     .style("fill-opacity", 1e-6);
 
   // Transition nodes to their new position.
@@ -111,7 +112,7 @@ function update(source) {
 
   // Update the links…
   var link = vis.selectAll("path.link")
-      .data(tree.links(nodes), function(d) { return d.target.id; });
+      .data(d3Tree.links(nodes), function(d) { return d.target.id; });
 
   // Enter any new links at the parent's previous position.
   link.enter().insert("svg:path", "g")
