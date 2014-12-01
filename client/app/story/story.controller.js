@@ -49,6 +49,47 @@ angular.module('storyHubApp')
       console.log('invitation sent to ' + obj.email)
     })
 
+  
+    function getTree(resultArray){
+      var firstNode = _.find(resultArray, {'firstNode': true});
+      var tree = {
+          name: firstNode.text,
+          id: firstNode._id,
+          children: [] 
+      };
+      var count = 0;
+      console.log(resultArray);
+
+
+      function recursion(node, treeChild){
+        var branch = treeChild.children;
+
+        console.log(node)
+
+        if(node.children.length === 0){
+          return
+        }
+
+        for(var i = 0; i < node.children.length; i++){
+
+          console.log(node.children)
+          var child = _.find(resultArray, {'_id': node.children[i]})
+          console.log(child);
+          var treeChild = {
+            name: child.text,
+            id: child._id,
+            children: [] 
+          };
+
+          branch.push(treeChild)
+          branch = branch.children;
+          recursion(child, treeChild)
+      }
+    }
+      recursion(firstNode, tree)
+      return tree;
+    }
+
     if (NodeService.nodes.length === 0){
       $scope.getNodesPerStory = function(){
       	var obj = {
@@ -57,42 +98,45 @@ angular.module('storyHubApp')
 
       	console.log('params obj', obj)
       	ExploreStories.getNodes(obj, function(results){
-    		NodeService.nodes = [];
       		// results.forEach(function(result){
       			// NodeService.nodes.push(result)
-            $scope.parentId = results[results.length -1]._id;
+            // $scope.parentId = results[results.length -1]._id;
             // console.log(result);
-            $scope.results = results;
+            // $scope.results = results;
+
+            var tree = getTree(results)
+            // NodeService.nodes = tree
+            console.log(tree)
       		// })
         // #########################################################################
-        var sampleObj = {
-                          "name": "level0",
-                          "children": [
-                                        {
-                                          "name": "level1b1",
-                                          "children": [
-                                                        {
-                                                          "name": "level2b1b1",
-                                                          "children": []
-                                                        }
-                                                      ]
-                                        },
-                                        {
-                                          "name": "level1b2",
-                                          "children": [
-                                                        {
-                                                          "name": "level2b2b1",
-                                                          "children": []
-                                                        },
-                                                        {
-                                                          "name": "level2b2b2",
-                                                          "children": []
-                                                        }
-                                                      ]
-                                        }
-                                      ]
-                        };
-          buildTree(sampleObj);
+        // var sampleObj = {
+        //                   "name": "level0",
+        //                   "children": [
+        //                                 {
+        //                                   "name": "level1b1",
+        //                                   "children": [
+        //                                                 {
+        //                                                   "name": "level2b1b1",
+        //                                                   "children": []
+        //                                                 }
+        //                                               ]
+        //                                 },
+        //                                 {
+        //                                   "name": "level1b2",
+        //                                   "children": [
+        //                                                 {
+        //                                                   "name": "level2b2b1",
+        //                                                   "children": []
+        //                                                 },
+        //                                                 {
+        //                                                   "name": "level2b2b2",
+        //                                                   "children": []
+        //                                                 }
+        //                                               ]
+        //                                 }
+        //                               ]
+        //                 };
+        //   buildTree(sampleObj);
           // #########################################################################
       	})
       }();

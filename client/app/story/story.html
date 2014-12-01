@@ -1,11 +1,13 @@
 {{story}}
 {{results}}
+{{nodes.nodes}}
 <div ng-repeat="node in nodes.nodes">
+
 	{{node.text}} - <a ng-click="setParent(node)">branch</a>
 
 </div>
 
-	<div ng-show="parentId">
+	<div>
 		<form role="form">
 		  <div class="form-group">
 		    <label for="nextLine">Add a line</label>
