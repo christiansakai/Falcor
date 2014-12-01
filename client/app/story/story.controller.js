@@ -8,12 +8,19 @@ angular.module('storyHubApp')
     $scope.writing = {
     	text: ''
     }
+    $scope.parentId = '';
+
+    $scope.setParent = function(node){
+      $scope.parentId = node._id;
+      console.log(node);
+      console.log($scope.parentId)
+    }
 
 		$scope.submitWriting = function(){
       var obj = {
         text: $scope.writing.text,
         author: Auth.getCurrentUser()._id, 
-        parentId: NodeService.nodes[NodeService.nodes.length - 1]._id 
+        parentId: $scope.parentId
       }
 			socket.socket.emit('nodeAdded', obj)
 		}
