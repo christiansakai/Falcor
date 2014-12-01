@@ -49,46 +49,50 @@ angular.module('storyHubApp')
       console.log('invitation sent to ' + obj.email)
     })
 
-  
+
     function getTree(resultArray){
-      var firstNode = _.find(resultArray, {'firstNode': true});
-      var tree = {
-          name: firstNode.text,
-          id: firstNode._id,
-          children: [] 
-      };
-      var count = 0;
-      console.log(resultArray);
+     var firstNode = _.find(resultArray, {'firstNode': true});
+     var tree = {
+         name: firstNode.text,
+         id: firstNode._id,
+         children: []
+     };
+     var count = 0;
+     console.log(resultArray);
+     var branch;
 
 
-      function recursion(node, treeChild){
-        var branch = treeChild.children;
+     function recursion(node, branch){
 
-        console.log(node)
+       console.log(node)
+       //firstNode --- firstNode.children
 
-        if(node.children.length === 0){
-          return
-        }
+       if(node.children.length === 0){
+         return
+       }
 
-        for(var i = 0; i < node.children.length; i++){
+       for(var i = 0; i < node.children.length; i++){
 
-          console.log(node.children)
-          var child = _.find(resultArray, {'_id': node.children[i]})
-          console.log(child);
-          var treeChild = {
-            name: child.text,
-            id: child._id,
-            children: [] 
-          };
+         console.log(node.children)
+         var child = _.find(resultArray, {'_id': node.children[i]})
+         console.log(child);
+         var treeChild = {
+           name: child.text,
+           id: child._id,
+           children: []
+         };
 
-          branch.push(treeChild)
-          branch = branch.children;
-          recursion(child, treeChild)
-      }
-    }
-      recursion(firstNode, tree)
-      return tree;
-    }
+        // branch = tree.children[i] // []
+         branch.push(treeChild)
+         //if treeChild.children.length > 1)
+         branch = treeChild.children; // []
+         recursion(child, branch)
+     }
+   }
+     recursion(firstNode, tree.children) //tree.children
+     return tree;
+   }
+
 
     if (NodeService.nodes.length === 0){
       $scope.getNodesPerStory = function(){
@@ -102,11 +106,12 @@ angular.module('storyHubApp')
       			// NodeService.nodes.push(result)
             // $scope.parentId = results[results.length -1]._id;
             // console.log(result);
-            // $scope.results = results;
+            $scope.results = results;
 
             var tree = getTree(results)
             // NodeService.nodes = tree
             console.log(tree)
+            buildTree(tree)
       		// })
         // #########################################################################
         // var sampleObj = {
@@ -144,7 +149,7 @@ angular.module('storyHubApp')
 
     // #########################################################################
     function buildTree(treeJSON) {
-        debugger;
+        // debugger;
 
         root = treeJSON;
         root.x0 = h / 2;
@@ -159,7 +164,7 @@ angular.module('storyHubApp')
 
         // Initialize the display to show a few nodes.
         root.children.forEach(toggleAll);
-        toggle(root.children[1]);
+        // toggle(root.children[1]);
 
         update(root);
     }
