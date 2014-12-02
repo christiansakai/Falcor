@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('StoryCtrl', function ($scope, NodeService, StoryService, Auth, socket, ExploreStories, $stateParams) {
+  .controller('StoryCtrl', function ($scope, NodeService, StoryService, Auth, socket, ExploreStories, $stateParams, $modal) {
 
     // this line sets the storyId that we send from the explore controller so that
-    // if you refresh the page, the id for the get request is not lost 
+    // if you refresh the page, the id for the get request is not lost
     StoryService.setData($stateParams.storyId)
     $scope.nodes = NodeService;
     $scope.story = StoryService;
@@ -15,8 +15,8 @@ angular.module('storyHubApp')
 
     $scope.setParent = function(node){
       $scope.parentId = node._id;
-      console.log(node);
-      console.log($scope.parentId)
+      // console.log(node);
+      // console.log($scope.parentId)
     }
 
 		$scope.submitWriting = function(){
@@ -29,7 +29,7 @@ angular.module('storyHubApp')
 		}
 
     socket.socket.on('addNodeToDom', function(node){
-    	console.log('added node', node)
+    	// console.log('added node', node)
     	NodeService.nodes.push(node)
       //add node to dom
       //initiate get request for all nodes associated with the story id
@@ -37,18 +37,32 @@ angular.module('storyHubApp')
       //ng-repeat over results
     })
 
-    $scope.shareWriting = function(){
-      //this function requires the story id, and the email address
-      //of the user invited
-      var obj = {
-        storyId: StoryService.id,
-        email: 'ayana.d.i.wilson@gmail.com'
+    $scope.shareWriting = function() {
+      var size = 'sm';// Empty : default, lg :large, sm : small
+      var modalInstance = $modal.open({
+      templateUrl: 'shareStoryModal.html',
+      controller: 'shareStoryModalInstanceCtrl',
+      size: size,
+      resolve: {
+        storyId: function () {
+          // !! GET THE CORRECT storyId
+          // return StoryService.id;
+          return 'somefakestoryid';
+        }
       }
+      });
 
-      socket.socket.emit('invitingToStory', obj)
+      modalInstance.result.then(function () {
+        // Modal ok.
+        // console.log('Modal closed properly.');
+      }, function () {
+        // Modal cancel.
+        // $log.info('Modal dismissed at: ' + new Date());
+      });
     }
 
     socket.socket.on('sentInvite', function(obj){
+      // !! GROWL MESSAGE HERE.
       console.log('invitation sent to ' + obj.email)
     })
 
@@ -66,7 +80,7 @@ angular.module('storyHubApp')
 
 
       function recursion(node, branch){
-        console.log(node)
+        // console.log(node)
         // if(node.children.length === 0){
         //   return
         // }
@@ -84,16 +98,16 @@ angular.module('storyHubApp')
 
          // branch = tree.children[i] // []
           branch.push(treeChild)
-          console.log('branch after push: ', branch)
+          // console.log('branch after push: ', branch)
 
           if (child.children.length > 0){
             var k = 0;
             while (k < child.children.length){
-              console.log('k: ', k)
+              // console.log('k: ', k)
               branch = treeChild.children;
-              console.log('branch: ', branch)
+              // console.log('branch: ', branch)
               k++
-              console.log('k: ', k)
+              // console.log('k: ', k)
               // console.log('branch: ', treeChild.children)
               recursion(child, branch)
               }
@@ -109,8 +123,8 @@ angular.module('storyHubApp')
 
 
     if (NodeService.nodes.length === 0){
-      console.log('in here: ', NodeService.nodes.length)
-      console.log('storyService: ', StoryService.getData())
+      // console.log('in here: ', NodeService.nodes.length)
+      // console.log('storyService: ', StoryService.getData())
       $scope.getNodesPerStory = function(){
       	var obj = {
       		storyId: StoryService.getData()
@@ -123,43 +137,14 @@ angular.module('storyHubApp')
             // $scope.parentId = results[results.length -1]._id;
             // console.log(result);
             $scope.results = results;
-            console.log('results: ', results)
+            // console.log('results: ', results)
 
             var tree = getTree(results)
             // NodeService.nodes = tree
-            console.log('tree: ', tree)
+            // console.log('tree: ', tree)
             buildTree(tree)
       		// })
-        // #########################################################################
-        // var sampleObj = {
-        //                   "name": "level0",
-        //                   "children": [
-        //                                 {
-        //                                   "name": "level1b1",
-        //                                   "children": [
-        //                                                 {
-        //                                                   "name": "level2b1b1",
-        //                                                   "children": []
-        //                                                 }
-        //                                               ]
-        //                                 },
-        //                                 {
-        //                                   "name": "level1b2",
-        //                                   "children": [
-        //                                                 {
-        //                                                   "name": "level2b2b1",
-        //                                                   "children": []
-        //                                                 },
-        //                                                 {
-        //                                                   "name": "level2b2b2",
-        //                                                   "children": []
-        //                                                 }
-        //                                               ]
-        //                                 }
-        //                               ]
-        //                 };
-        //   buildTree(sampleObj);
-          // #########################################################################
+
       	})
       }();
     }
@@ -187,3 +172,30 @@ angular.module('storyHubApp')
     }
     // #########################################################################
   });
+
+// !! ABSTRACT INTO ITS OWN FILE
+angular.module('storyHubApp').controller('shareStoryModalInstanceCtrl', function ($scope, $modalInstance, storyId) {
+
+  $scope.storyId = storyId;
+  $scope.recipientEmail = '';
+
+  $scope.ok = function () {
+    console.log('clicked ok')
+
+    //this function requires the story id, and the email address
+    //of the user invited
+    var inviteObj = {
+      storyId: $scope.storyId,
+      email: $scope.recipientEmail
+    }
+
+    console.log('invitingToStory', inviteObj)
+    // socket.socket.emit('invitingToStory', inviteObj)
+
+    $modalInstance.close(inviteObj);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
