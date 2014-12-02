@@ -1,9 +1,17 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('CreatestoryCtrl', function ($scope, $http, Auth, socket, NodeService, StoryService) {
+  .controller('CreatestoryCtrl', function ($scope, $state, $http, Auth, socket, NodeService, StoryService) {
     $scope.message = 'Hello';
     $scope.isPrivate = false;
+    $scope.privacy = 'Public'
+
+    $scope.privacyChange = function(){
+      if(!$scope.isPrivate){
+        $scope.privacy = 'Public';
+      }
+      else $scope.privacy = 'Private';
+    }
 
     var vm = this; 
 
@@ -12,7 +20,6 @@ angular.module('storyHubApp')
         input: '',
         isPrivate: $scope.isPrivate,
         userId: Auth.getCurrentUser()._id,
-        username: Auth.getCurrentUser().name
     }
 
     // $scope.username = Auth.getCurrentUser().name
@@ -32,6 +39,7 @@ angular.module('storyHubApp')
       StoryService.id = data.story._id;
       console.log(data)
       console.log(StoryService)
+      $state.go('story.graph', {storyId: StoryService.id, newStory: true})
     })
 
 

@@ -1,11 +1,14 @@
-{{results}}
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+
+<!-- {{results}}
 <div ng-repeat="node in results">
 	ID: {{node._id}}
 	CHILDREN: {{node.children}}
 	PARENTS: {{node.parentId}}
 	{{node.text}} - <a ng-click="setParent(node)">branch</a>
 
-</div>
+</div> -->
 
 	<div>
 		<form role="form">
@@ -21,4 +24,4 @@
 
 	<!-- <button type="submit" class="btn btn-default" ng-click="shareWriting()">Share With Friends</button> -->
 
-<div id="treeGraph"></div>
+<div ui-view></div>
