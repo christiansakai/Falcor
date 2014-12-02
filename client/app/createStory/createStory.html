@@ -7,12 +7,21 @@
 
   <h2>Write the first line of your story</h2>
 <textarea class="form-control beginStory" rows="3" ng-model="story.input"></textarea>
-<form role="form">
-  <div class="checkbox">
-    <label>
-      <input type="checkbox" ng-model="story.isPrivate"> Is this story private?
-    </label>
+
+  <div class="optionpage center text-center">
+    <div class="bloc">
+  			<form>
+  			  <p>{{privacy}}
+  				<input type="checkbox" ng-model="isPrivate"name="sounds" class="regular-radio" ng-click="privacyChange()"/>
+  			  </p>
+  			</form>
+    </div>
   </div>
-  <button type="submit" class="btn btn-default" ng-click="create.startStory()" ui-sref="story">Submit</button>
-</form>
+
+
+  <div class="center text-center">
+	  <button type="submit" class="submitButton" ng-click="create.startStory()">Submit</button>
+  </div>
 </div>
+
+

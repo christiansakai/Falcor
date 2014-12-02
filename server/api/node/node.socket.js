@@ -11,7 +11,7 @@ var Story = require('../story/story.model');
 var Node = require('./node.model');
 var User = require('../user/user.model');
 var nodemailer = require('nodemailer'); 
-var nodemailerConfig = require('../../config/nodemailer');
+
 
 
 
@@ -19,7 +19,7 @@ exports.register = function(socketio) {
 		//join room functionality
 
 	socketio.on('connection', function(socket) {
-		//subscribe to a room 
+		//subscribe to a room
 		socket.on('joinRoom', function(data){
 			if (socket.rooms.length){
 				socket.rooms.forEach(function(room){
@@ -33,20 +33,20 @@ exports.register = function(socketio) {
 
 		//create a story as well as the first node in the story on this single submit action
 		socket.on('newStory', function(obj){
-			//then want to create a story here 
+
+			//then want to create a story here
 			Story.create(obj, function(err, story){
-				console.log(story);
 				story.name = obj.title;
-				var firstNode = {}; 
-				firstNode.text = obj.input; 
+				var firstNode = {};
+				firstNode.text = obj.input;
 				firstNode.author = obj.userId;
-				firstNode.storyId = story._id; 
-				firstNode.firstNode = true; 
-				firstNode.isPrivate = obj.isPrivate; 
+				firstNode.storyId = story._id;
+				firstNode.firstNode = true;
+				firstNode.isPrivate = obj.isPrivate;
 				Node.create(firstNode, function(err, firstNode){
 					// console.log('firstnode', firstNode)
 					var data = {
-						story: story, 
+						story: story,
 						firstNode: firstNode
 					}
 					var userStory = {
@@ -64,7 +64,7 @@ exports.register = function(socketio) {
 		})
 
 		//so this occurs every time a member submits a piece of writing
-		//nodes created through this socket ping will never be first nodes  
+		//nodes created through this socket ping will never be first nodes
 		socket.on('nodeAdded', function(obj){
 			obj._id = mongoose.Types.ObjectId();
 
@@ -75,7 +75,7 @@ exports.register = function(socketio) {
 				obj.parentId = parentNode._id;
 				obj.storyId = parentNode.storyId;
 				obj.firstNode = false;
-				obj.isPrivate = parentNode.isPrivate; 
+				obj.isPrivate = parentNode.isPrivate;
 				console.log('setting obj', obj)
 				Node.create(obj, function(err, newNode){
 					console.log('created node', newNode)
@@ -102,18 +102,23 @@ exports.register = function(socketio) {
         }
       console.log('nodemailerConfig', options)
       nodemailerConfig.transporter.sendMail(options, function(error, info){
-          if(error){
-              console.log(error);
-          }else{
-              console.log('Message sent: ' + info.response);
-          }
-      // nodemailerConfig.transporter.close();
-      //using socket.emit instead of socketio.to because only sending to that one socket
-      socket.emit('sentInvite', obj)
-      console.log('obj', obj)
-      });
-		})
-	})		
+
+        var success = false;
+        if(error){
+          success = false;
+          console.log(error);
+        }else{
+          success = true;
+          console.log('Message sent: ' + info.response);
+        }
+        // nodemailerConfig.transporter.close();
+        obj.success = success;
+        // socketio.to(obj.storyId).emit('sentInvite', obj)
+        socket.emit('sentInvite', obj)
+        console.log('obj', obj)
+        });
+	  })
+	})
 }
 
 // function onSave(socket, doc, cb) {
