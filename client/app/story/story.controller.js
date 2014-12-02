@@ -281,7 +281,7 @@ angular.module('storyHubApp')
 
 
     // #########################################################################
-  });
+
 
 // !! ABSTRACT INTO ITS OWN FILE
 angular.module('storyHubApp').controller('shareStoryModalInstanceCtrl', function ($scope, $modalInstance, storyId) {

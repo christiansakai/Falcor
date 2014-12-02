@@ -20,6 +20,8 @@ angular.module('storyHubApp')
       socket.socket.emit('joinRoom', data)
 
       $state.go('story.graph', {storyId: storyId})
+
+    }
         
 
 
@@ -27,4 +29,5 @@ angular.module('storyHubApp')
     socket.socket.on('joinedRoom', function(data) {
       console.log(data)
     })
-  });
+
+});
