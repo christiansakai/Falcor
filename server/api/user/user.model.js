@@ -12,7 +12,10 @@ var UserSchema = new Schema({
     type: String,
     default: 'user'
   },
-  stories: [{type: Schema.Types.ObjectId, ref: 'Story'}],
+  stories: [{
+    id: {type: Schema.Types.ObjectId, ref: 'Story'},
+    title: String
+  }],
   hashedPassword: String,
   provider: String,
   salt: String,

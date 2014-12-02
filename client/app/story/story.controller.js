@@ -6,17 +6,34 @@ angular.module('storyHubApp')
     // this line sets the storyId that we send from the explore controller so that
     // if you refresh the page, the id for the get request is not lost 
     StoryService.setData($stateParams.storyId)
+    console.log('storyID: ', StoryService.getData())
+    $scope.storyId = StoryService.getData()
     $scope.nodes = NodeService;
     $scope.story = StoryService;
     $scope.writing = {
     	text: ''
     }
+
+    $scope.userId = Auth.getCurrentUser()._id
+    console.log('userId: ', Auth.getCurrentUser()._id)
+    console.log('userIdOnScope: ', $scope.userId)
+
     $scope.parentId = '';
 
     $scope.setParent = function(node){
       $scope.parentId = node._id;
       console.log(node);
       console.log($scope.parentId)
+    }
+
+    $scope.rateNode = function(nodeId){
+      var obj = {
+        userId: $scope.userId
+      }
+      console.log('sent obj: ', obj.userId)
+      ExploreStories.rateNodes(nodeId, obj, function(result){
+        console.log('liked node: ', result)
+      })
     }
 
 		$scope.submitWriting = function(){
@@ -81,9 +98,10 @@ angular.module('storyHubApp')
             children: []
           };
 
+          if (branch.indexOf(treeChild) === -1){
+            branch.push(treeChild)            
+          }
 
-         // branch = tree.children[i] // []
-          branch.push(treeChild)
           console.log('branch after push: ', branch)
 
           if (child.children.length > 0){

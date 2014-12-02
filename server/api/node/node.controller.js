@@ -36,6 +36,17 @@ exports.show = function(req, res) {
   });
 };
 
+// Get a single node
+exports.rateNodes = function(req, res) {
+  Node.findById(req.params.nodeId, {'likes':1}, function (err, node) {
+    if(err) { return handleError(res, err); }
+    if(!node) { return res.send(404); }
+    node.likeNodes(req.body, function(ratedNode){
+      return res.json(node);      
+    })
+  });
+};
+
 // Creates a new node in the DB.
 exports.create = function(req, res) {
   //amend this create

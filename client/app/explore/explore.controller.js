@@ -12,12 +12,16 @@ angular.module('storyHubApp')
   	$scope.joinStory = function(storyId){   
       // ExploreStories.storiesInfo.storyId = storyId
       StoryService.setData(storyId)
+      console.log('id: ', StoryService.getData())
       var data = {
         storyId: storyId, 
         username: $scope.username 
       }
       socket.socket.emit('joinRoom', data)
-      $state.go('story', {storyId: storyId})
+      setTimeout(function(){
+        $state.go('story', {storyId: storyId})
+      }, 0) 
+        
   	}
 
     //register those who have joined the room

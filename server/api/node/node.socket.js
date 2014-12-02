@@ -5,10 +5,11 @@
 
 'use strict';
 
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var Story = require('../story/story.model'); 
 var Node = require('./node.model');
+var User = require('../user/user.model');
 var nodemailer = require('nodemailer'); 
 var nodemailerConfig = require('../../config/nodemailer');
 
@@ -48,6 +49,14 @@ exports.register = function(socketio) {
 						story: story, 
 						firstNode: firstNode
 					}
+					var userStory = {
+						id: story._id, 
+						title: obj.title
+					}
+					User.findByIdAndUpdate(obj.userId, {$push: {stories: userStory}}, function(err, user){
+						console.log('user: ', obj.userId, 'story: ', userStory)
+						if (err) {console.log('error!: ', err)}
+					})
 					socket.join(story._id)
 					socketio.to(story._id).emit('StoryCreated', data)
 				})
@@ -76,6 +85,15 @@ exports.register = function(socketio) {
 		})
 
 		socket.on('invitingToStory', function(obj){
+
+			User.findOne({'email': obj.email}, function(err, user){
+				if (err) {return; }
+				if (!user) {return; }
+				//if the email address given matches that of a user, add the story to the
+				//user's stories array
+				user.stories.push(obj.storyId)
+			})
+
 			var options = {
           from: 'falkorapp@gmail.com',
           to: obj.email,
@@ -90,7 +108,8 @@ exports.register = function(socketio) {
               console.log('Message sent: ' + info.response);
           }
       // nodemailerConfig.transporter.close();
-      socketio.to(obj.storyId).emit('sentInvite', obj)
+      //using socket.emit instead of socketio.to because only sending to that one socket
+      socket.emit('sentInvite', obj)
       console.log('obj', obj)
       });
 		})

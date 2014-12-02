@@ -27,8 +27,10 @@ angular.module('storyHubApp')
       //register those who have joined the room
       //we'll have to remember to reset this --- wiring for switching between stories/rooms
     socket.socket.on('StoryCreated', function(data) {
+      console.log('created!')
       NodeService.nodes.push(data.firstNode);
       StoryService.title = data.story.name;
+      //StoryService.setData(data.story._id)
       StoryService.id = data.story._id;
       console.log(data)
       console.log(StoryService)
