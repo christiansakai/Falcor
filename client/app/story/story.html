@@ -1,8 +1,8 @@
-{{story}}
 {{results}}
-{{nodes.nodes}}
 <div ng-repeat="node in results">
-
+	ID: {{node._id}}
+	CHILDREN: {{node.children}}
+	PARENTS: {{node.parentId}}
 	{{node.text}} - <a ng-click="setParent(node)">branch</a>
 
 </div>
