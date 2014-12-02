@@ -4,11 +4,6 @@ angular.module('storyHubApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('story', {
-<<<<<<< HEAD
-      	// params: ['storyId'],
-=======
-      	// params: ['name'],
->>>>>>> master
         url: '/story/:storyId',
         templateUrl: 'app/story/story.html',
         controller: 'StoryCtrl as story',
