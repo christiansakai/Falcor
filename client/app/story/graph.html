@@ -1,0 +1,13 @@
+
+{{results}}
+<div ng-repeat="node in results">
+	ID: {{node._id}}
+	CHILDREN: {{node.children}}
+	PARENTS: {{node.parentId}}
+	{{node.text}} - <a ng-click="story.setParent(node)">branch</a>
+
+</div>
+
+{{story.parentId}}
+
+<div id="graphBox"></div>
