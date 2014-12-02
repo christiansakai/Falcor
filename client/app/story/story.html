@@ -19,6 +19,27 @@
 		</form>
 	</div>
 
-	<!-- <button type="submit" class="btn btn-default" ng-click="shareWriting()">Share With Friends</button> -->
-
-<div id="treeGraph"></div>
+<!-- <HTML TEMPLATE> -->
+<!-- !! ABSTRACT INTO ITS OWN FILE -->
+<script type="text/ng-template" id="shareStoryModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Share this story!</h3>
+    {{ storyId }}
+  </div>
+  <div class="modal-body">
+    <label for="recipientEmail">Email of person to invite:</label>
+    <input id="recipientEmail" type="email" ng-model="recipientEmail" />
+    {{ recipientEmail }}
+    <!-- <ul>
+      <li ng-repeat="item in items">
+          <a ng-click="selected.item = item">{{ item }}</a>
+      </li>
+    </ul>
+    Selected: <b>{{ selected.item }}</b> -->
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  </div>
+</script>
+<!-- </HTML TEMPLATE> -->
