@@ -1,0 +1,5 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div ng-repeat="story in myStories"><h1><a ng-click="goToStory(story.id)">{{story.title}}</a></h1>
+	{{story.id}}
+</div>

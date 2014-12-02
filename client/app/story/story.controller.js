@@ -5,6 +5,8 @@ angular.module('storyHubApp')
 
     // this line sets the storyId that we send from the explore controller so that
     // if you refresh the page, the id for the get request is not lost 
+
+
     StoryService.id = $stateParams.storyId
     // $scope.nodes = NodeService;
 
@@ -13,6 +15,11 @@ angular.module('storyHubApp')
     $scope.writing = {
     	text: ''
     }
+
+    $scope.userId = Auth.getCurrentUser()._id
+    console.log('userId: ', Auth.getCurrentUser()._id)
+    console.log('userIdOnScope: ', $scope.userId)
+
     $scope.parentId = '';
 
     this.setParent = function(node){
@@ -21,6 +28,16 @@ angular.module('storyHubApp')
       console.log($scope.parentId)
       // console.log(node);
       // console.log($scope.parentId)
+    }
+
+    $scope.rateNode = function(nodeId){
+      var obj = {
+        userId: $scope.userId
+      }
+      console.log('sent obj: ', obj.userId)
+      ExploreStories.rateNodes(nodeId, obj, function(result){
+        console.log('liked node: ', result)
+      })
     }
 
 		$scope.submitWriting = function(){
@@ -80,17 +97,14 @@ angular.module('storyHubApp')
       }
     });
 
+  });
 
-    // function getTree(resultArray){
-    //   var firstNode = _.find(resultArray, {'firstNode': true});
-    //   var tree = {
-    //       name: firstNode.text,
-    //       id: firstNode._id,
-    //       children: []
-    //   };
-    //   // var count = 0;
-    //   // console.log(resultArray);
-    //   // var branch;
+
+      // var count = 0;
+      // console.log(resultArray);
+      // var branch;
+
+
 
 
     //   function recursion(node, branch){

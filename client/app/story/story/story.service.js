@@ -38,8 +38,9 @@ angular.module('storyHubApp')
 
 
       	   // branch = tree.children[i] // []
-      	    branch.push(treeChild)
-      	    console.log('branch after push: ', branch)
+               if (branch.indexOf(treeChild) === -1){
+                 branch.push(treeChild)            
+               }
 
       	    if (child.children.length > 0){
       	      var k = 0;

@@ -21,6 +21,17 @@ exports.index = function(req, res) {
 };
 
 /**
+ * Get list of users nodes
+ * 
+ */
+exports.getUserNodes = function(req, res) {
+  User.findById(req.user._id, function (err, users) {
+    if(err) return res.send(500, err);
+    res.json(200, users);
+  });
+};
+
+/**
  * Creates a new user
  */
 exports.create = function (req, res, next) {
