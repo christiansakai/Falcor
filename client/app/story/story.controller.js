@@ -1,8 +1,11 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('StoryCtrl', function ($scope, NodeService, StoryService, Auth, socket, ExploreStories) {
+  .controller('StoryCtrl', function ($scope, NodeService, StoryService, Auth, socket, ExploreStories, $stateParams) {
 
+    // this line sets the storyId that we send from the explore controller so that
+    // if you refresh the page, the id for the get request is not lost 
+    StoryService.setData($stateParams.storyId)
     $scope.nodes = NodeService;
     $scope.story = StoryService;
     $scope.writing = {
@@ -98,6 +101,7 @@ angular.module('storyHubApp')
             branch = tree.children
           }
         }
+
       recursion(firstNode, tree.children) //tree.children
       console.log('final Tree: ', tree)
       return tree;
@@ -105,9 +109,11 @@ angular.module('storyHubApp')
 
 
     if (NodeService.nodes.length === 0){
+      console.log('in here: ', NodeService.nodes.length)
+      console.log('storyService: ', StoryService.getData())
       $scope.getNodesPerStory = function(){
       	var obj = {
-      		storyId: ExploreStories.storiesInfo.storyId
+      		storyId: StoryService.getData()
       	}
 
       	console.log('params obj', obj)

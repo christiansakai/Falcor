@@ -5,10 +5,16 @@ angular.module('storyHubApp')
     
     
     var Story = {
-      title: '',
       id: ''
     }
 
-    return Story;
+    return {
+    	getData: function(){
+    		return Story.id; 
+    	}, 
+    	setData: function(id){
+    		Story.id = id
+    	}
+    };
 
   });
