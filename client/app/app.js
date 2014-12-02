@@ -6,7 +6,8 @@ angular.module('storyHubApp', [
   'ngSanitize',
   'btford.socket-io',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'angular-growl'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider.otherwise('/');
@@ -46,6 +47,10 @@ angular.module('storyHubApp', [
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
+  })
+
+  .config(function(growlProvider) {
+    growlProvider.globalTimeToLive(4000);
   })
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
