@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('StoryCtrl', function ($scope, NodeService, StoryService, Auth, socket, ExploreStories, $stateParams, $modal) {
+  .controller('StoryCtrl', function ($scope, NodeService, StoryService, Auth, socket, ExploreStories, $stateParams, $modal, growl) {
 
     // this line sets the storyId that we send from the explore controller so that
     // if you refresh the page, the id for the get request is not lost
-    StoryService.setData($stateParams.storyId)
+    StoryService.setData($stateParams.storyId);
     $scope.nodes = NodeService;
     $scope.story = StoryService;
     $scope.writing = {
@@ -15,9 +15,7 @@ angular.module('storyHubApp')
 
     $scope.setParent = function(node){
       $scope.parentId = node._id;
-      // console.log(node);
-      // console.log($scope.parentId)
-    }
+    };
 
 		$scope.submitWriting = function(){
       var obj = {
@@ -26,16 +24,11 @@ angular.module('storyHubApp')
         parentId: $scope.parentId
       }
 			socket.socket.emit('nodeAdded', obj)
-		}
+		};
 
     socket.socket.on('addNodeToDom', function(node){
-    	// console.log('added node', node)
-    	NodeService.nodes.push(node)
-      //add node to dom
-      //initiate get request for all nodes associated with the story id
-      //$scope.story = results;
-      //ng-repeat over results
-    })
+    	NodeService.nodes.push(node);
+    });
 
     $scope.shareWriting = function() {
       var size = 'sm';// Empty : default, lg :large, sm : small
@@ -52,9 +45,10 @@ angular.module('storyHubApp')
       }
       });
 
-      modalInstance.result.then(function () {
+      modalInstance.result.then(function (inviteObj) {
         // Modal ok.
-        // console.log('Modal closed properly.');
+        growl.info('Sending Invitation to ' + inviteObj.email);
+        socket.socket.emit('invitingToStory', inviteObj)
       }, function () {
         // Modal cancel.
         // $log.info('Modal dismissed at: ' + new Date());
@@ -62,10 +56,13 @@ angular.module('storyHubApp')
     }
 
     socket.socket.on('sentInvite', function(obj){
-      // !! GROWL MESSAGE HERE.
-      console.log('invitation sent to ' + obj.email)
-    })
-
+      console.log('sentInvite', obj)
+      if(obj.success) {
+        growl.success('Invitation sent to ' + obj.email);
+      } else {
+        growl.error('Could not send invitation to ' + obj.email);
+      }
+    });
 
     function getTree(resultArray){
       var firstNode = _.find(resultArray, {'firstNode': true});
@@ -188,9 +185,6 @@ angular.module('storyHubApp').controller('shareStoryModalInstanceCtrl', function
       storyId: $scope.storyId,
       email: $scope.recipientEmail
     }
-
-    console.log('invitingToStory', inviteObj)
-    // socket.socket.emit('invitingToStory', inviteObj)
 
     $modalInstance.close(inviteObj);
   };
