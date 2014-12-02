@@ -1,11 +1,14 @@
-{{results}}
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+
+<!-- {{results}}
 <div ng-repeat="node in results">
 	ID: {{node._id}}
 	CHILDREN: {{node.children}}
 	PARENTS: {{node.parentId}}
 	{{node.text}} - <a ng-click="setParent(node)">branch</a>
 
-</div>
+</div> -->
 
 <div>
 	<form role="form">
@@ -19,6 +22,7 @@
 	</form>
 </div>
 
+<div ui-view></div>
 <!-- <HTML TEMPLATE> -->
 <!-- !! ABSTRACT INTO ITS OWN FILE -->
 <script type="text/ng-template" id="shareStoryModal.html">

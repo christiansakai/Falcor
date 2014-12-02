@@ -32,9 +32,9 @@ exports.register = function(socketio) {
 
 		//create a story as well as the first node in the story on this single submit action
 		socket.on('newStory', function(obj){
+
 			//then want to create a story here
 			Story.create(obj, function(err, story){
-				console.log(story);
 				story.name = obj.title;
 				var firstNode = {};
 				firstNode.text = obj.input;
