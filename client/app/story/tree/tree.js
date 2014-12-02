@@ -3,43 +3,19 @@ var m = [20, 120, 20, 120],
     h = 800 - m[0] - m[2],
     i = 0,
     root,
-    verticalPadding = 25;
+    verticalPadding = 25, // Fixed value in px
+    horizontalPadding = 25;// Ratio
 
 var d3Tree = d3.layout.tree()
     .size([h, w]);
 
-var diagonal = d3.svg.diagonal()
-    .projection(function(d) { return [d.x, d.y]; });//
+var diagonal = d3.svg.diagonal().projection(function(d) { return [d.x / horizontalPadding, d.y]; });
 
 var vis = d3.select("body").append("svg:svg")
     .attr("width", w + m[1] + m[3])
     .attr("height", h + m[0] + m[2])
     .append("svg:g")
     .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
-
-// d3.json("app/tree/flare.json", function(json) {
-//   debugger;
-
-//   root = json;
-//   root.x0 = h / 2;
-//   root.y0 = 0;
-
-//   function toggleAll(d) {
-//     if (d.children) {
-//       d.children.forEach(toggleAll);
-//       toggle(d);
-//     }
-//   }
-
-//   // Initialize the display to show a few nodes.
-//   root.children.forEach(toggleAll);
-//   toggle(root.children[1]);
-//   toggle(root.children[1].children[2]);
-//   toggle(root.children[9]);
-//   toggle(root.children[9].children[0]);
-
-//   update(root);
-// });
 
 function update(source) {
   var duration = d3.event && d3.event.altKey ? 5000 : 500;
@@ -51,16 +27,16 @@ function update(source) {
   nodes.forEach(function(d) { d.y = d.depth * verticalPadding; });
 
   // Update the nodes…
-  var node = vis.selectAll("g.node")
-      .data(nodes, function(d) { return d.id || (d.id = ++i); });
+  var node = vis.selectAll("g.node").data(nodes, function(d) { return d.id || (d.id = ++i); });
 
   // Enter any new nodes at the parent's previous position.
   var nodeEnter = node.enter().append("svg:g")
       .attr("class", "node")
-      .attr("transform", function(d) { return "translate(" + source.x0 + "," + source.y0 + ")"; })//
+      .attr("transform", function(d) { return "translate(" + source.x0 / horizontalPadding + "," + source.y0 + ")"; })//
       .on("click", function(d) {
-        toggle(d); update(d);
-        console.log('asd', source)
+        toggle(d);
+        update(d);
+        console.log('clicked node', d);
       });
 
   nodeEnter.append("svg:circle")
@@ -77,7 +53,7 @@ function update(source) {
   // Transition nodes to their new position.
   var nodeUpdate = node.transition()
       .duration(duration)
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });//
+      .attr("transform", function(d) { return "translate(" + d.x / horizontalPadding + "," + d.y + ")"; });//
 
   nodeUpdate.select("circle")
       .attr("r", 4.5)
@@ -86,13 +62,10 @@ function update(source) {
           return "green";
         }
         else if(d._children || d.children) {
-          // Has children.
-          return "red";
+          return "red";// Has children.
         } else {
-          // No children.
-          return "lightsteelblue";
+          return "lightsteelblue";// No children.
         }
-        // return d._children ? "lightsteelblue" : "red";
       });
 
   nodeUpdate.select("text")
@@ -101,7 +74,7 @@ function update(source) {
   // Transition exiting nodes to the parent's new position.
   var nodeExit = node.exit().transition()
       .duration(duration)
-      .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
+      .attr("transform", function(d) { return "translate(" + source.y + "," + source.x / horizontalPadding + ")"; })
       .remove();
 
   nodeExit.select("circle")
@@ -118,7 +91,7 @@ function update(source) {
   link.enter().insert("svg:path", "g")
       .attr("class", "link")
       .attr("d", function(d) {
-        var o = {x: source.x0, y: source.y0};
+        var o = {x: source.x0 / horizontalPadding, y: source.y0};
         return diagonal({source: o, target: o});
       })
     .transition()
@@ -134,7 +107,7 @@ function update(source) {
   link.exit().transition()
       .duration(duration)
       .attr("d", function(d) {
-        var o = {x: source.x, y: source.y};
+        var o = {x: source.x / horizontalPadding, y: source.y};
         return diagonal({source: o, target: o});
       })
       .remove();

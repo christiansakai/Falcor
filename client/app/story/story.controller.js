@@ -55,11 +55,11 @@ angular.module('storyHubApp')
       var tree = {
           name: firstNode.text,
           id: firstNode._id,
-          children: [] 
+          children: []
       };
       // var count = 0;
       // console.log(resultArray);
-      // var branch; 
+      // var branch;
 
 
       function recursion(node, branch){
@@ -75,7 +75,7 @@ angular.module('storyHubApp')
           var treeChild = {
             name: child.text,
             id: child._id,
-            children: [] 
+            children: []
           };
 
 
@@ -84,7 +84,7 @@ angular.module('storyHubApp')
           console.log('branch after push: ', branch)
 
           if (child.children.length > 0){
-            var k = 0; 
+            var k = 0;
             while (k < child.children.length){
               console.log('k: ', k)
               branch = treeChild.children;
@@ -174,7 +174,7 @@ angular.module('storyHubApp')
         }
 
         // Initialize the display to show a few nodes.
-        root.children.forEach(toggleAll);
+        // root.children.forEach(toggleAll);
         // toggle(root.children[1]);
 
         update(root);
