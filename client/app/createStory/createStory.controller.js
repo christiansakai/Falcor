@@ -3,22 +3,24 @@
 angular.module('storyHubApp')
   .controller('CreatestoryCtrl', function ($scope, $http, Auth, socket, NodeService, StoryService) {
     $scope.message = 'Hello';
+    $scope.isPrivate = false;
 
     var vm = this; 
 
     $scope.story = {
+        title: '',
         input: '',
-        isPrivate: false
+        isPrivate: $scope.isPrivate,
+        userId: Auth.getCurrentUser()._id,
+        username: Auth.getCurrentUser().name
     }
 
-    $scope.username = Auth.getCurrentUser().name
-    $scope.userId = Auth.getCurrentUser()._id
+    // $scope.username = Auth.getCurrentUser().name
+    // $scope.userId = Auth.getCurrentUser()._id
 
     vm.startStory = function(){
-      var obj = {
-        name: $scope.story.input, 
-        author: $scope.userId
-      }
+      console.log($scope.story)
+      var obj = $scope.story;
         socket.socket.emit('newStory', obj)
     }
 
@@ -33,13 +35,6 @@ angular.module('storyHubApp')
     })
 
 
-
-    $scope.createStory = function(){
-    	// console.log($scope.story.input)
-    	$http.post('/api/nodes/', {story: $scope.story}).success(function(story){
-    		console.log(story);
-    	})
-    }
 
 
   });

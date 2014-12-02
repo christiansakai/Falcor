@@ -34,14 +34,16 @@ exports.register = function(socketio) {
 		socket.on('newStory', function(obj){
 			//then want to create a story here 
 			Story.create(obj, function(err, story){
+				console.log(story);
+				story.name = obj.title;
 				var firstNode = {}; 
-				firstNode.text = obj.name; 
-				firstNode.author = obj.author;
+				firstNode.text = obj.input; 
+				firstNode.author = obj.userId;
 				firstNode.storyId = story._id; 
 				firstNode.firstNode = true; 
-				firstNode.isPrivate = false; 
+				firstNode.isPrivate = obj.isPrivate; 
 				Node.create(firstNode, function(err, firstNode){
-					console.log('firstnode', firstNode)
+					// console.log('firstnode', firstNode)
 					var data = {
 						story: story, 
 						firstNode: firstNode

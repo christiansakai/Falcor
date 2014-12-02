@@ -1,8 +1,12 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="col-lg-8">
+<div class="col-lg-8 center">
+	<h2>Give your story a title</h2>
+<textarea class="form-control storyTitle" rows="1" ng-model="story.title"></textarea>
+
+
   <h2>Write the first line of your story</h2>
-<textarea class="form-control" rows="3" ng-model="story.input"></textarea>
+<textarea class="form-control beginStory" rows="3" ng-model="story.input"></textarea>
 <form role="form">
   <div class="checkbox">
     <label>
