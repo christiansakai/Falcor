@@ -17,10 +17,13 @@ angular.module('storyHubApp')
   	var diagonal = d3.svg.diagonal().projection(function(d) { return [d.x / horizontalPadding, d.y]; });
 
   	var vis = d3.select("#graphBox").append("svg:svg")
-  	    .attr("width", w + m[1] + m[3])
-  	    .attr("height", h + m[0] + m[2])
+  	    // .attr("width", w + m[1] + m[3])
+        .attr("width", "100%")
+  	    // .attr("height", h + m[0] + m[2])
+        .attr("height", "100%")
   	    .append("svg:g")
   	    .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
+
 
   	function update(source) {
   	  var duration = d3.event && d3.event.altKey ? 5000 : 500;
@@ -39,19 +42,17 @@ angular.module('storyHubApp')
   	      .attr("class", "node")
   	      .attr("transform", function(d) { return "translate(" + source.x0 / horizontalPadding + "," + source.y0 + ")"; })//
   	      .on("click", function(d) {
-  	        toggle(d);
-  	        update(d);
+  	        // toggle(d);
+  	        // update(d);
             getBranchForNode(d);
   	      });
 
       function getBranchForNode(node) {
-        var selectedNode = _.find($scope.results, {'_id': node.id})
-
         $scope.branchFiltered = _.select($scope.results, function(ancestor){
-          return selectedNode.ancestors.indexOf(ancestor._id) != -1;
+          return node.ancestors.indexOf(ancestor._id) != -1;
         });
 
-        $scope.branchFiltered.push(selectedNode);
+        $scope.branchFiltered.push(node);
 
         // Do apply to update the view.
         $scope.$apply();
