@@ -3,7 +3,7 @@
 angular.module('storyHubApp')
   .factory('StoryService', function (ExploreStories) {
     
-    
+
     var Story = {
       id: '',
       title: '',
@@ -20,32 +20,16 @@ angular.module('storyHubApp')
       getTree: function(resultArray, cb){
         // console.log('resultArray', resultArray)
       	var firstNode = _.find(resultArray, {'firstNode': true});
-      	var tree = {
-      	    name: firstNode.text,
-      	    id: firstNode._id,
-      	    children: []
-      	};
-      	// var count = 0;
-      	// console.log(resultArray);
-      	// var branch;
 
+        function unflatten( array, parent ){
+            var children = _.filter( array, function(child){ return child.parentId == parent._id; });
+            if(!_.isEmpty(children)){
+                 parent.children = children;
+                _.each( children, function( child ){ unflatten( array, child ) } );
+            }
+        }
 
-      	function recursion(node, branch){
-      	  console.log(node)
-      	  // if(node.children.length === 0){
-      	  //   return
-      	  // }
-      	  for(var i = 0; i < node.children.length; i++){
-
-      	    // console.log(node.children)
-      	    var child = _.find(resultArray, {'_id': node.children[i]})
-      	    // console.log(child);
-      	    var treeChild = {
-      	      name: child.text,
-      	      id: child._id,
-      	      children: []
-      	    };
-
+        unflatten(resultArray, firstNode);
 
       	   // branch = tree.children[i] // []
                if (branch.indexOf(treeChild) === -1){
@@ -71,9 +55,9 @@ angular.module('storyHubApp')
       	recursion(firstNode, tree.children) //tree.children
       	console.log('final Tree: ', tree)
       	cb(tree);
+
       }
     }
 
     return Story;
-
   });
