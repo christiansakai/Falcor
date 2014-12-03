@@ -9,7 +9,7 @@ angular.module('storyHubApp')
   	    i = 0,
   	    root,
   	    verticalPadding = 25, // Fixed value in px
-  	    horizontalPadding = 1;// Ratio
+  	    horizontalPadding = 10;// Ratio
 
   	var d3Tree = d3.layout.tree()
   	    .size([h, w]);
@@ -41,8 +41,21 @@ angular.module('storyHubApp')
   	      .on("click", function(d) {
   	        toggle(d);
   	        update(d);
-  	        console.log('clicked node', d);
+            getBranchForNode(d);
   	      });
+
+      function getBranchForNode(node) {
+        var selectedNode = _.find($scope.results, {'_id': node.id})
+
+        $scope.branchFiltered = _.select($scope.results, function(ancestor){
+          return selectedNode.ancestors.indexOf(ancestor._id) != -1;
+        });
+
+        $scope.branchFiltered.push(selectedNode);
+
+        // Do apply to update the view.
+        $scope.$apply();
+      };
 
   	  nodeEnter.append("svg:circle")
   	      .attr("r", 1e-6)
@@ -147,8 +160,9 @@ angular.module('storyHubApp')
               $scope.results = results;
 
               var tree = StoryService.getTree(results)
-              // NodeService.nodes = tree
+
               console.log('tree: ', tree)
+
               buildTree(tree)
           })
         }
