@@ -1,13 +1,47 @@
 
-{{results}}
-<div ng-repeat="node in results">
-	ID: {{node._id}}
-	CHILDREN: {{node.children}}
-	PARENTS: {{node.parentId}}
-	{{node.text}} - <a ng-click="story.setParent(node)">branch</a>
-
-</div>
+<!-- {{results}} -->
+<!-- <div ng-repeat="node in results"> -->
+	<!-- ID: {{node._id}} -->
+	<!-- CHILDREN: {{node.children}} -->
+	<!-- PARENTS: {{node.parentId}} -->
+	<!-- {{node.text}} - <a ng-click="story.setParent(node)">branch</a> -->
+<!-- </div> -->
 
 {{story.parentId}}
 
-<div id="graphBox"></div>
+<div>
+
+  <div id="graphBox" class="col-lg-2">
+  </div>
+
+  <div class="panel panel-primary col-lg-9">
+    <div class="panel-heading">
+      <h3 class="panel-title">Story Title</h3>
+    </div>
+    <div class="panel-body">
+      <!-- <NG-REPEAT> -->
+      <div ng-repeat="node in branchFiltered">
+        <!-- {{ ::node._id }} -->
+        <!-- {{ ::node.parentId }} -->
+        <!-- {{ ::node.storyId }} -->
+        <!-- {{ ::node.ancestors }} -->
+        <!-- {{ ::node.children }} -->
+        <div class="col-lg-11">
+          <p>
+            {{ ::node.text }}
+          </p>
+        </div>
+        <div class="col-lg-1">
+          <p>
+            <small>{{ ::node.date | date:'yyyy-MM-dd HH:mm:ss'}}</small>
+            <small>Author</small>
+            <small><a ng-click="story.setParent(node)">Branch</a></small>
+          </p>
+        </div>
+      </div>
+      <!-- </NG-REPEAT> -->
+    </div>
+  </div>
+</div>
+
+
