@@ -19,11 +19,20 @@ exports.index = function(req, res) {
 // Get list of nodes
 exports.getNodes = function(req, res) {
   //configure this recursive call for all nodes that are children of this root node
-  Node.find({storyId: req.query.storyId}, function (err, nodes) {
-    console.log('nodes', nodes)
-    console.log('query', req.query);
+  Node.find({storyId: req.query.storyId})
+    // .populate('author', 'name')
+    .exec(function (err, nodes) {
+    // console.log('nodes', nodes)
     if(err) { return handleError(res, err); }
     return res.json(200, nodes);
+  });
+};
+
+// Get list of storys that match keywords
+exports.findKeyword = function(req, res) {
+  Node.find({$text: {$search: req.params.keyword}}, function (err, stories) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, stories);
   });
 };
 

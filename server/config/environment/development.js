@@ -8,5 +8,5 @@ module.exports = {
     uri: 'mongodb://localhost/storyhub-dev'
   },
 
-  seedDB: true
+  seedDB: false
 };

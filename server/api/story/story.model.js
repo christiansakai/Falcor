@@ -23,4 +23,6 @@ StorySchema.methods = {
 	// }
 }
 
+// StorySchema.index({ name: 'text'}, {weights: {name: 1}});
+
 module.exports = mongoose.model('Story', StorySchema);

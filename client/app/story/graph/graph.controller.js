@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('GraphCtrl', function ($scope, $stateParams, ExploreStories, StoryService) {
+  .controller('GraphCtrl', function ($scope, $stateParams, ExploreStories, StoryService, NodeService) {
 
   	var m = [20, 120, 20, 120],
   	    w = 1280 - m[1] - m[3],
@@ -145,6 +145,32 @@ angular.module('storyHubApp')
           ExploreStories.getNodes(obj, function(results){
               console.log('results', results);
               $scope.results = results;
+
+
+              //retrieving numbers on the story nodes 
+              var wordCountArr = []
+              var words = {
+                _id: "", 
+                count: Number
+              }
+
+              results.forEach(function(element){
+                  words._id = element._id
+                  words.count = element.text.split(" ").length
+                  wordCountArr.push(words)
+                  words = {
+                    _id: "", 
+                    count: Number
+                  }
+              })
+
+              Node.wordCount = wordCountArr; 
+              console.log('node service: ', Node.wordCount)
+
+
+              
+
+
 
               var tree = StoryService.getTree(results)
               // NodeService.nodes = tree

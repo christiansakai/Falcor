@@ -30,7 +30,7 @@ angular.module('storyHubApp')
       // console.log($scope.parentId)
     }
 
-    $scope.rateNode = function(nodeId){
+    this.rateNode = function(nodeId){
       var obj = {
         userId: $scope.userId
       }
@@ -51,6 +51,7 @@ angular.module('storyHubApp')
 			socket.socket.emit('nodeAdded', obj)
 		};
 
+    
     socket.socket.on('addNodeToDom', function(node){
     	// console.log('added node', node)
     	// NodeService.nodes.push(node)

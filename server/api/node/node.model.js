@@ -36,5 +36,6 @@ NodeSchema.methods = {
   }
 }
 
+NodeSchema.index({ text: 'text'}, {weights: {name: 1}});
 
 module.exports = mongoose.model('Node', NodeSchema);

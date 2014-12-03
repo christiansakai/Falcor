@@ -10,7 +10,7 @@ var Schema = mongoose.Schema;
 var Story = require('../story/story.model'); 
 var Node = require('./node.model');
 var User = require('../user/user.model');
-var nodemailer = require('nodemailer'); 
+var nodemailerConfig = require('../../config/nodemailer'); 
 
 
 
@@ -53,9 +53,14 @@ exports.register = function(socketio) {
 						id: story._id, 
 						title: obj.title
 					}
+					//User.findByIdAndUpdate(obj.userId, {$push: {stories: userStory}})
 					User.findByIdAndUpdate(obj.userId, {$push: {stories: userStory}}, function(err, user){
-						console.log('user: ', obj.userId, 'story: ', userStory)
+						console.log('id: ', obj.userId)
 						if (err) {console.log('error!: ', err)}
+						// user.stories.push(userStory)
+						user.save(function (err, newUser, numModified){
+							// console.log('user: ', user, 'story: ', userStory, 'saved?: ', numModified)							
+						})
 					})
 					socket.join(story._id)
 					socketio.to(story._id).emit('StoryCreated', data)
@@ -73,6 +78,7 @@ exports.register = function(socketio) {
 				obj.ancestors = parentNode.ancestors;
 				obj.ancestors.push(parentNode._id);
 				obj.parentId = parentNode._id;
+				obj.author = obj.author;
 				obj.storyId = parentNode.storyId;
 				obj.firstNode = false;
 				obj.isPrivate = parentNode.isPrivate;

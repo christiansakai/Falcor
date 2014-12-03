@@ -15,12 +15,16 @@ angular.module('storyHubApp')
   	    getNodes: function(obj, callback){
   		    $http.get('/api/nodes/getNodes/', {params: obj}).success(callback)    	
   	    },
-        getUserNodes: function(callback){
-          $http.get('/api/users/getUserNodes/').success(callback)
+        getUserNodes: function(obj, callback){
+          $http.get('/api/users/getUserNodes/', {params: obj}).success(callback)
         }, 
 
         rateNodes: function(nodeId, obj, callback){
           $http.put('/api/nodes/rateNodes/' + nodeId + '/', obj).success(callback)
+        }, 
+
+        submitKeywords: function(keyword, callback){
+          $http.get('/api/nodes/' + keyword + '/').success(callback)
         }
 	    }
 

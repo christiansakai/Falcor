@@ -25,7 +25,9 @@ exports.index = function(req, res) {
  * 
  */
 exports.getUserNodes = function(req, res) {
-  User.findById(req.user._id, function (err, users) {
+  console.log('id', req.query.id)
+  User.findById(req.query.id, function (err, users) {
+    console.log('userHERE: ', users)
     if(err) return res.send(500, err);
     res.json(200, users);
   });
