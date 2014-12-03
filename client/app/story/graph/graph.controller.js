@@ -154,7 +154,6 @@ angular.module('storyHubApp')
   	}
 
 
-<<<<<<< HEAD
     if($stateParams.newStory !== true){
       StoryService.getNodes(function(nodes){
         StoryService.getTree(nodes, function(tree){

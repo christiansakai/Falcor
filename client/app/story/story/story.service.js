@@ -32,32 +32,16 @@ angular.module('storyHubApp')
         unflatten(resultArray, firstNode);
 
       	   // branch = tree.children[i] // []
-               if (branch.indexOf(treeChild) === -1){
-                 branch.push(treeChild)            
-               }
 
-      	    if (child.children.length > 0){
-      	      var k = 0;
-      	      while (k < child.children.length){
-      	        console.log('k: ', k)
-      	        branch = treeChild.children;
-      	        console.log('branch: ', branch)
-      	        k++
-      	        console.log('k: ', k)
-      	        // console.log('branch: ', treeChild.children)
-      	        recursion(child, branch)
-      	        }
-      	      }
-      	      branch = tree.children
-      	    }
-      	  }
-
-      	recursion(firstNode, tree.children) //tree.children
-      	console.log('final Tree: ', tree)
-      	cb(tree);
+      	// recursion(firstNode, tree.children) //tree.children
+      	console.log('final Tree: ', firstNode)
+      	cb(firstNode);
 
       }
     }
 
+  
+
     return Story;
+
   });
