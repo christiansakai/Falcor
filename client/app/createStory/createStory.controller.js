@@ -2,7 +2,6 @@
 
 angular.module('storyHubApp')
   .controller('CreatestoryCtrl', function ($scope, $state, $http, Auth, socket, NodeService, StoryService) {
-    $scope.message = 'Hello';
     $scope.isPrivate = false;
     $scope.privacy = 'Public'
 
@@ -12,6 +11,7 @@ angular.module('storyHubApp')
       }
       else $scope.privacy = 'Private';
     }
+    $scope.hasTitle = false; 
 
     var vm = this; 
 
@@ -21,6 +21,12 @@ angular.module('storyHubApp')
         isPrivate: $scope.isPrivate,
         userId: Auth.getCurrentUser()._id,
     }
+
+
+    vm.chooseTitle = function(){
+      $scope.hasTitle = true; 
+    }
+
 
     // $scope.username = Auth.getCurrentUser().name
     // $scope.userId = Auth.getCurrentUser()._id

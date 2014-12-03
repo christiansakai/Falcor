@@ -11,6 +11,25 @@
 	margin-top: 50px;
 }
 
+textarea, input { outline: 0px; }
+
+.createText{
+  background-color: rgba(255, 255, 255, 0.0);
+  border: none;
+  border-radius: 0px;
+  box-shadow: none;
+  height: 40px;
+  margin: 5px;
+  font-size: 26px;
+  font-family: 'Museo Sans', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+}
+.createText:focus{
+        outline: 0;
+        box-shadow: none;
+  }
+
+
 /*body {
   font: 18px 'Helvetica-Neue', sans-serif;
   background: url('http://kevinchassagne.com/assets/images/template/sidebar.png');
@@ -34,9 +53,9 @@
 }
 
 form p { 
-  text-transform: uppercase;
-  vertical-align: top;
-  line-height: 40px;
+  font-family: 'Museo Sans', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 100;
+  font-size: 14px;
 }
 
 /* Checkbox */
@@ -46,7 +65,10 @@ form p {
   cursor: pointer;
 }
 
-.regular-radio:focus { outline: none; }
+.regular-radio:active { 
+  border: none;
+  outline: none;
+   }
 
 .regular-radio {
   -webkit-appearance: none;
@@ -57,7 +79,7 @@ form p {
   position: relative;
   height: 30px;
   width: 100px;
-  background-color: #e56c69;
+  background-color: #6ADD75;
   transition: all 0.3s ease; 
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease; 
@@ -75,7 +97,7 @@ form p {
 }
 
 .regular-radio:checked {
-  background-color: #6ADD75;
+  background-color: #e56c69;
 }
 
 .regular-radio:after {

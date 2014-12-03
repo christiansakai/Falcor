@@ -1,14 +1,24 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .factory('StoryService', function () {
+  .factory('StoryService', function (ExploreStories) {
     
     
     var Story = {
       id: '',
       title: '',
       branchFrom: '',
-      getTree: function(resultArray){
+      getNodes: function(cb){
+        var obj = {
+          storyId: this.id
+        }
+          ExploreStories.getNodes(obj, function(results){
+              console.log('results', results);
+              cb(results)
+          })
+      },
+      getTree: function(resultArray, cb){
+        // console.log('resultArray', resultArray)
       	var firstNode = _.find(resultArray, {'firstNode': true});
       	var tree = {
       	    name: firstNode.text,
@@ -60,7 +70,7 @@ angular.module('storyHubApp')
 
       	recursion(firstNode, tree.children) //tree.children
       	console.log('final Tree: ', tree)
-      	return tree;
+      	cb(tree);
       }
     }
 
