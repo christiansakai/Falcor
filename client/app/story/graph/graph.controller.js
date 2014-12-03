@@ -3,6 +3,10 @@
 angular.module('storyHubApp')
   .controller('GraphCtrl', function ($scope, $stateParams, ExploreStories, StoryService) {
 
+    StoryService.getNodes(function(results){
+      $scope.results = results
+    })
+
   	var m = [20, 120, 20, 120],
   	    w = 1280 - m[1] - m[3],
   	    h = 800 - m[0] - m[2],
@@ -135,27 +139,37 @@ angular.module('storyHubApp')
   	  }
   	}
 
-      $scope.getNodesPerStory = function(){
-        var obj = {
-          storyId: StoryService.id
-        }
 
-        console.log('params obj', obj)
-        if($stateParams.newStory !== true){
-          ExploreStories.getNodes(obj, function(results){
-              console.log('results', results);
-              $scope.results = results;
+    if($stateParams.newStory !== true){
+      StoryService.getNodes(function(nodes){
+        StoryService.getTree(nodes, function(tree){
+          buildTree(tree)    
+        })
+      })
+      
+    }
 
-              var tree = StoryService.getTree(results)
-              // NodeService.nodes = tree
-              console.log('tree: ', tree)
-              buildTree(tree)
-          })
-        }
-        else {
-          //something
-        }
-      }();
+      // $scope.getNodesPerStory = function(){
+      //   var obj = {
+      //     storyId: StoryService.id
+      //   }
+
+      //   // console.log('params obj', obj)
+      //   if($stateParams.newStory !== true){
+      //     ExploreStories.getNodes(obj, function(results){
+      //         console.log('results', results);
+      //         $scope.results = results;
+
+      //         var tree = StoryService.getTree(results)
+      //         // NodeService.nodes = tree
+      //         console.log('tree: ', tree)
+      //         buildTree(tree)
+      //     })
+      //   }
+      //   else {
+      //     //something
+      //   }
+      // }();
 
     // #########################################################################
     function buildTree(treeJSON) {
