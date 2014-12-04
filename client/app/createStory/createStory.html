@@ -4,7 +4,7 @@
   <div>
     <span><h2>Give your story a title </h2> <h4>{{60 -story.title.length }}</h4></span>
     
-    <input class="form-control storyTitle createText text-center" maxlength="60" rows="1" ng-model="story.title" placeholder="Enter a title" autofocus>  
+    <input class="form-control storyTitle createText text-center" maxlength="60" rows="1" ng-model="story.title" placeholder="Enter a title" autofocus ng-keyup="$event.keyCode == 13 && create.chooseTitle()">  
     
   </div>
 
