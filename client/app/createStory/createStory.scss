@@ -13,6 +13,10 @@
 
 textarea, input { outline: 0px; }
 
+textarea{
+  resize: none;
+}
+
 .createText{
   background-color: rgba(255, 255, 255, 0.0);
   border: none;
