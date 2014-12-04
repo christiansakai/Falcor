@@ -1,34 +1,11 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<!-- {{results}}
->>>>>>> master
-<div ng-repeat="node in results">
-	ID: {{node._id}}
-	CHILDREN: {{node.children}}
-	PARENTS: {{node.parentId}}
-	{{node.text}} - <a ng-click="setParent(node)">branch</a>
-	<span><a ng-click="rateNode(node._id)">Like</a><span>
-
-</div> -->
-
-<div>
-	<form role="form">
-	  <div class="form-group">
-	    <label for="nextLine">Add a line</label>
-	    <input type="text" ng-model="writing.text" class="form-control" id="nextline" placeholder="Enter a line">
-	  </div>
-
-		<button type="submit" class="btn btn-default" ng-click="shareWriting()">Share With Friends</button>
-		  <button type="submit" class="btn btn-default" ng-click="submitWriting()">Submit</button>
-		  <button type="submit" class="btn btn-default" ui-sref="userStories">My Stories</button>
-		</form>
-	</div>
-
-	<!-- <button type="submit" class="btn btn-default" ng-click="shareWriting()">Share With Friends</button> -->
-
-
-<div ui-view></div>
+<!-- <UI-VIEW> -->
+<div ui-view>
+</div>
+<!-- </UI-VIEW> -->
 <!-- <HTML TEMPLATE> -->
+
 <!-- !! ABSTRACT INTO ITS OWN FILE -->
 <script type="text/ng-template" id="shareStoryModal.html">
   <div class="modal-header">

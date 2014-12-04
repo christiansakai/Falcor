@@ -7,10 +7,10 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Story = require('../story/story.model'); 
+var Story = require('../story/story.model');
 var Node = require('./node.model');
 var User = require('../user/user.model');
-var nodemailerConfig = require('../../config/nodemailer'); 
+var nodemailerConfig = require('../../config/nodemailer');
 
 
 
@@ -50,7 +50,7 @@ exports.register = function(socketio) {
 						firstNode: firstNode
 					}
 					var userStory = {
-						id: story._id, 
+						id: story._id,
 						title: obj.title
 					}
 					//User.findByIdAndUpdate(obj.userId, {$push: {stories: userStory}})
@@ -59,7 +59,7 @@ exports.register = function(socketio) {
 						if (err) {console.log('error!: ', err)}
 						// user.stories.push(userStory)
 						user.save(function (err, newUser, numModified){
-							// console.log('user: ', user, 'story: ', userStory, 'saved?: ', numModified)							
+							// console.log('user: ', user, 'story: ', userStory, 'saved?: ', numModified)
 						})
 					})
 					socket.join(story._id)
@@ -85,6 +85,7 @@ exports.register = function(socketio) {
 				console.log('setting obj', obj)
 				Node.create(obj, function(err, newNode){
 					console.log('created node', newNode)
+          console.log('Rooms', socket.rooms)
 					socketio.to(obj.storyId).emit('addNodeToDom', newNode)
 				})
 			})
