@@ -13,6 +13,7 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/getNodes/', controller.getNodes);
+router.get('/getNodesForStories/', controller.getNodesForStories);
 router.get('/:keyword/', controller.findKeyword);
 router.get('/:id', controller.show);
 router.post('/', controller.create);

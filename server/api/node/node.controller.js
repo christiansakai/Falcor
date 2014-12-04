@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Node = require('./node.model');
+var Q = require('q');
 
 // Get list of nodes
 exports.index = function(req, res) {
@@ -17,15 +18,27 @@ exports.index = function(req, res) {
 };
 
 // Get list of nodes
+exports.getNodesForStories = function(req, res) {
+  var promiseForNodesArr = [];
+  // check if it is not an array
+  var storyIds = req.query.storyIds;
+  console.log('query: ', req.query.storyIds);
+  console.log('Array? query: ', Array.isArray(req.query.storyIds));
+  storyIds.forEach(function(storyId){
+    var promiseForNodes = Node.find({storyId: storyId}).exec();
+    promiseForNodesArr.push(promiseForNodes);
+  })
+  Q.all(promiseForNodesArr).then(function(storyNodes){
+    res.json(storyNodes);
+  })
+};
+
+// Get list of nodes
 exports.getNodes = function(req, res) {
-  //configure this recursive call for all nodes that are children of this root node
-  Node.find({storyId: req.query.storyId})
-    // .populate('author', 'name')
-    .exec(function (err, nodes) {
-    // console.log('nodes', nodes)
+  Node.find({storyId: req.query.storyId}, function(err, nodes) {
     if(err) { return handleError(res, err); }
-    return res.json(200, nodes);
-  });
+    return res.json(200, nodes)
+  })
 };
 
 // Get list of storys that match keywords
