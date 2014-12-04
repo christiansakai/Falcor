@@ -84,7 +84,7 @@ angular.module('storyHubApp')
       StoryService.getTree($scope.results, function(tree){
           buildTree(tree);
       });
-    })
+    });
 
 
     StoryService.getNodes(function(results){
@@ -140,11 +140,10 @@ angular.module('storyHubApp')
   	      });
 
       function getBranchForNode(node) {
-        $scope.branchFiltered = _.select($scope.results, function(ancestor){
-          return node.ancestors.indexOf(ancestor._id) != -1;
-        });
 
-        $scope.branchFiltered.push(node);
+        $scope.branchFiltered = _.select($scope.results, function(ancestor){
+          return node.ancestors.indexOf(ancestor._id) != -1 || ancestor._id == node._id;
+        });
 
         // Do apply to update the view.
         $scope.$apply();
