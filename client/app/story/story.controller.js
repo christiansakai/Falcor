@@ -4,7 +4,7 @@ angular.module('storyHubApp')
   .controller('StoryCtrl', function ($scope, NodeService, StoryService, Auth, socket, ExploreStories, $stateParams, $modal, growl) {
 
     // this line sets the storyId that we send from the explore controller so that
-    // if you refresh the page, the id for the get request is not lost 
+    // if you refresh the page, the id for the get request is not lost
 
 
     StoryService.id = $stateParams.storyId
@@ -12,91 +12,91 @@ angular.module('storyHubApp')
 
     $scope.nodes = NodeService;
     $scope.story = StoryService;
-    $scope.writing = {
-    	text: ''
-    }
+    // $scope.writing = {
+    // 	text: ''
+    // }
 
     $scope.userId = Auth.getCurrentUser()._id
-    console.log('userId: ', Auth.getCurrentUser()._id)
-    console.log('userIdOnScope: ', $scope.userId)
+    // console.log('userId: ', Auth.getCurrentUser()._id)
+    // console.log('userIdOnScope: ', $scope.userId)
 
-    $scope.parentId = '';
+    // $scope.parentId = '';
 
-    this.setParent = function(node){
-      console.log(node);
-      $scope.parentId = node._id;
-      console.log($scope.parentId)
-      // console.log(node);
-      // console.log($scope.parentId)
-    }
+    // this.setParent = function(node){
+    //   console.log(node);
+    //   $scope.parentId = node._id;
+    //   console.log($scope.parentId)
+    //   // console.log(node);
+    //   // console.log($scope.parentId)
+    // }
 
-    this.rateNode = function(nodeId){
-      var obj = {
-        userId: $scope.userId
-      }
-      console.log('sent obj: ', obj.userId)
-      ExploreStories.rateNodes(nodeId, obj, function(result){
-        console.log('liked node: ', result)
-      })
-    }
+    // this.rateNode = function(nodeId){
+    //   var obj = {
+    //     userId: $scope.userId
+    //   }
+    //   console.log('sent obj: ', obj.userId)
+    //   ExploreStories.rateNodes(nodeId, obj, function(result){
+    //     console.log('liked node: ', result)
+    //   })
+    // }
 
-		$scope.submitWriting = function(){
-      console.log($scope.parentId)
-      var obj = {
-        text: $scope.writing.text,
-        author: Auth.getCurrentUser()._id,
-        parentId: this.parentId
-      }
-      console.log(obj)
-			socket.socket.emit('nodeAdded', obj)
-		};
-
-    
-    socket.socket.on('addNodeToDom', function(node){
-    	// console.log('added node', node)
-    	// NodeService.nodes.push(node)
-      //add node to dom
-      //initiate get request for all nodes associated with the story id
-      //$scope.story = results;
-      //ng-repeat over results
-    })
+		// $scope.submitWriting = function(){
+  //     console.log($scope.parentId)
+  //     var obj = {
+  //       text: $scope.writing.text,
+  //       author: Auth.getCurrentUser()._id,
+  //       parentId: this.parentId
+  //     }
+  //     console.log(obj)
+		// 	socket.socket.emit('nodeAdded', obj)
+		// };
 
 
+    // socket.socket.on('addNodeToDom', function(node){
+    // 	// console.log('added node', node)
+    // 	// NodeService.nodes.push(node)
+    //   //add node to dom
+    //   //initiate get request for all nodes associated with the story id
+    //   //$scope.story = results;
+    //   //ng-repeat over results
+    // })
 
-    $scope.shareWriting = function() {
-      var size = 'sm';// Empty : default, lg :large, sm : small
-      var modalInstance = $modal.open({
-      templateUrl: 'shareStoryModal.html',
-      controller: 'shareStoryModalInstanceCtrl',
-      size: size,
-      resolve: {
-        storyId: function () {
-          // !! GET THE CORRECT storyId
-          // return StoryService.id;
-          return 'somefakestoryid';
-        }
-      }
-      });
 
-      modalInstance.result.then(function (inviteObj) {
-        // Modal ok.
-        growl.info('Sending Invitation to ' + inviteObj.email);
-        socket.socket.emit('invitingToStory', inviteObj)
-      }, function () {
-        // Modal cancel.
-        // $log.info('Modal dismissed at: ' + new Date());
-      });
-    }
 
-    socket.socket.on('sentInvite', function(obj){
-      // console.log('invitation sent to ' + obj.email)
-      // console.log('sentInvite', obj)
-      if(obj.success) {
-        growl.success('Invitation sent to ' + obj.email);
-      } else {
-        growl.error('Could not send invitation to ' + obj.email);
-      }
-    });
+    // $scope.shareWriting = function() {
+    //   var size = 'sm';// Empty : default, lg :large, sm : small
+    //   var modalInstance = $modal.open({
+    //     templateUrl: 'shareStoryModal.html',
+    //     controller: 'shareStoryModalInstanceCtrl',
+    //     size: size,
+    //     resolve: {
+    //       storyId: function () {
+    //         // !! GET THE CORRECT storyId
+    //         // return StoryService.id;
+    //         return 'somefakestoryid';
+    //       }
+    //     }
+    //   });
+
+    //   modalInstance.result.then(function (inviteObj) {
+    //     // Modal ok.
+    //     growl.info('Sending Invitation to ' + inviteObj.email);
+    //     socket.socket.emit('invitingToStory', inviteObj)
+    //   }, function () {
+    //     // Modal cancel.
+    //     // $log.info('Modal dismissed at: ' + new Date());
+    //   });
+    // }
+
+    // socket.socket.on('sentInvite', function(obj){
+    //   // console.log('invitation sent to ' + obj.email)
+    //   // console.log('sentInvite', obj)
+    //   if(obj.success) {
+    //     growl.success('Invitation sent to ' + obj.email);
+    //   } else {
+    //     growl.error('Could not send invitation to ' + obj.email);
+    //   }
+    // });
 
   });
 
@@ -284,26 +284,26 @@ angular.module('storyHubApp')
     // #########################################################################
 
 
-// !! ABSTRACT INTO ITS OWN FILE
-angular.module('storyHubApp').controller('shareStoryModalInstanceCtrl', function ($scope, $modalInstance, storyId) {
+// // !! ABSTRACT INTO ITS OWN FILE
+// angular.module('storyHubApp').controller('shareStoryModalInstanceCtrl', function ($scope, $modalInstance, storyId) {
 
-  $scope.storyId = storyId;
-  $scope.recipientEmail = '';
+//   $scope.storyId = storyId;
+//   $scope.recipientEmail = '';
 
-  $scope.ok = function () {
-    console.log('clicked ok')
+//   $scope.ok = function () {
+//     console.log('clicked ok')
 
-    //this function requires the story id, and the email address
-    //of the user invited
-    var inviteObj = {
-      storyId: $scope.storyId,
-      email: $scope.recipientEmail
-    }
+//     //this function requires the story id, and the email address
+//     //of the user invited
+//     var inviteObj = {
+//       storyId: $scope.storyId,
+//       email: $scope.recipientEmail
+//     }
 
-    $modalInstance.close(inviteObj);
-  };
+//     $modalInstance.close(inviteObj);
+//   };
 
-  $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
-  };
-});
+//   $scope.cancel = function () {
+//     $modalInstance.dismiss('cancel');
+//   };
+// });
