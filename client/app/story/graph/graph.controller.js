@@ -3,6 +3,14 @@
 angular.module('storyHubApp')
   .controller('GraphCtrl', function ($scope, $stateParams, ExploreStories, StoryService, NodeService, Auth, growl, $modal, socket) {
 
+    // <TO JOIN ROOM WHEN LOADED>
+    var data = {
+        storyId: $stateParams.storyId,
+        username: Auth.getCurrentUser().name
+    };
+    socket.socket.emit('joinRoom', data);
+    // <TO JOIN ROOM WHEN LOADED>
+
     $scope.showAddLine = false;
     $scope.setParent = function(parentId){
       $scope.parentId = parentId;
@@ -70,11 +78,12 @@ angular.module('storyHubApp')
     socket.socket.on('addNodeToDom', function(node){
       console.log('added node', node);
 
-      // NodeService.nodes.push(node)
-      //add node to dom
-      //initiate get request for all nodes associated with the story id
-      //$scope.story = results;
-      //ng-repeat over results
+      // !! Store results array in service. Push data to array in service.
+      $scope.results.push(node);
+
+      StoryService.getTree($scope.results, function(tree){
+          buildTree(tree);
+      });
     })
 
 
@@ -99,7 +108,7 @@ angular.module('storyHubApp')
   	    // .attr("width", w + m[1] + m[3])
         .attr("width", "100%")
   	    // .attr("height", h + m[0] + m[2])
-        .attr("height", "100%")
+        .attr("height", "1000px")
   	    .append("svg:g")
   	    .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
