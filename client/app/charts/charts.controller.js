@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('ChartsCtrl', function ($scope, ExploreStories, NodeService, $q, $http, alchemize, $log) {
+  .controller('ChartsCtrl', function ($scope, ExploreStories, NodeService, $q, $http, alchemize, parseAlchemy, $log) {
     
   	var vm = this; 
 
@@ -125,14 +125,12 @@ angular.module('storyHubApp')
         return authorsAndCountsArr; 
     }
 
-    // var result = vm.authorCount()
-    // setTimeout(function(){
-    //   console.log('res: ', result)
-    // }, 3000)
 
 
   /////////////// data assessed by alchemy API //////////////////////////
 
+  //join nodes for a single story 
+  //receive sentiment analysis on single story 
   vm.fetchAlchemyData = function(){
     var nodeTextArr = []
     vm.getNodesPerStory()
@@ -140,12 +138,12 @@ angular.module('storyHubApp')
       nodeTextArr = story.map(function(node){
         return node.text;
       });
-      nodeTextArr.unshift('Robert became very angry with sally')
-      var obj = {
-        nodeText: nodeTextArr
-      }
-      console.log('text: ', nodeTextArr[0])
-      return alchemize.sendToAlchemy(nodeTextArr[0])
+      nodeTextArr.unshift('Robert became very angry with sally');
+      var text = nodeTextArr.join(" ");
+      console.log('text to be sent: ', text)
+      return alchemize.sendToAlchemy(text)
+    }).then(function assessAlchemyData(analysis){
+      parseAlchemy.parseAlchemyData(analysis)
     })
   }
 
@@ -153,6 +151,12 @@ angular.module('storyHubApp')
 
 
 
+
+  //data stored in parseAlchemy service
+  setTimeout(function(){
+    var data = parseAlchemy.data
+    console.log(data)
+  }, 3000)
 
 
   //////////////////////////////////////////

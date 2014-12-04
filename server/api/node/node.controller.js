@@ -20,7 +20,13 @@ exports.index = function(req, res) {
 // Get list of nodes
 exports.getNodesForStories = function(req, res) {
   var promiseForNodesArr = [];
+  var backUpArr = [];
   // check if it is not an array
+  //if not array, push req.query into the array 
+  if (!Array.isArray(req.query.storyIds)){
+    backUpArr.push(req.query.storyIds)
+    req.query.storyIds = backUpArr; 
+  }
   var storyIds = req.query.storyIds;
   console.log('query: ', req.query.storyIds);
   console.log('Array? query: ', Array.isArray(req.query.storyIds));

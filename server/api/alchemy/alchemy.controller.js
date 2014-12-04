@@ -11,7 +11,7 @@ var Q = require('q');
 // Get list of alchemys
 exports.sentiment = function(req, res) {
   console.log('body: ', req.body.text)
- alchemy.sentiment(req.body.text, {}, function (err, response) {
+  alchemy.sentiment(req.body.text, {}, function (err, response) {
     if(err) throw err;
     console.log('res: ', response)
     res.json(response.docSentiment);
