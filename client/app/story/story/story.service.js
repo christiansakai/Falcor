@@ -2,7 +2,7 @@
 
 angular.module('storyHubApp')
   .factory('StoryService', function (ExploreStories) {
-    
+
 
     var Story = {
       id: '',
@@ -30,18 +30,10 @@ angular.module('storyHubApp')
         }
 
         unflatten(resultArray, firstNode);
-
-      	   // branch = tree.children[i] // []
-
-      	// recursion(firstNode, tree.children) //tree.children
-      	console.log('final Tree: ', firstNode)
+        console.log('asdasd',firstNode);
       	cb(firstNode);
-
       }
     }
 
-  
-
     return Story;
-
   });

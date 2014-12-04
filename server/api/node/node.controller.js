@@ -35,7 +35,7 @@ exports.getNodesForStories = function(req, res) {
 
 // Get list of nodes
 exports.getNodes = function(req, res) {
-  Node.find({storyId: req.query.storyId}, function(err, nodes) {
+  Node.find({storyId: req.query.storyId}, null, {sort: {date: 1}}, function(err, nodes) {
     if(err) { return handleError(res, err); }
     return res.json(200, nodes)
   })
@@ -64,7 +64,7 @@ exports.rateNodes = function(req, res) {
     if(err) { return handleError(res, err); }
     if(!node) { return res.send(404); }
     node.likeNodes(req.body, function(ratedNode){
-      return res.json(node);      
+      return res.json(node);
     })
   });
 };
