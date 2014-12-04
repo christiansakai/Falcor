@@ -30,7 +30,7 @@ angular.module('storyHubApp')
         }
 
         unflatten(resultArray, firstNode);
-
+        console.log('asdasd',firstNode);
       	cb(firstNode);
       }
     }
