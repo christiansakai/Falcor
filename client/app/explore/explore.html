@@ -1,5 +1,10 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
+<!-- <div class="buttonHolder">
+ --><input type="text" name='keywords' ng-model='keywords' ng-enter="submitKeywords()" placeholder='keyword search'> 	
+<!-- </div>
+ -->
+
 <div ng-repeat="story in stories"><h1><a ng-click="joinStory(story.storyId)">{{story.text}}</a></h1>
 	{{story.storyId}}
 </div>

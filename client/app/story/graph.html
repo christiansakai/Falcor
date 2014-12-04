@@ -1,11 +1,11 @@
 
-<!-- {{results}} -->
-<!-- <div ng-repeat="node in results"> -->
-	<!-- ID: {{node._id}} -->
-	<!-- CHILDREN: {{node.children}} -->
-	<!-- PARENTS: {{node.parentId}} -->
-	<!-- {{node.text}} - <a ng-click="story.setParent(node)">branch</a> -->
-<!-- </div> -->
+{{results}}
+<div ng-repeat="node in results">
+	ID: {{node._id}}
+	CHILDREN: {{node.children}}
+	PARENTS: {{node.parentId}}
+	{{node.text}} - <a ng-click="story.setParent(node)">branch</a>
+	<span><a ng-click="story.rateNode(node._id)">Like</a></span>
 
 {{story.parentId}}
 

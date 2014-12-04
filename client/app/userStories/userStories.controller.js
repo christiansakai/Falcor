@@ -6,24 +6,29 @@ angular.module('storyHubApp')
     var vm = this; 
 
     $scope.username = Auth.getCurrentUser().name
+    $scope.userId = Auth.getCurrentUser()._id
 
     vm.getMyNodes = function(){
-    	ExploreStories.getUserNodes(function(results){
+      var obj = {
+        id: $scope.userId
+      }
+    	ExploreStories.getUserNodes(obj, function(results){
     		$scope.myStories = results.stories
-    		console.log('results: ', results.stories)
+        $scope.nodes = results
+    		console.log('results: ', results)
     	})
     }
 
     $scope.goToStory = function(storyId){
-    	StoryService.setData(storyId)
-    	console.log('id: ', StoryService.getData())
+    	StoryService.id = storyId; 
+    	// console.log('id: ', StoryService.getData())
       var data = {
         storyId: storyId, 
         username: $scope.username 
       }
       socket.socket.emit('joinRoom', data)
       setTimeout(function(){
-        $state.go('story', {storyId: storyId})
+        $state.go('story.graph', {storyId: storyId})
       }, 0) 
 
     }

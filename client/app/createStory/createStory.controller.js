@@ -34,6 +34,7 @@ angular.module('storyHubApp')
     vm.startStory = function(){
       console.log($scope.story)
       var obj = $scope.story;
+      
         socket.socket.emit('newStory', obj)
     }
 

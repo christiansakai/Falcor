@@ -7,7 +7,9 @@ angular.module('storyHubApp', [
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
-  'angular-growl'
+  'angular-growl', 
+  'chartjs',
+  'tc.chartjs'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider.otherwise('/');

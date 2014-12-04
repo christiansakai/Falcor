@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "main": "server/app.js",
   "dependencies": {
+    "angular-chartjs": "0.0.5",
     "body-parser": "~1.5.0",
+    "chart": "^0.1.2",
     "composable-middleware": "^0.3.0",
     "compression": "~1.0.1",
     "connect-mongo": "^0.4.1",
@@ -24,6 +26,7 @@
     "passport-google-oauth": "latest",
     "passport-local": "~0.1.6",
     "passport-twitter": "latest",
+    "q": "^1.1.2",
     "serve-favicon": "~2.0.1",
     "socket.io": "^1.0.6",
     "socket.io-client": "^1.0.6",

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('GraphCtrl', function ($scope, $stateParams, ExploreStories, StoryService) {
+  .controller('GraphCtrl', function ($scope, $stateParams, ExploreStories, StoryService, NodeService) {
 
     StoryService.getNodes(function(results){
       $scope.results = results
@@ -160,7 +160,6 @@ angular.module('storyHubApp')
           buildTree(tree)    
         })
       })
-      
     }
 
       // $scope.getNodesPerStory = function(){
@@ -184,6 +183,7 @@ angular.module('storyHubApp')
       //     //something
       //   }
       // }();
+
 
 
     // #########################################################################
