@@ -13,9 +13,14 @@
 
 textarea, input { outline: 0px; }
 
-textarea{
+textarea.createText{
+
   resize: none;
 }
+
+:focus{
+    box-shadow: none;
+};
 
 .createText{
   background-color: rgba(255, 255, 255, 0.0);

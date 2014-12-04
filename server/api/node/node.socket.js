@@ -16,6 +16,8 @@ var nodemailerConfig = require('../../config/nodemailer');
 
 
 exports.register = function(socketio) {
+
+
 		//join room functionality
 
 	socketio.on('connection', function(socket) {
@@ -27,9 +29,27 @@ exports.register = function(socketio) {
 				})
 			}
 			console.log('io', socketio.to)
-			socket.join(data.storyId)
-    	socketio.to(data.storyId).emit('joinedRoom', {'announcement': data.username + ' joined!'});
-		})
+			socket.nickname = data.username;
+			socket.join(data.storyId);
+			// console.log('finding clients--------------', findClientsSocketByRoomId(data.storyId))
+			var currentUsers = []
+			findClientsSocketByRoomId(data.storyId, function(sockets){
+					sockets.forEach(function(socket){
+						console.log(socket.nickname)
+						currentUsers.push(socket.nickname)
+					})
+				})
+
+						// if(users.length > 0){
+			// 	users.forEach(function(id){
+			// 		console.log(id)
+			// 		currentUsers.push(sendNicknames(id))
+			// 	})
+			// }
+
+
+    	socketio.to(data.storyId).emit('joinedRoom', {currentUsers:currentUsers, 'announcement': data.username + ' joined!'});
+		})	
 
 		//create a story as well as the first node in the story on this single submit action
 		socket.on('newStory', function(obj){
@@ -67,6 +87,26 @@ exports.register = function(socketio) {
 				})
 			})
 		})
+
+
+
+		function findClientsSocketByRoomId(roomId, cb) {
+		var res = []
+		, room = socketio.sockets.adapter.rooms[roomId];
+		if (room) {
+		    for (var id in room) {
+		    res.push(socketio.sockets.adapter.nsp.connected[id]);
+		    }
+		}
+		 cb(res);
+		}
+
+		function sendNicknames(i){
+			var socket = socketio.sockets.connected[id]
+			console.log('socket----------------', socket)
+			return socket.nickname
+
+		}
 
 		//so this occurs every time a member submits a piece of writing
 		//nodes created through this socket ping will never be first nodes
@@ -126,6 +166,9 @@ exports.register = function(socketio) {
 	  })
 	})
 }
+
+
+
 
 // function onSave(socket, doc, cb) {
 //   socket.emit('node:save', doc);

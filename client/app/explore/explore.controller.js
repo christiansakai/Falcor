@@ -21,6 +21,7 @@ angular.module('storyHubApp')
         username: $scope.username 
       }
       socket.socket.emit('joinRoom', data)
+    
 
       $state.go('story.graph', {storyId: storyId})
 
