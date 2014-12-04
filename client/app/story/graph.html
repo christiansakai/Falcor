@@ -1,15 +1,13 @@
 
-{{results}}
-<div ng-repeat="node in results">
-	ID: {{node._id}}
-	CHILDREN: {{node.children}}
-	PARENTS: {{node.parentId}}
-	{{node.text}} - <a ng-click="story.setParent(node)">branch</a>
-	<span><a ng-click="story.rateNode(node._id)">Like</a></span>
-
-{{story.parentId}}
-
-<div>
+<!-- {{results}} -->
+<!-- <div ng-repeat="node in results"> -->
+  <!-- ID: {{node._id}} -->
+  <!-- CHILDREN: {{node.children}} -->
+  <!-- PARENTS: {{node.parentId}} -->
+  <!-- {{node.text}} - <a ng-click="story.setParent(node)">branch</a> -->
+  <!-- <span><a ng-click="story.rateNode(node._id)">Like</a></span> -->
+<!-- {{story.parentId}} -->
+<!-- <div> -->
 
   <div id="graphBox" class="col-lg-2">
   </div>
@@ -36,6 +34,7 @@
             <small>{{ ::node.date | date:'yyyy-MM-dd HH:mm:ss'}}</small>
             <small>Author</small>
             <small><a ng-click="story.setParent(node)">Branch</a></small>
+            <small><a ng-click="story.rateNode(node._id)">Like</a></small>
           </p>
         </div>
       </div>
@@ -43,5 +42,3 @@
     </div>
   </div>
 </div>
-
-
