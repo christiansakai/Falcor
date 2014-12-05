@@ -37,46 +37,6 @@ exports.keywords = function(req, res) {
 // };
 
 
-// //figure out how to execute all api calls 
-// exports.sentimentsArray = function(req, res){
-//   console.log('text: ', req.body)
-//   var promisesForBranchText = []; 
-//   var branchText = req.body.branchText; 
-//     async.each(branchText, function (text, doneOneItemCallback){
-      
-//       alchemy.sentiment(text, {}, function(err, response){
-//         promisesForBranchText.push(response)
-//         console.log('res: ', response)
-//         console.log('arr: ', promisesForBranchText)
-//         doneOneItemCallback(null)
-//       })
-//     }, function doneAllItems() {
-//     res.json(200, promisesForBranchText)
-//     });
-// }
-
-var apiCallOne = function(text, doneAPICallOne){
-  console.log('textHERE!!!!', text)
-  alchemy.sentiment(text, {}, function(err, response){
-    sentimentsArr.push(response)
-    doneAPICallOne(err, 'done with one')
-  })
-}
-
-var apiCallTwo = function(text, doneAPICallTwo){
-  alchemy.concepts(text, {}, function(err, response) {
-    conceptsArr.push(response)
-    doneAPICallTwo(err, 'done with two')
-  });
-}
-
-var apiCallThree = function(text, doneAPICallThree){
-  alchemy.keywords(text, {}, function(err, response) {
-    keywordsArr.push(response)
-    doneAPICallThree(err, 'done with three')
-  });
-}
-
 //figure out how to execute all api calls 
 exports.sentimentsArray = function(req, res){
   // console.log('text: ', req.body)
@@ -86,13 +46,54 @@ exports.sentimentsArray = function(req, res){
   var finalArr = []
   var branchText = req.body.branchText; 
   console.log('branch: ', branchText)
-    async.each(branchText, function (text, doneOneItemCallback){
-      async.series([apiCallOne, apiCallTwo, apiCallThree])
-      // doneOneItemCallback(null)
-    }, function doneAllItems(err, results){
-      finalArr.push(sentimentsArr, conceptsArr, keywordsArr)
-      res.json(200, finalArr)
+    // async.each(branchText, function (text, doneOneItemCallback){
+    //   async.series([apiCallOne, apiCallTwo, apiCallThree])
+    //   // doneOneItemCallback(null)
+    // }, function doneAllItems(err, results){
+    //   finalArr.push(sentimentsArr, conceptsArr, keywordsArr)
+    //   res.json(200, finalArr)
+    // });
+
+
+  var alchemyForOneItem = function(oneText, doneAlchemyForOneItem) {
+    var apiCallOne = function(doneAPICallOne){
+      console.log('inside apiCallOne');
+      alchemy.sentiment(oneText, {}, function(err, response){
+        sentimentsArr.push(response)
+        doneAPICallOne(err, 'done with one')
+      })
+    }
+
+    var apiCallTwo = function(doneAPICallTwo){
+      console.log('inside apiCallTwo');
+      alchemy.concepts(oneText, {}, function(err, response) {
+        conceptsArr.push(response)
+        doneAPICallTwo(err, 'done with two')
+      });
+    }
+
+    var apiCallThree = function(doneAPICallThree){
+      console.log('inside apiCallThree');
+      alchemy.keywords(oneText, {}, function(err, response) {
+        keywordsArr.push(response)
+        doneAPICallThree(err, 'done with three')
+      });
+    }
+
+    async.series([apiCallOne, apiCallTwo, apiCallThree], function(err, results) {
+      console.log('inside alchemyForOneItem');
+      doneAlchemyForOneItem(err);
     });
+
+  };
+
+  var doneAlchemyForAllItem = function(err) {
+    finalArr.push(sentimentsArr, conceptsArr, keywordsArr);
+    console.log(finalArr);
+    res.json(200, finalArr);
+  };
+
+  async.each(branchText, alchemyForOneItem, doneAlchemyForAllItem)
 }
 
 
