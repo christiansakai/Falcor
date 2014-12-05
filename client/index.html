@@ -14,6 +14,9 @@
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
       <link rel="stylesheet" href="bower_components/angular-growl-v2/build/angular-growl.css" />
+      <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />
+      <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/material.css" />
+      <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/ripples.css" />
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
@@ -65,6 +68,11 @@
       <script src="bower_components/ng-chartjs/dist/angular-chartjs.min.js"></script>
       <script src="bower_components/angular-chartjs-directive/chartjs-directive.js"></script>
       <script src="bower_components/tc-angular-chartjs/dist/tc-angular-chartjs.min.js"></script>
+      <script src="bower_components/nvd3/nv.d3.js"></script>
+      <script src="bower_components/bootstrap-material-design/dist/js/material.js"></script>
+      <script src="bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
+      <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
+      <script src="bower_components/angular-nvd3/dist/angular-nvd3.min.js"></script>
       <!-- endbower -->
       <script src="socket.io-client/socket.io.js"></script>
 
@@ -87,6 +95,8 @@
           <script src="app/charts/parseAlchemy/parseAlchemy.service.js"></script>
           <script src="app/createStory/createStory.controller.js"></script>
           <script src="app/createStory/createStory.js"></script>
+          <script src="app/d3Keywords/d3Keywords.controller.js"></script>
+          <script src="app/d3Keywords/d3Keywords.js"></script>
           <script src="app/d3Sentiment/d3Sentiment.controller.js"></script>
           <script src="app/d3Sentiment/d3Sentiment.js"></script>
           <script src="app/explore/explore.controller.js"></script>

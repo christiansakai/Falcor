@@ -8,8 +8,7 @@ angular.module('storyHubApp')
   this.sendToAlchemy = function (text) {
       var alchemyCalls = [
         '/api/alchemys',
-        '/api/alchemys/keywords',
-        '/api/alchemys/concepts'
+        '/api/alchemys/keywords'
       ];
       // map each API call to a promise for its response.data
       alchemyCalls = alchemyCalls.map( function makeCall (url) {
@@ -25,8 +24,8 @@ angular.module('storyHubApp')
         console.log('res', results)
         return {
           sentiment : results[0],
-          keywords : results[1],
-          concepts : results[2]
+          keywords : results[1]
+          // concepts : results[2]
         };
       });
     };

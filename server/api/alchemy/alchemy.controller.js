@@ -28,13 +28,13 @@ exports.keywords = function(req, res) {
   });
 };
 
-// Creates a new alchemy in the DB.
-exports.concepts = function(req, res) {
-  alchemy.concepts(req.body.text, {}, function(err, response) {
-    if(err) throw err;
-    res.json(response.concepts);
-  });
-};
+// // Creates a new alchemy in the DB.
+// exports.concepts = function(req, res) {
+//   alchemy.concepts(req.body.text, {}, function(err, response) {
+//     if(err) throw err;
+//     res.json(response.concepts);
+//   });
+// };
 
 
 // //figure out how to execute all api calls 

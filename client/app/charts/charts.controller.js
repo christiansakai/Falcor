@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('ChartsCtrl', function ($scope, ExploreStories, NodeService, $q, $http, alchemize, parseAlchemy, $log) {
+  .controller('ChartsCtrl', function ($scope, ExploreStories, NodeService, $q, $http, alchemize, ParseAlchemy, $log) {
     
   	var vm = this; 
 
@@ -145,9 +145,17 @@ angular.module('storyHubApp')
       console.log('text to be sent: ', text)
       return alchemize.sendToAlchemy(text)
     }).then(function assessAlchemyData(analysis){
-      parseAlchemy.parseAlchemyData(analysis)
+      ParseAlchemy.parseAlchemyData(analysis)
+      console.log("this is from chart controller", ParseAlchemy.data);
     })
   }
+
+  $scope.test = function() {
+    console.log("chart controller, ", ParseAlchemy.data);
+    ParseAlchemy.doTest();
+    console.log(ParseAlchemy.test);
+  };
+
 
   vm.fetchAlchemyDataforStory()
 
@@ -181,15 +189,15 @@ angular.module('storyHubApp')
     })
   }
 
-  // vm.fetchAlchemyDataForBranch();
+  vm.fetchAlchemyDataForBranch();
 
 
 
-  //data stored in parseAlchemy service
-  setTimeout(function(){
-    var data = parseAlchemy.data
-    console.log('DATA::', data)
-  }, 3000)
+  // //data stored in ParseAlchemy service
+  // setTimeout(function(){
+  //   var data = ParseAlchemy.data
+  //   console.log('DATA::', data)
+  // }, 3000)
 
 
   /////////////////////////////////////////////////////////////////////
