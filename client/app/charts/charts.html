@@ -1,5 +1,9 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
 <div class="col-lg-6 center text-center">
 	<h3>Word Count</h3>
+	<button class='btn1' ng-click="test()">Load Data</button>
+	<button class='btn1' ui-sref="d3Sentiment">D3 Sentiment</button>
+	<button class='btn1' ui-sref="d3Keywords">D3 Keywords</button>
 
 	<!-- 	<canvas tc-chartjs-line chart-options="options" chart-data="data.words" width="800" height="500"></canvas> -->
 
@@ -9,4 +13,8 @@
 
 	<canvas tc-chartjs-line chart-options="options" chart-data="data.words" width="600" height="400"></canvas>
 
+<!-- 	<button class='btn1' ui-sref='.wordsPerStory'>Lines Per Story</button>
+ -->	
 </div>
+
+<div ui-view>

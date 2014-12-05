@@ -20,6 +20,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/alchemy/alchemy.socket').register(socket);
   
 }
 

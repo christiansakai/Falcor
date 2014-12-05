@@ -1,27 +1,21 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('ChartsCtrl', function ($scope, ExploreStories, NodeService, $q, $http) {
+  .controller('ChartsCtrl', function ($scope, ExploreStories, NodeService, $q, $http, alchemize, ParseAlchemy, $log) {
     
   	var vm = this; 
 
   	$scope.results; 
 
-  	// vm.getNodesPerStory = function(){
-   //    var obj = {
-   //      storyId: "547617ddf41f2eb111c49b45"
-   //      //storyId: StoryService.id
-   //    }
-   //    var deferredObj = $q.defer();
-   //    $http.get('/api/nodes/getNodes/', {params: obj}).success(function(results){
-   //    	deferredObj.resolve(results)
-   //    })
-   //    .error(function(status, err){
-   //    	deferredObj.reject(status)
-   //    })
+  	vm.getNodesPerStory = function(){
+      var obj = { 
+        storyId: "547fb98a382686674d78b276"         //storyId: StoryService.id
+      }
 
-   //    return deferredObj.promise;
-   //  }
+      return $http.get('/api/nodes/getNodes/', {params: obj}).then(function(results){
+      	return results.data; 
+        })
+    }
 
     vm.getStoryIdsForCount = function(){
 
@@ -39,12 +33,10 @@ angular.module('storyHubApp')
     	});
     }
 
-    //consider making a chart that compares total words per stories 
-
+    //compares word count per story 
     vm.wordStoryCount = function(){
-    	console.log('here!')
     	var storyIdsArr = []; 
-    	var nodesPerStory = []; 
+      var wordsPerStoryArr = []; 
     	vm.getStoryIdsForCount()
     	.then(function(stories){
     		storyIdsArr = stories.map(function(story){
@@ -54,130 +46,208 @@ angular.module('storyHubApp')
     		var obj = {
     			storyIds: storyIdsArr
     		}
-    		console.log('obj', obj)
+        var count = 0; 
     		$http.get('/api/nodes/getNodesForStories/', {params: obj})
     			.success(function(storyNodes){
-    				console.log('story nodes: ', storyNodes)
+            console.log('nodes: ', storyNodes)
+    				storyNodes.forEach(function(story){
+              story.forEach(function(node){
+                count += node.text.split(" ").length; 
+              })
+              wordsPerStoryArr.push(count)
+              count = 0
+            })
+            // console.log('arr: ', wordsPerStoryArr)
     			});
-
-    		// storyIds.forEach(function(storyId){
-    		// 	console.log('storyId!', storyId)
-    		// // 	storyIds.push(storyId)
-    		// // })
-	    	// // console.log('storyIDArr: ', storyIds)
-	    	// // storyIds.forEach(function(storyId){
-	    	// 	console.log('in here!')
-	    	// 	var obj = {
-	    	// 		storyId: storyId._id
-	    	// 	}
-	    	// 	var deferredObj = $q.defer()
-	    	// 	$http.get('/api/nodes/getNodes/', {params: obj}).success(function(result){
-	    	// 		deferredObj.resolve(result)
-	    	// 	})
-	    	// 	.error(function(status, err){
-	    	// 		deferredObj.reject(status)
-	    	// 	})
-	    	// 	 nodesPerStory.push(deferredObj.promise)
-	    	// })
-    	// console.log('nodesPerStoryArr: ', nodesPerStory)
-    	// return nodesPerStory; 
     	})
+      return wordsPerStoryArr;
     }
 
-    vm.wordStoryCount()
 
-    // vm.wordStoryCountContinued = function(){
-    // 	var arrayforNodes = vm.wordStoryCount()
-    // 	var resultArr = []; 
-    // 		setTimeout(function(){
-    // 			console.log('arr: ', arrayforNodes)
-    // 			arrayforNodes.forEach(function(result){
-    // 			result.then(function(results){
-    // 				resultArr.push(result)
-    // 			})
-    // 		})
-    // 	}, 1000)
-    // 		console.log('res: ', resultArr)
-    // 		return resultArr; 
-    // }
+    //compares word count of nodes within a single story
+    vm.wordCount = function(){
+    	var wordCountArr = []; 
+    	vm.getNodesPerStory()
+    	.then(function(results){
+    		results.forEach(function(element){
+    			wordCountArr.push(element.text.split(" ").length)
+    		})
+    		 // console.log('words: ', wordCountArr)
+    	})
+     	return wordCountArr;
+    }
 
-    // vm.wordStoryCountContinued()
+    //compares number of likes per node in a single story
+    vm.numLikes = function(){
+      var numLikesArr = []; 
+      vm.getNodesPerStory()
+      .then(function(results){
+        // console.log('res: ', results)
+        results.forEach(function(element){
+          // console.log('element: ', element)
+          numLikesArr.push(element.likes.numLikes)
+        })
+      // console.log('numLikes: ', numLikesArr)
+      })
+      return numLikesArr; 
+    }
 
-    //counts words of text per node in a single story
-    // vm.wordCount = function(){
-    // 	var wordCountArr = []; 
-    // 	vm.getNodesPerStory()
-    // 	.then(function(results){
-    // 		results.forEach(function(element){
-    // 			wordCountArr.push(element.text.split(" ").length)
-    // 		})
-    // 		 console.log('words: ', wordCountArr)
-    // 	})
-    //  	return wordCountArr;
-    // }
+    vm.authorCount = function(){
+      var obj = {};
+      var count; 
+      vm.getNodesPerStory()
+      .then(function(story){
+        story.forEach(function(node){
+          if (typeof obj[node.author] === 'undefined'){
+            obj[node.author] = 1;
+          }
+          else {
+            obj[node.author] += 1; 
+          }
+        })
+        console.log('final obj: ', obj)
+        return buildAuthArr(obj)
+      })
+    }
 
-    // //data for chart js rendering 
-    // $scope.data = {
-    // 	words: {
-	   //  	labels: 'happy',
-	   //  	datasets: [{
-	   //  		fillColor : "rgba(220,220,220,0.5)",
-	   //      strokeColor : "rgba(220,220,220,1)",
-	   //      pointColor : "rgba(220,220,220,1)",
-	   //      pointStrokeColor : "#fff",
-		  //   	data: vm.wordCount()
-    // 		}]
-    // 	}, 
-  		// numLikes: {
-    // 		labels: 'happy',
-    // 		datasets: [{
-    // 			fillColor : "rgba(220,220,220,0.5)",
-    //     	strokeColor : "rgba(220,220,220,1)",
-    //     	pointColor : "rgba(220,220,220,1)",
-    //     	pointStrokeColor : "#fff"
-	   //  		// data: vm.numLikes()
-  		// 	}]
-  		// }
+    function buildAuthArr(obj){
+      console.log('o: ', obj)
+        var authorsAndCountsArr = []; 
+        var countPerAuthor = []; 
+        var authorLabels = []; 
+        for (var key in obj){
+          console.log('key: ', key)
+          countPerAuthor.push(obj[key])
+          authorLabels.push(key)
+        }
+        authorsAndCountsArr.push(countPerAuthor, authorLabels) 
+        console.log('authors&Counts: ', authorsAndCountsArr)
+        return authorsAndCountsArr; 
+    }
 
-    // }
 
-    // vm.numLikes = function(){
-    // 	var numLikesArr = []; 
-    // 	vm.getNodesPerStory()
-    // 	.then(function(results){
-    // 		results.forEach(function(element){
-    // 			numLikesArr.push(element.likes.numLikes)
-    // 		})
-    // 		console.log('numLikes: ', numLikesArr)
-    // 	})
-    // 	return numLikesArr; 
-    // }
 
-    // vm.authorCount = function(){
-    // 	var countPerAuthor = []; 
-    // 	var authorLabels = []; 
-    // 	var obj = {};
-    // 	var count; 
-    // 	vm.getNodesPerStory()
-    // 	.then(function(results){
-    // 		results.forEach(function(element){
-    // 			if (typeof obj[element.author] === 'undefined'){
-    // 				obj[element.author] = 1;
-    // 			}
-    // 			else {
-    // 				obj[element.author] += 1; 
-    // 			}
-    // 		})
-    // 		for (var key in obj){
-    // 			if (obj.hasOwnProperty(key)){
-    // 				countPerAuthor.push(obj[key])
-    // 				authorLabels.push(key)
-    // 			}
-    // 		}
-    // 	})
-    // 	console.log('countPerAuthor: ', countPerAuthor)
-    // }
-  
+  /////////////// data assessed by alchemy API //////////////////////////
+
+
+  ///////////////////// SENTIMENT FOR A SINGLE STORY /////////////////////
+  //join nodes for a single story 
+  //receive sentiment analysis on single story 
+  vm.fetchAlchemyDataforStory = function(){
+    var nodeTextArr = []
+    vm.getNodesPerStory()
+    .then(function(story){
+      nodeTextArr = story.map(function(node){
+        return node.text;
+      });
+      nodeTextArr.unshift('Politics angry existentialism life pissed nihilism');
+      var text = nodeTextArr.join(" ");
+      console.log('text to be sent: ', text)
+      return alchemize.sendToAlchemy(text)
+    }).then(function assessAlchemyData(analysis){
+      ParseAlchemy.parseAlchemyData(analysis)
+      console.log("this is from chart controller", ParseAlchemy.data);
+    })
+  }
+
+  $scope.test = function() {
+    console.log("chart controller, ", ParseAlchemy.data);
+    ParseAlchemy.doTest();
+    console.log(ParseAlchemy.test);
+  };
+
+
+  vm.fetchAlchemyDataforStory()
+
+
+  //////////////// BRANCH BY BRANCH WITHIN STORY DATA ////////////////////////
+  vm.getNodesForBranch = function(){
+    var obj = {
+      storyId: "547fbab6fcbe35714dc28f4f"
+    }
+    return $http.get('/api/nodes/getChildlessNodes/', {params: obj}).then(function(response){
+      return response.data;
+    })
+  }
+
+
+  //gets the entire branch of text per story 
+  vm.fetchAlchemyDataForBranch = function(){
+    vm.getNodesForBranch()
+    .then(function(nodes){
+      console.log('childless nodes here: ', nodes)
+      var textArr = nodes.map(function(childlessNode){
+        return childlessNode.text + childlessNode.ancestors.map(function(ancestors){
+          return ancestors.text;
+        })
+      })
+      var obj = {
+        branchText: textArr
+      }; 
+      console.log('textArr: ', obj)
+      return alchemize.sendArrayToAlchemy(obj)
+    })
+  }
+
+  vm.fetchAlchemyDataForBranch();
+
+
+
+  // //data stored in ParseAlchemy service
+  // setTimeout(function(){
+  //   var data = ParseAlchemy.data
+  //   console.log('DATA::', data)
+  // }, 3000)
+
+
+  /////////////////////////////////////////////////////////////////////
+
+
+  // //data for chart js rendering 
+    $scope.data = {
+    	words: {
+	    	labels: 'happy',
+	    	datasets: [{
+	    		fillColor : "rgba(220,220,220,0.5)",
+	        strokeColor : "rgba(220,220,220,1)",
+	        pointColor : "rgba(220,220,220,1)",
+	        pointStrokeColor : "#fff",
+		    	data: vm.wordCount()
+    		}]
+    	},
+      wordsPerStory: {
+        labels: 'happy',
+        datasets: [{
+          fillColor : "rgba(220,220,220,0.5)",
+          strokeColor : "rgba(220,220,220,1)",
+          pointColor : "rgba(220,220,220,1)",
+          pointStrokeColor : "#fff",
+          data: vm.wordStoryCount()
+        }]
+      }, 
+  		numLikes: {
+    		labels: 'happy',
+    		datasets: [{
+    			fillColor : "rgba(220,220,220,0.5)",
+        	strokeColor : "rgba(220,220,220,1)",
+        	pointColor : "rgba(220,220,220,1)",
+        	pointStrokeColor : "#fff",
+	    		data: vm.numLikes()
+  			}]
+  		}, 
+      authorsByWordCount: {
+        // labels: vm.authorCount()[1],
+        datasets: [{
+          fillColor : "rgba(220,220,220,0.5)",
+          strokeColor : "rgba(220,220,220,1)",
+          pointColor : "rgba(220,220,220,1)",
+          pointStrokeColor : "#fff",
+          // data: vm.authorCount()[0]
+        }]
+      }
+    }
+
+
 
 
 	

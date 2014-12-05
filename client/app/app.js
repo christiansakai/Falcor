@@ -9,7 +9,9 @@ angular.module('storyHubApp', [
   'ui.bootstrap',
   'angular-growl', 
   'chartjs',
-  'tc.chartjs'
+  'tc.chartjs',
+  'nvd3ChartDirectives', 
+  'nvd3'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider.otherwise('/');

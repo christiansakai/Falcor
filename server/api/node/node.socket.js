@@ -78,6 +78,7 @@ exports.register = function(socketio) {
 			console.log(obj)
 			//then want to create a story here
 			Story.create(obj, function(err, story){
+				console.log('storyID: ', story._id)
 				story.name = obj.title;
 				story.save();
 				console.log(story)
@@ -93,6 +94,8 @@ exports.register = function(socketio) {
 						story: story,
 						firstNode: firstNode
 					}
+
+					console.log('first node with storyID: ', firstNode)
 					var userStory = {
 						id: story._id,
 						title: obj.title
