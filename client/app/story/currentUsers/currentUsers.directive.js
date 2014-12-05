@@ -5,12 +5,14 @@ angular.module('storyHubApp')
     return {
       templateUrl: 'app/story/currentUsers/currentUsers.html',
       restrict: 'E',
-      controller: function($scope, socket) {
+      controller: function($scope, socket, StoryService) {
         // console.log("this is directive", Playlist);
-        socket.socket.on('joinedRoom', function(data){
+        // socket.socket.on('joinedRoom', function(data){
+        //   console.log('JOINED ROOM', data)
           // console.log('hi there', data.currentUsers)
-          $scope.currentUsers = data.currentUsers;
-        })
+          $scope.currentUsers = StoryService.currentUsers
+          // $scope.$apply();
+        // })
 
         socket.socket.on('leftRoom', function(data){
           // console.log('disconnect test', data)

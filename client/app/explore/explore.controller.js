@@ -19,7 +19,7 @@ angular.module('storyHubApp')
       StoryService.id = storyId
       var data = {
         storyId: storyId,
-        username: $scope.username
+        username: Auth.getCurrentUser().name
       }
       // socket.socket.emit('joinRoom', data)
     
@@ -37,9 +37,9 @@ angular.module('storyHubApp')
     }
 
     //register those who have joined the room
-    socket.socket.on('joinedRoom', function(data) {
-      console.log(data)
-    })
+    // socket.socket.on('joinedRoom', function(data) {
+    //   console.log(data)
+    // })
 
 })
   .directive('ngEnter', function(){
