@@ -11,7 +11,9 @@ exports.index = function(req, res) {
     isPrivate: JSON.parse(req.query.isPrivate)
   };
 
-  Node.find(findCriteria, function (err, nodes) {
+  Node.find(findCriteria)
+    .populate('storyId')
+    .exec(function (err, nodes) {
     if(err) { return handleError(res, err); }
     return res.json(200, nodes);
   });

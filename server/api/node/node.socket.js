@@ -25,6 +25,7 @@ exports.register = function(socketio) {
 		socket.on('joinRoom', function(data){
 			if (socket.rooms.length){
 				socket.rooms.forEach(function(room){
+					if(room !== data.storyId)
 					socket.leave(room)
 				})
 			}
@@ -40,23 +41,41 @@ exports.register = function(socketio) {
 					})
 				})
 
-						// if(users.length > 0){
-			// 	users.forEach(function(id){
-			// 		console.log(id)
-			// 		currentUsers.push(sendNicknames(id))
-			// 	})
-			// }
+
 
 
     	socketio.to(data.storyId).emit('joinedRoom', {currentUsers:currentUsers, 'announcement': data.username + ' joined!'});
+		})
+
+
+		socket.on('leaveRoom', function(data){
+			console.log('data', data);
+			socket.leave(data.storyId);
+
+			var currentUsers = []
+			findClientsSocketByRoomId(data.storyId, function(sockets){
+					sockets.forEach(function(socket){
+						console.log(socket.nickname)
+						currentUsers.push(socket.nickname)
+					})
+				})
+
+			console.log('currentUsers', currentUsers)
+
+
+
+		socketio.to(data.storyId).emit('leftRoom', {currentUsers:currentUsers, 'announcement': data.username + ' left the room!'});
 		})	
 
 		//create a story as well as the first node in the story on this single submit action
 		socket.on('newStory', function(obj){
 
+			console.log(obj)
 			//then want to create a story here
 			Story.create(obj, function(err, story){
 				story.name = obj.title;
+				story.save();
+				console.log(story)
 				var firstNode = {};
 				firstNode.text = obj.input;
 				firstNode.author = obj.userId;

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('GraphCtrl', function ($scope, $stateParams, ExploreStories, StoryService, NodeService, Auth, growl, $modal, socket) {
+  .controller('GraphCtrl', function ($scope, $state, $stateParams, ExploreStories, StoryService, Auth, growl, $modal, socket) {
 
     // <TO JOIN ROOM WHEN LOADED>
     var data = {
@@ -30,6 +30,22 @@ angular.module('storyHubApp')
     $scope.writing = {
       text: ''
     }
+
+    //This function allows user to leave a story
+    $scope.leaveStory = function(){
+      console.log(StoryService.id)
+
+      var obj = {
+        storyId: StoryService.id,
+        username: Auth.getCurrentUser().name
+      }
+
+
+      socket.socket.emit('leaveRoom', obj);
+      $state.go('landing')
+    };
+
+
 
     $scope.submitWriting = function(){
       console.log($scope.parentId)
