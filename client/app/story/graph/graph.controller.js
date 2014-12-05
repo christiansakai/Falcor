@@ -107,6 +107,9 @@ angular.module('storyHubApp')
       $scope.results = results
     })
 
+    var box = document.getElementById('graphBox');
+    var widthToCenter = (box.clientWidth - 120) / 2;
+
   	var m = [20, 120, 20, 120],
   	    w = 1280 - m[1] - m[3],
   	    h = 800 - m[0] - m[2],
@@ -126,7 +129,7 @@ angular.module('storyHubApp')
   	    // .attr("height", h + m[0] + m[2])
         .attr("height", "1000px")
   	    .append("svg:g")
-  	    .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
+        .attr("transform", "translate(" + widthToCenter + ", 20)");
 
 
   	function update(source) {
