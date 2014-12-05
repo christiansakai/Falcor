@@ -22,7 +22,7 @@
       <div class="col-lg-1">
         <p>
           <small>{{ ::node.date | date:'yyyy-MM-dd HH:mm:ss'}}</small>
-          <small>Author</small>
+          <small>Author: {{ ::node.author.name }}</small>
           <small><a ng-click="setParent(node._id)">Branch</a></small>
           <small><a ng-click="rateNode(node._id)">Like</a></small>
         </p>
