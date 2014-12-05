@@ -20,11 +20,9 @@ angular.module('storyHubApp')
         })
 
         socket.socket.on('disconnection', function(data){
-          console.log('hi there', data)
-          var removeIndex = $scope.currentUsers.indexOf(data.formerMember)
-          console.log(removeIndex)
-          $scope.currentUsers.splice(removeIndex, 1)
-          // $scope.currentUsers = data.currentUsers;
+          $scope.currentUsers = $scope.currentUsers.filter(function(user){
+            return user.id !== data.res.id
+          })
         })
 
       }

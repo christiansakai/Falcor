@@ -42,7 +42,7 @@ exports.getNodes = function(req, res) {
       .populate('author','name')
       .exec(function(err, nodes) {
         if(err) { return handleError(res, err); }
-        console.log('here2', nodes)
+        // console.log('here2', nodes)
         return res.json(200, nodes);
       });
 };

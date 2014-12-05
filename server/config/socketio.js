@@ -59,7 +59,11 @@ module.exports = function (socketio) {
     // Call onDisconnect.
     socket.on('disconnect', function () {
       onDisconnect(socket);
-      socketio.emit('disconnection', {formerMember: socket.nickname}); 
+      var obj = {
+        name: socket.nickname,
+        id: socket.id
+      }
+      socketio.emit('disconnection', {res: obj}); 
       console.info('[%s] DISCONNECTED', socket.address);
     });
 
