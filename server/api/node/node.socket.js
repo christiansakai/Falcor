@@ -34,11 +34,15 @@ exports.register = function(socketio) {
 			socket.nickname = data.username;
 			socket.join(data.storyId);
 			// console.log('finding clients--------------', findClientsSocketByRoomId(data.storyId))
-			var currentUsers = []
+			var currentUsers = [];
+
 			findClientsSocketByRoomId(data.storyId, function(sockets){
 					sockets.forEach(function(socket){
 						console.log(socket.nickname)
-						currentUsers.push(socket.nickname)
+						currentUsers.push({
+							name: socket.nickname,
+							id: socket.id}
+							)
 					})
 				})
 
@@ -121,12 +125,6 @@ exports.register = function(socketio) {
 		 cb(res);
 		}
 
-		function sendNicknames(i){
-			var socket = socketio.sockets.connected[id]
-			console.log('socket----------------', socket)
-			return socket.nickname
-
-		}
 
 		//so this occurs every time a member submits a piece of writing
 		//nodes created through this socket ping will never be first nodes
