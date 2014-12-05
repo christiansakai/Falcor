@@ -23,13 +23,14 @@ exports.register = function(socketio) {
 	socketio.on('connection', function(socket) {
 		//subscribe to a room
 		socket.on('joinRoom', function(data){
+			console.log('-------------------', data)
 			if (socket.rooms.length){
 				socket.rooms.forEach(function(room){
-					if(room !== data.storyId)
+					// if(room !== data.storyId)
 					socket.leave(room)
 				})
 			}
-			console.log('io', socketio.to)
+			// console.log('io', socketio.to)
 			socket.nickname = data.username;
 			socket.join(data.storyId);
 			// console.log('finding clients--------------', findClientsSocketByRoomId(data.storyId))
@@ -49,7 +50,7 @@ exports.register = function(socketio) {
 
 
 		socket.on('leaveRoom', function(data){
-			console.log('data', data);
+			// console.log('data', data);
 			socket.leave(data.storyId);
 
 			var currentUsers = []
@@ -60,7 +61,7 @@ exports.register = function(socketio) {
 					})
 				})
 
-			console.log('currentUsers', currentUsers)
+			// console.log('currentUsers', currentUsers)
 
 
 
