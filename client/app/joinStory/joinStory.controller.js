@@ -18,13 +18,13 @@ angular.module('storyHubApp')
 
     // ExploreStories.storiesInfo.storyId = storyId
 
-      socket.socket.emit('joinRoom', data)
+      // socket.socket.emit('joinRoom', data)
 
-      socket.socket.on('joinedRoom', function(data){
-        console.log('hi there', data)
-      })
+      // socket.socket.on('joinedRoom', function(data){
+      //   console.log('hi there', data)
+      // })
 
-      $state.go('story')
+      $state.go('story.graph', {storyId: storyId})
 	}
 
 

@@ -6,6 +6,7 @@ angular.module('storyHubApp')
 
     $scope.stories = ExploreStories.getStories.query({ firstNode: true, isPrivate: false });
     // api/nodes?firstNode=true&isPrivate=false
+    // console.log($scope.stories)
     $scope.username = Auth.getCurrentUser().name
 
     $scope.keywords = "";
@@ -20,7 +21,7 @@ angular.module('storyHubApp')
         storyId: storyId,
         username: $scope.username
       }
-      socket.socket.emit('joinRoom', data)
+      // socket.socket.emit('joinRoom', data)
     
 
       $state.go('story.graph', {storyId: storyId})
