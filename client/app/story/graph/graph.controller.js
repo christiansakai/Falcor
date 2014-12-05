@@ -21,9 +21,9 @@ angular.module('storyHubApp')
       var obj = {
         userId: $scope.userId
       }
-      console.log('sent obj: ', obj.userId)
+      // console.log('sent obj: ', obj.userId)
       ExploreStories.rateNodes(nodeId, obj, function(result){
-        console.log('liked node: ', result)
+        // console.log('liked node: ', result)
       })
     }
 
@@ -150,7 +150,7 @@ angular.module('storyHubApp')
   	        // update(d);
             getBranchForNode(d);
             $scope.showAddLine = false;
-
+            updateNode();
             // Do apply to update the view.
             $scope.$apply();
   	      });
@@ -175,27 +175,54 @@ angular.module('storyHubApp')
   	  //     .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
   	  //     .text(function(d) { return "some text here"; })
   	  //     .style("fill-opacity", 1e-6);
-
+function updateNode() {
   	  // Transition nodes to their new position.
   	  var nodeUpdate = node.transition()
   	      .duration(duration)
   	      .attr("transform", function(d) { return "translate(" + d.x / horizontalPadding + "," + d.y + ")"; });//
 
   	  nodeUpdate.select("circle")
-  	      .attr("r", 4.5)
+  	      .attr("r", function(d){
+            if(typeof $scope.branchFiltered === 'undefined' || $scope.branchFiltered.length == 0) {
+              return 4.5;
+            } else {
+              var endOfBranchNode = $scope.branchFiltered[$scope.branchFiltered.length - 1];
+              if(d._id === endOfBranchNode._id) {
+                return 7;//Larger size for selected node.
+              } else {
+                return 4.5;//Default size.
+              }
+            }
+
+          })
   	      .style("fill", function(d) {
-  	        if(d.isMyBranch) {
-  	          return "green";
-  	        }
-  	        else if(d._children || d.children) {
-  	          return "red";// Has children.
-  	        } else {
-  	          return "lightsteelblue";// No children.
-  	        }
+            // Perform custom logic to determine color of the circles.
+  	        // if(d.author._id == $scope.userId) {
+  	        //   return "lightgreen";
+  	        // }
+  	        // else if(d._children || d.children) {
+  	        //   return "red";// Has children.
+  	        // } else {
+  	        //   return "lightsteelblue";// No children.
+  	        // }
+            if(typeof $scope.branchFiltered === 'undefined' || $scope.branchFiltered.length == 0) {
+              return "blue";// Default color.
+            } else {
+              var endOfBranchNode = $scope.branchFiltered[$scope.branchFiltered.length - 1];
+              var ance = endOfBranchNode.ancestors;
+
+              if(ance.indexOf(d._id) !== -1 || d._id === endOfBranchNode._id){
+                return "lightgreen";// Current selected branch.
+              } else {
+                return "blue"; // Anything else.
+              }
+            }
   	      });
 
   	  nodeUpdate.select("text")
   	      .style("fill-opacity", 1);
+    }
+    updateNode();
 
   	  // Transition exiting nodes to the parent's new position.
   	  var nodeExit = node.exit().transition()
