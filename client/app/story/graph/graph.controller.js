@@ -1,7 +1,107 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('GraphCtrl', function ($scope, $stateParams, ExploreStories, StoryService, NodeService) {
+  .controller('GraphCtrl', function ($scope, $state, $stateParams, ExploreStories, StoryService, Auth, growl, $modal, socket) {
+
+    // <TO JOIN ROOM WHEN LOADED>
+    var data = {
+        storyId: $stateParams.storyId,
+        username: Auth.getCurrentUser().name
+    };
+    socket.socket.emit('joinRoom', data);
+    // <TO JOIN ROOM WHEN LOADED>
+
+    $scope.showAddLine = false;
+    $scope.setParent = function(parentId){
+      $scope.parentId = parentId;
+      $scope.showAddLine = true;
+    }
+
+    $scope.rateNode = function(nodeId){
+      var obj = {
+        userId: $scope.userId
+      }
+      console.log('sent obj: ', obj.userId)
+      ExploreStories.rateNodes(nodeId, obj, function(result){
+        console.log('liked node: ', result)
+      })
+    }
+
+    $scope.writing = {
+      text: ''
+    }
+
+    //This function allows user to leave a story
+    $scope.leaveStory = function(){
+      console.log(StoryService.id)
+
+      var obj = {
+        storyId: StoryService.id,
+        username: Auth.getCurrentUser().name
+      }
+
+
+      socket.socket.emit('leaveRoom', obj);
+      $state.go('landing')
+    };
+
+
+
+    $scope.submitWriting = function(){
+      console.log($scope.parentId)
+      var obj = {
+        text: $scope.writing.text,
+        author: Auth.getCurrentUser()._id,
+        parentId: this.parentId
+      }
+      console.log(obj)
+      socket.socket.emit('nodeAdded', obj)
+    };
+
+    $scope.shareWriting = function() {
+      var size = 'sm';// Empty : default, lg :large, sm : small
+      var modalInstance = $modal.open({
+        templateUrl: 'shareStoryModal.html',
+        controller: 'shareStoryModalInstanceCtrl',
+        size: size,
+        resolve: {
+          storyId: function () {
+            // !! GET THE CORRECT storyId
+            // return StoryService.id;
+            return 'somefakestoryid';
+          }
+        }
+      });
+
+      modalInstance.result.then(function (inviteObj) {
+        // Modal ok.
+        growl.info('Sending Invitation to ' + inviteObj.email);
+        socket.socket.emit('invitingToStory', inviteObj)
+      }, function () {
+        // Modal cancel.
+        // $log.info('Modal dismissed at: ' + new Date());
+      });
+    }
+
+    socket.socket.on('sentInvite', function(obj){
+      if(obj.success) {
+        growl.success('Invitation sent to ' + obj.email);
+      } else {
+        growl.error('Could not send invitation to ' + obj.email);
+      }
+    });
+
+    socket.socket.on('addNodeToDom', function(node){
+      console.log('added node', node);
+
+      // !! Store results array in service. Push data to array in service.
+      $scope.results.push(node);
+
+      StoryService.getTree($scope.results, function(tree){
+          buildTree(tree);
+      });
+    });
+
 
     StoryService.getNodes(function(results){
       $scope.results = results
@@ -24,7 +124,7 @@ angular.module('storyHubApp')
   	    // .attr("width", w + m[1] + m[3])
         .attr("width", "100%")
   	    // .attr("height", h + m[0] + m[2])
-        .attr("height", "100%")
+        .attr("height", "1000px")
   	    .append("svg:g")
   	    .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
@@ -49,14 +149,17 @@ angular.module('storyHubApp')
   	        // toggle(d);
   	        // update(d);
             getBranchForNode(d);
+            $scope.showAddLine = false;
+
+            // Do apply to update the view.
+            $scope.$apply();
   	      });
 
       function getBranchForNode(node) {
-        $scope.branchFiltered = _.select($scope.results, function(ancestor){
-          return node.ancestors.indexOf(ancestor._id) != -1;
-        });
 
-        $scope.branchFiltered.push(node);
+        $scope.branchFiltered = _.select($scope.results, function(ancestor){
+          return node.ancestors.indexOf(ancestor._id) != -1 || ancestor._id == node._id;
+        });
 
         // Do apply to update the view.
         $scope.$apply();
@@ -157,7 +260,7 @@ angular.module('storyHubApp')
     if($stateParams.newStory !== true){
       StoryService.getNodes(function(nodes){
         StoryService.getTree(nodes, function(tree){
-          buildTree(tree)    
+          buildTree(tree)
         })
       })
     }
@@ -209,3 +312,27 @@ angular.module('storyHubApp')
     }
 
   });
+
+// !! ABSTRACT INTO ITS OWN FILE
+angular.module('storyHubApp').controller('shareStoryModalInstanceCtrl', function ($scope, $modalInstance, storyId) {
+
+  $scope.storyId = storyId;
+  $scope.recipientEmail = '';
+
+  $scope.ok = function () {
+    console.log('clicked ok')
+
+    //this function requires the story id, and the email address
+    //of the user invited
+    var inviteObj = {
+      storyId: $scope.storyId,
+      email: $scope.recipientEmail
+    }
+
+    $modalInstance.close(inviteObj);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});

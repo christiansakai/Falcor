@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .factory('StoryService', function (ExploreStories) {
-    
+  .factory('StoryService', function (ExploreStories, socket) {
+
 
     var Story = {
+      currentUsers: [],
       id: '',
       title: '',
       branchFrom: '',
@@ -30,18 +31,18 @@ angular.module('storyHubApp')
         }
 
         unflatten(resultArray, firstNode);
-
-      	   // branch = tree.children[i] // []
-
-      	// recursion(firstNode, tree.children) //tree.children
-      	console.log('final Tree: ', firstNode)
+        // console.log('asdasd',firstNode);
       	cb(firstNode);
-
       }
     }
 
-  
+    socket.socket.on('joinedRoom', function(data){
+      console.log('hitting StoryService', data)
+      // Story.currentUsers = [];
+      // Story.currentUsers = data.currentUsers;
+      angular.copy(data.currentUsers, Story.currentUsers)
+    })
+
 
     return Story;
-
   });

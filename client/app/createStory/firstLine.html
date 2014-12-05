@@ -1,0 +1,22 @@
+  <div ng-include="'components/navbar/navbar.html'"></div>
+
+  <div class="col-lg-6 center">
+
+    <div>
+      <h2>Write the first line of your story</h2>
+      <textarea autofocus placeholder="Enter your first line" class="form-control beginStory createText" rows="3" ng-model="story.input" ng-keyup="$event.keyCode == 13 && create.startStory()"></textarea>
+    </div>
+
+    <div class="col-lg-8 center">
+
+      <div class="center text-center">
+        <button type="submit" class="submitButton" ng-click="create.startStory()">Submit</button>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+

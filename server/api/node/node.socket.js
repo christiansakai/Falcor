@@ -7,37 +7,77 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Story = require('../story/story.model'); 
+var Story = require('../story/story.model');
 var Node = require('./node.model');
 var User = require('../user/user.model');
-var nodemailerConfig = require('../../config/nodemailer'); 
+var nodemailerConfig = require('../../config/nodemailer');
 
 
 
 
 exports.register = function(socketio) {
+
+
 		//join room functionality
 
 	socketio.on('connection', function(socket) {
 		//subscribe to a room
 		socket.on('joinRoom', function(data){
+			console.log('-------------------', data)
 			if (socket.rooms.length){
 				socket.rooms.forEach(function(room){
+					// if(room !== data.storyId)
 					socket.leave(room)
 				})
 			}
-			console.log('io', socketio.to)
-			socket.join(data.storyId)
-    	socketio.to(data.storyId).emit('joinedRoom', {'announcement': data.username + ' joined!'});
+			// console.log('io', socketio.to)
+			socket.nickname = data.username;
+			socket.join(data.storyId);
+			// console.log('finding clients--------------', findClientsSocketByRoomId(data.storyId))
+			var currentUsers = []
+			findClientsSocketByRoomId(data.storyId, function(sockets){
+					sockets.forEach(function(socket){
+						console.log(socket.nickname)
+						currentUsers.push(socket.nickname)
+					})
+				})
+
+
+
+
+    	socketio.to(data.storyId).emit('joinedRoom', {currentUsers:currentUsers, 'announcement': data.username + ' joined!'});
 		})
+
+
+		socket.on('leaveRoom', function(data){
+			// console.log('data', data);
+			socket.leave(data.storyId);
+
+			var currentUsers = []
+			findClientsSocketByRoomId(data.storyId, function(sockets){
+					sockets.forEach(function(socket){
+						console.log(socket.nickname)
+						currentUsers.push(socket.nickname)
+					})
+				})
+
+			// console.log('currentUsers', currentUsers)
+
+
+
+		socketio.to(data.storyId).emit('leftRoom', {currentUsers:currentUsers, 'announcement': data.username + ' left the room!'});
+		})	
 
 		//create a story as well as the first node in the story on this single submit action
 		socket.on('newStory', function(obj){
 
+			console.log(obj)
 			//then want to create a story here
 			Story.create(obj, function(err, story){
 				console.log('storyID: ', story._id)
 				story.name = obj.title;
+				story.save();
+				console.log(story)
 				var firstNode = {};
 				firstNode.text = obj.input;
 				firstNode.author = obj.userId;
@@ -53,7 +93,7 @@ exports.register = function(socketio) {
 
 					console.log('first node with storyID: ', firstNode)
 					var userStory = {
-						id: story._id, 
+						id: story._id,
 						title: obj.title
 					}
 					//User.findByIdAndUpdate(obj.userId, {$push: {stories: userStory}})
@@ -62,7 +102,7 @@ exports.register = function(socketio) {
 						if (err) {console.log('error!: ', err)}
 						// user.stories.push(userStory)
 						user.save(function (err, newUser, numModified){
-							// console.log('user: ', user, 'story: ', userStory, 'saved?: ', numModified)							
+							// console.log('user: ', user, 'story: ', userStory, 'saved?: ', numModified)
 						})
 					})
 					socket.join(story._id)
@@ -70,6 +110,26 @@ exports.register = function(socketio) {
 				})
 			})
 		})
+
+
+
+		function findClientsSocketByRoomId(roomId, cb) {
+		var res = []
+		, room = socketio.sockets.adapter.rooms[roomId];
+		if (room) {
+		    for (var id in room) {
+		    res.push(socketio.sockets.adapter.nsp.connected[id]);
+		    }
+		}
+		 cb(res);
+		}
+
+		function sendNicknames(i){
+			var socket = socketio.sockets.connected[id]
+			console.log('socket----------------', socket)
+			return socket.nickname
+
+		}
 
 		//so this occurs every time a member submits a piece of writing
 		//nodes created through this socket ping will never be first nodes
@@ -88,6 +148,7 @@ exports.register = function(socketio) {
 				console.log('setting obj', obj)
 				Node.create(obj, function(err, newNode){
 					console.log('created node', newNode)
+          console.log('Rooms', socket.rooms)
 					socketio.to(obj.storyId).emit('addNodeToDom', newNode)
 				})
 			})
@@ -129,6 +190,9 @@ exports.register = function(socketio) {
 	  })
 	})
 }
+
+
+
 
 // function onSave(socket, doc, cb) {
 //   socket.emit('node:save', doc);

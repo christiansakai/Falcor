@@ -12,7 +12,9 @@ exports.index = function(req, res) {
     isPrivate: JSON.parse(req.query.isPrivate)
   };
 
-  Node.find(findCriteria, function (err, nodes) {
+  Node.find(findCriteria)
+    .populate('storyId')
+    .exec(function (err, nodes) {
     if(err) { return handleError(res, err); }
     return res.json(200, nodes);
   });
@@ -58,10 +60,14 @@ exports.getChildlessNodes = function(req, res){
 
 // Get list of nodes
 exports.getNodes = function(req, res) {
-  Node.find({storyId: req.query.storyId}, function(err, nodes) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, nodes)
-  })
+  Node.find({storyId: req.query.storyId})
+      .sort('date')
+      .populate('author','name')
+      .exec(function(err, nodes) {
+        if(err) { return handleError(res, err); }
+        console.log('here2', nodes)
+        return res.json(200, nodes);
+      });
 };
 
 // Get list of storys that match keywords
@@ -87,7 +93,7 @@ exports.rateNodes = function(req, res) {
     if(err) { return handleError(res, err); }
     if(!node) { return res.send(404); }
     node.likeNodes(req.body, function(ratedNode){
-      return res.json(node);      
+      return res.json(node);
     })
   });
 };

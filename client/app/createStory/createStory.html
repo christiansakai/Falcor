@@ -1,15 +1,11 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="col-lg-8 center">
-  <div ng-hide="hasTitle">
+<div class="col-lg-8 center text-center">
+  <div>
     <span><h2>Give your story a title </h2> <h4>{{60 -story.title.length }}</h4></span>
     
-    <input class="form-control storyTitle createText text-center" maxlength="60" rows="1" ng-model="story.title" autofocus>  
+    <input class="form-control storyTitle createText text-center" maxlength="60" rows="1" ng-model="story.title" placeholder="Enter a title" autofocus ng-keyup="$event.keyCode == 13 && create.chooseTitle()">  
     
-  </div>
-  <div ng-show="hasTitle">
-    <h2>Write the first line of your story</h2>
-    <textarea class="form-control beginStory" rows="3" ng-model="story.input"></textarea>
   </div>
 
   <div class="optionpage center text-center">
@@ -23,13 +19,26 @@
   </div>
 
   <div class="col-lg-8 center">
-    <div class="center text-center" ng-hide="hasTitle">
+<!-- 
+    <div class="optionpage center text-center">
+      <div class="block">
+          <form>
+            <p><span id="privacyNote">Your story will be set to {{privacy}}</span><br>
+            <input type="checkbox" ng-model="isPrivate"name="sounds" class="regular-radio" ng-click="privacyChange()"/>
+            </p>
+          </form>
+      </div>
+    </div>
+ -->
+
+
+    <div class="center text-center">
       <button type="submit" class="submitButton" ng-click="create.chooseTitle()">Next</button>
     </div>
-    <div class="center text-center" ng-show="hasTitle">
+<!--     <div class="center text-center" ng-show="hasTitle">
       <button type="submit" class="submitButton" ng-click="create.startStory()">Submit</button>
     </div>
-  </div>
+ -->  </div>
 
 
 </div>
