@@ -129,16 +129,18 @@ angular.module('storyHubApp')
 
   /////////////// data assessed by alchemy API //////////////////////////
 
+
+  ///////////////////// SENTIMENT FOR A SINGLE STORY /////////////////////
   //join nodes for a single story 
   //receive sentiment analysis on single story 
-  vm.fetchAlchemyData = function(){
+  vm.fetchAlchemyDataforStory = function(){
     var nodeTextArr = []
     vm.getNodesPerStory()
     .then(function(story){
       nodeTextArr = story.map(function(node){
         return node.text;
       });
-      nodeTextArr.unshift('Robert became very angry with sally');
+      nodeTextArr.unshift('Politics angry existentialism life pissed nihilism');
       var text = nodeTextArr.join(" ");
       console.log('text to be sent: ', text)
       return alchemize.sendToAlchemy(text)
@@ -147,48 +149,52 @@ angular.module('storyHubApp')
     })
   }
 
-  vm.fetchAlchemyData()
+  vm.fetchAlchemyDataforStory()
 
+
+  //////////////// BRANCH BY BRANCH WITHIN STORY DATA ////////////////////////
+  vm.getNodesForBranch = function(){
+    var obj = {
+      storyId: "547fbab6fcbe35714dc28f4f"
+    }
+    return $http.get('/api/nodes/getChildlessNodes/', {params: obj}).then(function(response){
+      return response.data;
+    })
+  }
+
+
+  //gets the entire branch of text per story 
+  vm.fetchAlchemyDataForBranch = function(){
+    vm.getNodesForBranch()
+    .then(function(nodes){
+      console.log('childless nodes here: ', nodes)
+      var textArr = nodes.map(function(childlessNode){
+        return childlessNode.text + childlessNode.ancestors.map(function(ancestors){
+          return ancestors.text;
+        })
+      })
+      var obj = {
+        branchText: textArr
+      }; 
+      console.log('textArr: ', obj)
+      return alchemize.sendArrayToAlchemy(obj)
+    })
+  }
+
+  // vm.fetchAlchemyDataForBranch();
 
 
 
   //data stored in parseAlchemy service
   setTimeout(function(){
     var data = parseAlchemy.data
-    console.log(data)
+    console.log('DATA::', data)
   }, 3000)
 
 
-  //////////////////////////////////////////
-
-// .then(function(stories){
-//         storyIdsArr = stories.map(function(story){
-//           return story._id;
-//         });
-
-//         var obj = {
-//           storyIds: storyIdsArr
-//         }
-//         var count = 0; 
-//         $http.get('/api/nodes/getNodesForStories/', {params: obj})
-//           .success(function(storyNodes){
-//             console.log('nodes: ', storyNodes)
-//             storyNodes.forEach(function(story){
-//               story.forEach(function(node){
-//                 count += node.text.split(" ").length; 
-//               })
-//               wordsPerStoryArr.push(count)
-//               count = 0
-//             })
-//             // console.log('arr: ', wordsPerStoryArr)
-//           });
-//       })
-//       return wordsPerStoryArr;
-//     }
+  /////////////////////////////////////////////////////////////////////
 
 
-
-///////////////////////////////////////////
   // //data for chart js rendering 
     $scope.data = {
     	words: {

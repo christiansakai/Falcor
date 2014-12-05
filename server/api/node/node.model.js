@@ -23,7 +23,6 @@ NodeSchema.methods = {
 
   likeNodes: function(obj, callback){
     if (this.likes.likedBy.indexOf(obj.userId) === -1){
-      console.log('in here')
       this.likes.likedBy.push(obj.userId)
       this.likes.numLikes = this.likes.likedBy.length; 
       this.save()

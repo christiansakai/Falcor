@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Node = require('./node.model');
 var Q = require('q');
+var async = require('async'); 
 
 // Get list of nodes
 exports.index = function(req, res) {
@@ -28,8 +29,6 @@ exports.getNodesForStories = function(req, res) {
     req.query.storyIds = backUpArr; 
   }
   var storyIds = req.query.storyIds;
-  console.log('query: ', req.query.storyIds);
-  console.log('Array? query: ', Array.isArray(req.query.storyIds));
   storyIds.forEach(function(storyId){
     var promiseForNodes = Node.find({storyId: storyId}).exec();
     promiseForNodesArr.push(promiseForNodes);
@@ -38,6 +37,24 @@ exports.getNodesForStories = function(req, res) {
     res.json(storyNodes);
   })
 };
+
+//get nodes with no children for alchemy branch analysis 
+exports.getChildlessNodes = function(req, res){
+  console.log('in here')
+  Node.find({storyId: req.query.storyId})
+    .populate('ancestors', 'text')
+    .exec(function(err, nodes){
+    console.log('nodes: ', nodes)
+    var childlessNodesArr = nodes.reduce(function(childlessNodes, currentNode){
+
+      if(currentNode.children.length === 0){
+        childlessNodes.push(currentNode)
+      }
+      return childlessNodes;  
+    }, [])
+    res.json(200, childlessNodesArr)
+  })
+}
 
 // Get list of nodes
 exports.getNodes = function(req, res) {
