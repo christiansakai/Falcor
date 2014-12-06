@@ -10,7 +10,7 @@ angular.module('storyHubApp')
         authenticate: true
       })
       .state('story.graph', {
-        // params: ['storyId'],
+        // params: ['storyTitle'],
         url: '/graph',
         templateUrl: 'app/story/graph.html',
         controller: 'GraphCtrl as graph',

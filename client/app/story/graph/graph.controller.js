@@ -4,10 +4,15 @@ angular.module('storyHubApp')
   .controller('GraphCtrl', function ($scope, $state, $stateParams, ExploreStories, StoryService, Auth, growl, $modal, socket) {
 
     // <TO JOIN ROOM WHEN LOADED>
+    console.log('state params', $stateParams);
+    console.log('StoryService', StoryService)
+
+    $scope.storyTitle = StoryService.title
     var data = {
         storyId: $stateParams.storyId,
         username: Auth.getCurrentUser().name
     };
+
     socket.socket.emit('joinRoom', data);
     // <TO JOIN ROOM WHEN LOADED>
 
@@ -30,6 +35,22 @@ angular.module('storyHubApp')
     $scope.writing = {
       text: ''
     }
+
+    $scope.selectNode = function(node) {
+      console.log(node);
+      console.log('hi')
+      var size = 'md';// Empty : default, lg :large, sm : small
+      var modalInstance = $modal.open({
+        templateUrl: 'nodeModal.html',
+        controller: 'nodeModalController',
+        size: size,
+        resolve: {
+          node: function () {
+            return node;
+          }
+        }
+      })
+    };
 
     //This function allows user to leave a story
     $scope.leaveStory = function(){
@@ -72,6 +93,9 @@ angular.module('storyHubApp')
           }
         }
       });
+
+
+
 
       modalInstance.result.then(function (inviteObj) {
         // Modal ok.
@@ -310,6 +334,9 @@ angular.module('storyHubApp')
 
         update(root);
     }
+
+
+
 
   });
 
