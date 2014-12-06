@@ -1,5 +1,5 @@
 angular.module('storyHubApp')
-  .controller('nodeModalController', function ($scope, $modalInstance, $modal, node) {
+  .controller('nodeModalController', function ($scope, $modalInstance, $modal, node, Auth) {
 
   	$scope.cancel = function () {
   	  $modalInstance.dismiss('cancel');
@@ -19,7 +19,23 @@ angular.module('storyHubApp')
   	      }
   	    }
   	  })
+
+      modalInstance.result.then($modalInstance.close('done'))
   	};
+
+    $scope.rateNode = function(){
+      var nodeId = node._id
+      var obj = {
+        userId: Auth.getCurrentUser()._id
+      }
+      console.log('nodeId', nodeId)
+      console.log('obj', obj)
+      // console.log('sent obj: ', obj.userId)
+      ExploreStories.rateNodes(nodeId, obj, function(result){
+        // console.log('liked node: ', result)
+      })
+    }
+
 
 
   })
