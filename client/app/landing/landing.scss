@@ -1,6 +1,12 @@
 
 .landingButtons{
    padding-top: 12%;
+   button{
+      margin: 15px;
+   }
+   button:focus{
+      outline: none;
+   }
 }
 
 .btn1{

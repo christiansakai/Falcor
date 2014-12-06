@@ -41,12 +41,19 @@
 }
 
 .modal-content{
+	padding-top: 18%;
 	border: none;
-	/*box-shadow: none;*/
+	box-shadow: none;
+	background-color: rgba(255,255,255,0.0);
 	border-radius: 0px;
 }
 
 .writingModal{
 	background-color: white;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 	margin: 8px;
 };
+
+.nodeModal{
+	/*padding-top: 18%;*/
+}
