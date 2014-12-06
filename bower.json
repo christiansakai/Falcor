@@ -22,7 +22,6 @@
     "angular-chartjs-directive": "~0.0.2",
     "tc-angular-chartjs": "~1.0.9",
     "nvd3": "~1.1.15-beta",
-    "bootstrap-material-design": "~0.2.0",
     "angularjs-nvd3-directives": "~0.0.7",
     "angular-nvd3": "~0.0.9"
   },
