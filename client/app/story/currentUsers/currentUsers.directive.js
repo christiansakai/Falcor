@@ -5,7 +5,7 @@ angular.module('storyHubApp')
     return {
       templateUrl: 'app/story/currentUsers/currentUsers.html',
       restrict: 'E',
-      controller: function($scope, socket, StoryService) {
+      controller: function($scope, $state, socket, StoryService, Auth) {
         // console.log("this is directive", Playlist);
         // socket.socket.on('joinedRoom', function(data){
         //   console.log('JOINED ROOM', data)
@@ -13,6 +13,18 @@ angular.module('storyHubApp')
           $scope.currentUsers = StoryService.currentUsers
           // $scope.$apply();
         // })
+        $scope.leaveStory = function(){
+          console.log(StoryService.id)
+
+          var obj = {
+            storyId: StoryService.id,
+            username: Auth.getCurrentUser().name
+          }
+
+
+          socket.socket.emit('leaveRoom', obj);
+          $state.go('landing')
+        };
 
         socket.socket.on('leftRoom', function(data){
           // console.log('disconnect test', data)

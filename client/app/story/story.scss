@@ -4,18 +4,24 @@
 	font-weight: bolder;
 }
 
+#graphBox{
+	/*position: absolute;*/
+}
+
+
 #storyText{
 	font-family: freight-text-pro, Georgia, Cambria, 'Times New Roman', Times, serif;
 	font-size: 22px;
 	height: 70vh;
 	overflow-y:auto;
 	.storyNode{
+		line-height: 1.5em;
 		a{
 			color: black;
 			text-decoration: none;
 		}
 		a:hover{
-			background-color: yellow;
+			background-color: #42f6ce;
 			cursor: pointer;
 		}
 	}

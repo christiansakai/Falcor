@@ -10,6 +10,9 @@
 	font-weight: 300;
 	margin-top: 50px;
 }
+.submitButton:hover{
+  color: #42f6ce;
+}
 
 textarea, input { outline: 0px; }
 
@@ -47,7 +50,7 @@ textarea.createText{
   margin: 5px;
   font-size: 24px;
   font-family: freight-text-pro, Georgia, Cambria, 'Times New Roman', Times, serif;
-
+  margin-top: 50px;
 }
 .createNode:focus{
         outline: 0;

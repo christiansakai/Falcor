@@ -40,7 +40,7 @@
 
   <div>
     <h2>Keep the story going</h2>
-    <textarea autofocus placeholder="Enter text here" class="form-control beginStory createNode" rows="6" ng-model="writing" ng-keyup="$event.keyCode == 13 && submitWriting()" ></textarea>
+    <textarea msd-elastic autofocus placeholder="Enter text here" class="form-control beginStory createNode" rows="1" ng-model="writing" ng-enter="submitWriting()" ></textarea>
   </div>
 
   <div class="col-lg-8 center">

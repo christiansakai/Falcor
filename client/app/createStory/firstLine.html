@@ -3,8 +3,7 @@
   <div class="col-lg-6 center">
 
     <div>
-      <h2>Write the first line of your story</h2>
-      <textarea autofocus placeholder="Enter your first line" class="form-control beginStory createNode" rows="3" ng-model="story.input" ng-keyup="$event.keyCode == 13 && create.startStory()"></textarea>
+      <textarea msd-elastic autofocus placeholder="Start writing..." class="form-control beginStory createNode" rows="1" ng-model="story.input" ng-enter="create.startStory()"></textarea>
     </div>
 
     <div class="col-lg-8 center">
