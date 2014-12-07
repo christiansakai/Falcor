@@ -10,3 +10,35 @@ input[type=text] {
     border: none;
     color: black;
 }
+
+.exploreBox{
+	margin-bottom: 50px;
+	.exploreRow{
+		padding-left: 8%;
+		a{
+			color: black;
+			text-decoration: none;
+			cursor: pointer;
+		}
+		.exploreTitle{
+			font-family: jaf-bernino-sans, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+			font-size: 22px;
+			font-weight: bolder;
+		}
+		.exploreText{
+			font-family: "jaf-bernino-sans","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
+			font-weight: 300;
+			font-size: 16px;
+			/*padding-bottom: 18px;*/
+		}
+		.exploreAuthor{
+			font-family: "jaf-bernino-sans","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
+			font-size: 14px;
+			color: #777;
+			margin-top: 10px;
+			span{
+				color: #57ad68;
+			}
+		}
+	}
+}

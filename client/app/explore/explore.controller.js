@@ -3,10 +3,10 @@
 angular.module('storyHubApp')
   .controller('ExploreCtrl', function ($scope, ExploreStories, Auth, NodeService, StoryService, socket, $state) {
     var vm = this;
-
+    // cons
     $scope.stories = ExploreStories.getStories.query({ firstNode: true, isPrivate: false });
     // api/nodes?firstNode=true&isPrivate=false
-    // console.log($scope.stories)
+    console.log($scope.stories)
     $scope.username = Auth.getCurrentUser().name
 
     $scope.keywords = "";

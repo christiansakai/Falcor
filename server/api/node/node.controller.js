@@ -13,7 +13,7 @@ exports.index = function(req, res) {
   };
 
   Node.find(findCriteria)
-    .populate('storyId')
+    .populate('storyId').populate('author')
     .exec(function (err, nodes) {
     if(err) { return handleError(res, err); }
     return res.json(200, nodes);
