@@ -17,8 +17,11 @@
 textarea, input { outline: 0px; }
 
 textarea.createText{
-
   resize: none;
+}
+
+#createInput{
+  margin-top: 9%;
 }
 
 :focus{
