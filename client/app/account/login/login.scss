@@ -42,10 +42,12 @@
 			}
 		}
 		.loginbuttons{
-			padding-top: 15%;
 			height: 5%;
 			float: none;
 			margin: 0 auto;
+			.loginButton{
+				margin-top: 0;
+			}
 		}
 	}
 }

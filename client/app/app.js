@@ -11,7 +11,8 @@ angular.module('storyHubApp', [
   'chartjs',
   'tc.chartjs',
   'nvd3ChartDirectives', 
-  'nvd3'
+  'nvd3',
+  'monospaced.elastic'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider.otherwise('/');

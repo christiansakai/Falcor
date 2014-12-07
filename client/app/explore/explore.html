@@ -11,16 +11,15 @@
 <div class="col-lg-9 exploreBox">
 	<div ng-repeat="story in stories" class="clearfix exploreRow">
 		<a ng-click="joinStory(story.storyId)">
-			<div>
 			<span class="exploreTitle">{{story.storyId.name}}</span>
 			<br />
 			<span class="exploreText">{{story.text}}</span>
+			</a>
 			<br>
-			</div>
 			<div class="clearfix">
 			<span class="exploreAuthor">by <span>{{story.author.name}}</span></span>
 			</div>
-		</a>
+
 		<hr ng-show="!$last" />
 	</div>
 </div>

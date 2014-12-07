@@ -7,12 +7,12 @@
 <div class="col-lg-4 col-md-6 col-sm-8 loginbox clearfix">
   <form class="form" name="form" novalidate>
     <div>
-      <div class="form-group  text-center">
+      <div class="form-group clearfix text-center">
 
         <input type="email" name="email" placeholder="email" class="text-center col-lg-12" ng-model="user.email" required>
       </div>
 
-      <div class="form-group text-center">
+      <div class="form-group clearfix text-center">
 
         <input type="password" name="password" placeholder="password" class="text-center col-lg-12" ng-model="user.password" required ng-keyup="$event.keyCode == 13 && login(form)">
       </div>
@@ -37,10 +37,7 @@
       </button>
  -->
 
-      <a ng-click="login(form)">Login</a>
-    </div>
-
-
+      <button type="submit" class="submitButton loginButton" ng-click="login(form)">Login</button>
 
   </form>
 
