@@ -157,7 +157,7 @@ angular.module('storyHubApp')
   };
 
 
-  vm.fetchAlchemyDataforStory()
+  // vm.fetchAlchemyDataforStory()
 
 
   //////////////// BRANCH BY BRANCH WITHIN STORY DATA ////////////////////////
@@ -178,7 +178,7 @@ angular.module('storyHubApp')
       console.log('childless nodes here: ', nodes)
       var textArr = nodes.map(function(childlessNode){
         return childlessNode.text + childlessNode.ancestors.map(function(ancestors){
-          return ancestors.text;
+          return ancestors.text + 'hate ugly wrong bad';
         })
       })
       var obj = {
@@ -186,10 +186,12 @@ angular.module('storyHubApp')
       }; 
       console.log('textArr: ', obj)
       return alchemize.sendArrayToAlchemy(obj)
+    }).then(function assessAlchemyBranchData(analysis){
+      ParseAlchemy.parseAlchemyBranchData(analysis)
     })
   }
 
-  vm.fetchAlchemyDataForBranch();
+  // vm.fetchAlchemyDataForBranch();
 
 
 
