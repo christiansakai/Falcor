@@ -29,6 +29,29 @@ angular.module('storyHubApp')
     	})
     }
 
+      $scope.joinStory = function(story){
+        console.log(story)
+                var storyId = story.storyId._id;
+                var nodeId = story._id;
+
+                $state.go('story.graph2', {storyId: storyId, nodeId: nodeId})
+        // console.log(story)
+        // ExploreStories.storiesInfo.storyId = storyId
+
+        // StoryService.id = story._id;
+        // StoryService.title = story.name;
+        // var data = {
+
+        //   storyId: StoryService.id,
+        //   username: Auth.getCurrentUser().name
+        // }
+        // // socket.socket.emit('joinRoom', data)
+      
+
+        // $state.go('story.graph', {storyId: data.storyId, storyTitle: StoryService.title})
+
+      }
+
 
     $scope.changePage = function(){
       console.log($scope.currentPage)
