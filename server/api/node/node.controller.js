@@ -70,6 +70,18 @@ exports.getNodes = function(req, res) {
       });
 };
 
+// Get single branch from nodeId and ancestors
+exports.getSingleBranch = function(req, res) {
+  Node.find({_id: req.query.nodeId})
+      .populate('ancestors','text')
+      .exec(function(err, nodes) {
+        if(err) { return handleError(res, err); }
+        // console.log('here2', nodes)
+        return res.json(200, nodes);
+      });
+};
+
+
 // Get list of storys that match keywords
 exports.findKeyword = function(req, res) {
   console.log('keywords: ', req.params.keyword)

@@ -4,7 +4,6 @@ angular.module('storyHubApp')
   .controller('D3keywordsCtrl', function ($scope, $log, ParseAlchemy) {
     
 
-     console.log('al: ', ParseAlchemy.data.keywords)
   	 $scope.options = {
                 chart: {
                     type: 'scatterChart',
