@@ -10,17 +10,22 @@ angular.module('storyHubApp')
       })
       .state('charts.wordsPerStory', {
       	url: '/wordsPerStory',
-        templateUrl: 'app/charts/linewordsPerStory.html',
+        templateUrl: 'app/charts/wordsPerStory.html',
         controller: 'ChartsCtrl'
       })
 	    .state('charts.numLikes', {
 	    	url: '/numLikes',
-	      templateUrl: 'app/charts/lineNumLikes.html',
+	      templateUrl: 'app/charts/numLikes.html',
 	      controller: 'ChartsCtrl'
 	    })
-	    .state('charts.authorByWordCount', {
+	    .state('charts.authorsByWordCount', {
 	    	url: '/authorWordCount',
 	      templateUrl: 'app/charts/authorsByWordCount.html',
 	      controller: 'ChartsCtrl'
 	    })
+      .state('charts.wordsPerNode', {
+        url: '/wordsPerNode',
+        templateUrl: 'app/charts/wordsPerNode.html',
+        controller: 'ChartsCtrl'
+      })
   });

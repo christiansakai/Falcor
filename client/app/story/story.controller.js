@@ -7,7 +7,6 @@ angular.module('storyHubApp')
     // if you refresh the page, the id for the get request is not lost
     StoryService.id = $stateParams.storyId
 
-
     $scope.nodes = NodeService;
 
     //story id is stored 

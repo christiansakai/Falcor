@@ -14,7 +14,7 @@ angular.module('storyHubApp')
           storyId: this.id
         }
           ExploreStories.getNodes(obj, function(results){
-              console.log('results', results);
+              // console.log('results', results);
               cb(results)
           })
       },
