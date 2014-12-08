@@ -1,20 +1,19 @@
-<img src="/assets/images/forest-sm.jpg" id="bg">
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 
 
 <div class="col-lg-12 text-center">
-<div class="col-lg-4 col-md-6 col-sm-8 loginbox clearfix">
+<div class="col-lg-4 col-md-4 col-sm-4 col-xs-10 loginbox clearfix">
   <form class="form" name="form" novalidate>
     <div>
       <div class="form-group clearfix text-center">
 
-        <input type="email" name="email" placeholder="email" class="text-center col-lg-12" ng-model="user.email" required>
+        <input type="email" name="email" placeholder="email" class="text-center center col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-model="user.email" autofocus required>
       </div>
 
       <div class="form-group clearfix text-center">
 
-        <input type="password" name="password" placeholder="password" class="text-center col-lg-12" ng-model="user.password" required ng-keyup="$event.keyCode == 13 && login(form)">
+        <input type="password" name="password" placeholder="password" class="text-center center col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-model="user.password" required ng-keyup="$event.keyCode == 13 && login(form)">
       </div>
 
       <div class="form-group has-error">
