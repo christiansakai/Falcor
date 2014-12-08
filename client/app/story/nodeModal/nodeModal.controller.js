@@ -51,6 +51,13 @@ angular.module('storyHubApp')
       })
     }
 
+    $scope.analyze = function(){
+      vm.fetchAlchemyDataForBranch();
+      $modalInstance.close('done');
+  
+    }
+
+
 
     vm.fetchAlchemyDataForBranch = function(){
       $scope.analyzeBranch()
@@ -69,10 +76,9 @@ angular.module('storyHubApp')
       })
       setTimeout(function(){
         $state.go('d3Keywords')
-      }, 1000)
+      }, 400)
     }
 
-    vm.fetchAlchemyDataForBranch();
 
 
 
