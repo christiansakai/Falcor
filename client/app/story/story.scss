@@ -1,0 +1,71 @@
+#storyTitle{
+	font-family: jaf-bernino-sans, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+	font-size: 40px;
+	font-weight: bolder;
+}
+
+#graphBox{
+	/*position: absolute;*/
+}
+
+
+#storyText{
+	font-family: freight-text-pro, Georgia, Cambria, 'Times New Roman', Times, serif;
+	font-size: 22px;
+	height: 70vh;
+	overflow-y:auto;
+	.storyNode{
+		line-height: 1.5em;
+		a{
+			color: black;
+			text-decoration: none;
+		}
+		a:hover{
+			background-color: #42f6ce;
+			cursor: pointer;
+		}
+	}
+/*	.storyNode.tooltip{
+		  	display: inline;
+		 	position: relative;
+		}
+
+		.tooltip:hover {
+		    color: #c00;
+		    text-decoration: none;
+		}*/
+
+	.popover{
+		color: black;
+		font-size: 12px;
+	}
+}
+
+.submitButtonSmall{
+	width: 100px;
+	height: 100px;
+	margin: 18px 18px;
+
+}
+
+.modal-content{
+	padding-top: 18%;
+	border: none;
+	box-shadow: none;
+	background-color: rgba(255,255,255,0.0);
+	border-radius: 0px;
+}
+
+.writingModal{
+	background-color: white;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+	margin: 8px;
+};
+
+textarea {
+    resize: none;
+}
+
+.nodeModal{
+	/*padding-top: 18%;*/
+}

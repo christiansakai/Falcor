@@ -34,6 +34,51 @@
 
 <!-- <HTML TEMPLATE> -->
 
+
+<script type="text/ng-template" id="writingModal.html">
+<div class="col-lg-12 center writingModal">
+
+  <div>
+    <h2>Keep the story going</h2>
+    <textarea msd-elastic autofocus placeholder="Enter text here" class="form-control beginStory createNode" rows="1" ng-model="writing" ng-enter="submitWriting()" ></textarea>
+  </div>
+
+  <div class="col-lg-8 center">
+
+    <div class="center text-center">
+
+      <button type="submit" class="submitButton submitButtonSmall" ng-click="cancel()">Cancel</button>
+      <button type="submit" class="submitButton submitButtonSmall" ng-click="submitWriting()">Submit
+      </button>
+
+    </div>
+
+  </div>
+
+
+</div>
+</script>
+
+<script type="text/ng-template" id="nodeModal.html">
+	<div class="text-center nodeModal clearfix">
+
+	    <div class="text-right col-lg-6 col-md-6 col-sm-6 col-xs-6">
+	      <button type="submit" class="submitButton submitButtonSmall" ng-click="">Like</button>
+	    </div>
+	    <div class="text-left col-lg-6 col-md-6 col-sm-6 col-xs-6">
+	      <button type="submit" class="submitButton submitButtonSmall" ng-click="write()">Write</button>
+	    </div>
+	    <div class="text-right col-lg-6 col-md-6 col-sm-6 col-xs-6">
+	      <button type="submit" class="submitButton submitButtonSmall" ng-click="">Analyze</button>
+	    </div>
+	    <div class="text-left col-lg-6 col-md-6 col-sm-6 col-xs-6">
+	      <button type="submit" class="submitButton submitButtonSmall" ng-click="cancel()">Cancel</button>
+	    </div>
+	</div>
+</script>
+
+
+
 <!-- !! ABSTRACT INTO ITS OWN FILE -->
 <script type="text/ng-template" id="shareStoryModal.html">
   <div class="modal-header">

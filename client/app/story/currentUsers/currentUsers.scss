@@ -1,0 +1,32 @@
+.navbar{
+	margin-bottom: 0;
+}
+
+.nav-pills > li > a{
+	border-radius: 0;
+}
+
+ul.nav-pills{
+	margin-bottom: 25px;
+	background-color: black;
+	cursor: pointer;
+	a{
+		color: white;
+		font-family: 'Museo Sans', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		font-size: 16px;
+	}
+	a:hover{
+		color: #42f6ce;
+	}
+}
+.nav-pills > li > a:hover{
+	background-color: black;
+};
+
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus{
+	background-color: black;
+}
+
+.nav .open > a, .nav .open > a:hover, .nav .open > a:visited{
+	background-color: black;
+}

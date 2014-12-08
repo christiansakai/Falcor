@@ -1,19 +1,29 @@
-<!-- <GRAPH BOX> -->
-<div id="graphBox" class="col-lg-2">
+
+<div id="graphBox" class="col-lg-6">
 </div>
 <!-- </GRAPH BOX> -->
 
+<div id="storyBox" class="col-lg-6">
+  <div class="text-center" id="storyTitle"><h1>{{storyTitle}}</h1></div>
+      <div class="col-lg-10 center" id="storyText">
+        <span ng-repeat="node in branchFiltered" class="storyNode" popover="Posted by {{node.author.name}}  at {{node.date | date:'h:mma,  M/d/yy'}}" popover-placement="bottom"  popover-trigger="mouseenter"><a ng-click="selectNode(node)">{{ node.text }}</a><span>&nbsp;</span></span>
+      </div>
+</div>
+
+
+
 <!-- <PANEL> -->
-<div class="panel panel-primary col-lg-9">
+<!-- <div class="panel panel-primary col-lg-6"> -->
   <!-- <PANEL HEADING> -->
-  <div class="panel-heading">
-    <h3 class="panel-title">Story Title</h3>
-  </div>
+<!--   <div class="panel-heading">
+    <h3 class="panel-title">{{storyTitle}}</h3>
+  </div> -->
   <!-- <PANEL HEADING> -->
   <!-- <PANEL BODY> -->
-  <div class="panel-body">
+
+<!--   <div class="panel-body"> -->
     <!-- <NG-REPEAT> -->
-    <div ng-repeat="node in branchFiltered">
+<!--     <div ng-repeat="node in branchFiltered">
       <div class="col-lg-11">
         <p>
           {{ node.text }}
@@ -27,9 +37,9 @@
           <small><a ng-click="rateNode(node._id)">Like</a></small>
         </p>
       </div>
-    </div>
+    </div> -->
     <!-- </NG-REPEAT> -->
-    <!-- <ADD LINE FORM> -->
+    <!-- <ADD LINE FORM>
     <div ng-show="showAddLine">
       <form role="form">
         <div class="form-group">
@@ -37,13 +47,13 @@
           <input type="text" ng-model="writing.text" class="form-control" id="nextline" placeholder="Enter a line">
         </div>
         <button type="submit" class="btn btn-default" ng-click="shareWriting()">Share With Friends</button>
-        <button type="submit" class="btn btn-default" ng-click="submitWriting()">Submit</button>
-        <button type="submit" class="btn btn-default" ui-sref="userStories">My Stories</button>
-        <button type="submit" class="btn btn-default" ng-click="leaveStory()">Leave Story</button>
-      </form>
-    </div>
+        <button type="submit" class="btn btn-default" ng-click="submitWriting()">Submit</button> -->
+        <!-- <button type="submit" class="btn btn-default" ui-sref="userStories">My Stories</button> -->
+        <!-- <button type="submit" class="btn btn-default" ng-click="leaveStory()">Leave Story</button> -->
+<!--       </form>
+    </div> -->
     <!-- <ADD LINE FORM> -->
-  </div>
+  <!-- </div> -->
   <!-- </PANEL BODY> -->
-</div>
-<!-- </PANEL> -->
+<!-- </div> -->
+<!-- </PANEL>

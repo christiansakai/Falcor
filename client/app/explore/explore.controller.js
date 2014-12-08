@@ -3,7 +3,7 @@
 angular.module('storyHubApp')
   .controller('ExploreCtrl', function ($scope, ExploreStories, Auth, NodeService, StoryService, socket, $state) {
     var vm = this;
-
+    // cons
     $scope.stories = ExploreStories.getStories.query({ firstNode: true, isPrivate: false });
     // api/nodes?firstNode=true&isPrivate=false
     console.log($scope.stories)
@@ -13,18 +13,21 @@ angular.module('storyHubApp')
 
 
     //final cut of function will pass in the roomId
-  	$scope.joinStory = function(storyId){
+  	$scope.joinStory = function(story){
+      console.log(story)
       // ExploreStories.storiesInfo.storyId = storyId
 
-      StoryService.id = storyId
+      StoryService.id = story._id;
+      StoryService.title = story.name;
       var data = {
-        storyId: storyId,
+
+        storyId: StoryService.id,
         username: Auth.getCurrentUser().name
       }
       // socket.socket.emit('joinRoom', data)
     
 
-      $state.go('story.graph', {storyId: storyId})
+      $state.go('story.graph', {storyId: data.storyId, storyTitle: StoryService.title})
 
     }
 

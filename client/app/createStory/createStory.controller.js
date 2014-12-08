@@ -6,7 +6,7 @@ angular.module('storyHubApp')
     $scope.privacy = 'Public'
 
     $scope.privacyChange = function(){
-      if(!CreateService.isPrivate){
+      if($scope.isPrivate){
         $scope.privacy = 'Public';
       }
       else $scope.privacy = 'Private';

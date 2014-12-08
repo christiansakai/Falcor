@@ -10,33 +10,56 @@
 	font-weight: 300;
 	margin-top: 50px;
 }
+.submitButton:hover{
+  color: #42f6ce;
+}
 
 textarea, input { outline: 0px; }
 
 textarea.createText{
-
   resize: none;
+}
+
+#createInput{
+  margin-top: 9%;
 }
 
 :focus{
     box-shadow: none;
 };
 
-.createText{
+.createTitle{
+  background-color: rgba(255, 255, 255, 0.0);
+  border: none;
+  border-radius: 0px;
+  box-shadow: none;
+  height: 50px;
+  margin: 5px;
+  font-size: 34px;
+  font-family: jaf-bernino-sans, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+
+}
+.createTitle:focus{
+        outline: 0;
+        box-shadow: none;
+  }
+
+.createNode{
   background-color: rgba(255, 255, 255, 0.0);
   border: none;
   border-radius: 0px;
   box-shadow: none;
   height: 40px;
   margin: 5px;
-  font-size: 26px;
-  font-family: 'Museo Sans', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-
+  font-size: 24px;
+  font-family: freight-text-pro, Georgia, Cambria, 'Times New Roman', Times, serif;
+  margin-top: 50px;
 }
-.createText:focus{
+.createNode:focus{
         outline: 0;
         box-shadow: none;
   }
+
 
 
 /*body {
