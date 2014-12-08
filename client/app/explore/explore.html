@@ -8,7 +8,7 @@
 </div> 	
 <!-- </div>
  -->
-<div class="col-lg-9 exploreBox">
+<div class="col-lg-9 col-md-9 col-sm-9 exploreBox">
 	<div ng-repeat="story in stories" class="clearfix exploreRow">
 		<a ng-click="joinStory(story.storyId)">
 			<span class="exploreTitle">{{story.storyId.name}}</span>
@@ -17,10 +17,10 @@
 			</a>
 			<br>
 			<div class="clearfix">
-			<span class="exploreAuthor">by <span>{{story.author.name}}</span></span>
+			<span class="exploreAuthor">by <strong>{{story.author.name}}</strong></span>
 			</div>
 
 		<hr ng-show="!$last" />
 	</div>
 </div>
-<div class="col-lg-3">dsfjkndsfkjn</div>
+<div class="col-lg-3 col-md-3 col-sm-3 hidden-xs">dsfjkndsfkjn</div>
