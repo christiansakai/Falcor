@@ -1,12 +1,12 @@
 
-<div id="graphBox" class="col-lg-6">
+<div id="graphBox" class="col-lg-6 clearfix">
 </div>
 <!-- </GRAPH BOX> -->
 
 <div id="storyBox" class="col-lg-6">
   <div class="text-center" id="storyTitle"><h1>{{storyTitle}}</h1></div>
       <div class="col-lg-10 center" id="storyText">
-        <span ng-repeat="node in branchFiltered" class="storyNode" popover="Posted by {{node.author.name}}  at {{node.date | date:'h:mma,  M/d/yy'}}" popover-placement="bottom"  popover-trigger="mouseenter"><a ng-click="selectNode(node)">{{ node.text }}</a><span>&nbsp;</span></span>
+        <span ng-repeat="node in branchFiltered" class="storyNode"><a ng-click="selectNode(node)">{{ node.text }}</a><span>&nbsp;</span></span>
       </div>
 </div>
 

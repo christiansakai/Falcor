@@ -8,7 +8,6 @@ angular.module('storyHubApp')
     StoryService.id = $stateParams.storyId
 
 
-    $scope.nodes = NodeService;
 
     //story id is stored 
     $scope.story = StoryService;

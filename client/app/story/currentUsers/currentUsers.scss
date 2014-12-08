@@ -23,10 +23,17 @@ ul.nav-pills{
 	background-color: black;
 };
 
+.nav-pills > li > a:visited{
+	background-color: black;
+};
+
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus, .nav .open > a:visited{
+	background-color: black;
+}
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus{
 	background-color: black;
 }
 
-.nav .open > a, .nav .open > a:hover, .nav .open > a:visited{
+.nav > li > a:hover, .nav > li > a:focus{
 	background-color: black;
 }

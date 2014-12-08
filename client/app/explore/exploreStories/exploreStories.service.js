@@ -16,7 +16,7 @@ angular.module('storyHubApp')
   		    $http.get('/api/nodes/getNodes/', {params: obj}).success(callback)    	
   	    },  
         getUserNodes: function(obj, callback){
-          $http.get('/api/users/getUserNodes/', {params: obj}).success(callback)
+          $http.get('/api/nodes/getUserNodes/', {params: obj}).success(callback)
         }, 
 
         rateNodes: function(nodeId, obj, callback){
@@ -24,7 +24,7 @@ angular.module('storyHubApp')
         }, 
 
         submitKeywords: function(keyword, callback){
-          $http.get('/api/nodes/' + keyword + '/').success(callback)
+          $http.get('/api/nodes/keywordSearch' + keyword + '/').success(callback)
         }
 	    }
 
