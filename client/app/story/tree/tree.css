@@ -1,7 +1,7 @@
 .node circle {
   cursor: pointer;
   fill: #fff;
-  stroke: steelblue;
+  stroke: black;
   stroke-width: 1.5px;
 }
 

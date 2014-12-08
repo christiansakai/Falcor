@@ -4,10 +4,10 @@ angular.module('storyHubApp')
   .controller('GraphCtrl', function ($scope, $state, $stateParams, ExploreStories, StoryService, Auth, growl, $modal, socket) {
 
     // <TO JOIN ROOM WHEN LOADED>
-    console.log('state params', $stateParams);
-    console.log('StoryService', StoryService)
+    // console.log('state params', $stateParams);
+    // console.log('StoryService', StoryService)
 
-    $scope.storyTitle = StoryService.title
+    $scope.storyTitle = StoryService.title;
     var data = {
         storyId: $stateParams.storyId,
         username: Auth.getCurrentUser().name
@@ -17,24 +17,27 @@ angular.module('storyHubApp')
     // <TO JOIN ROOM WHEN LOADED>
 
     $scope.showAddLine = false;
-    $scope.setParent = function(parentId){
+    $scope.setParent = function(parentId) {
       $scope.parentId = parentId;
       $scope.showAddLine = true;
-    }
+    };
 
-    $scope.rateNode = function(nodeId){
+
+    $scope.rateNode = function(nodeId) {
       var obj = {
         userId: $scope.userId
-      }
+      };
       // console.log('sent obj: ', obj.userId)
       ExploreStories.rateNodes(nodeId, obj, function(result){
         // console.log('liked node: ', result)
       })
     }
 
+
     $scope.writing = {
       text: ''
-    }
+    };
+
 
     $scope.selectNode = function(node) {
       console.log(node);
@@ -49,8 +52,9 @@ angular.module('storyHubApp')
             return node;
           }
         }
-      })
+      });
     };
+
 
     //This function allows user to leave a story
     $scope.leaveStory = function(){
@@ -59,13 +63,11 @@ angular.module('storyHubApp')
       var obj = {
         storyId: StoryService.id,
         username: Auth.getCurrentUser().name
-      }
-
+      };
 
       socket.socket.emit('leaveRoom', obj);
-      $state.go('landing')
+      $state.go('landing');
     };
-
 
 
     $scope.submitWriting = function(){
@@ -94,9 +96,6 @@ angular.module('storyHubApp')
         }
       });
 
-
-
-
       modalInstance.result.then(function (inviteObj) {
         // Modal ok.
         growl.info('Sending Invitation to ' + inviteObj.email);
@@ -105,7 +104,7 @@ angular.module('storyHubApp')
         // Modal cancel.
         // $log.info('Modal dismissed at: ' + new Date());
       });
-    }
+    };
 
     socket.socket.on('sentInvite', function(obj){
       if(obj.success) {
@@ -121,14 +120,16 @@ angular.module('storyHubApp')
       // !! Store results array in service. Push data to array in service.
       $scope.results.push(node);
 
-      StoryService.getTree($scope.results, function(tree){
-          buildTree(tree);
-      });
+      // Set the new node as the selected node in the graph.
+      getBranchForNode(node);
     });
 
 
-    StoryService.getNodes(function(results){
-      $scope.results = results
+    StoryService.getNodes(function(results){      
+      $scope.results = results;
+
+      // When results are retrieved, set the first node as selected.
+      getBranchForNode($scope.results[0]);
     })
 
     var box = document.getElementById('graphBox');
@@ -140,7 +141,7 @@ angular.module('storyHubApp')
   	    i = 0,
   	    root,
   	    verticalPadding = 25, // Fixed value in px
-  	    horizontalPadding = 10;// Ratio
+  	    horizontalPadding = 3;// Ratio
 
   	var d3Tree = d3.layout.tree()
   	    .size([h, w]);
@@ -155,6 +156,16 @@ angular.module('storyHubApp')
   	    .append("svg:g")
         .attr("transform", "translate(" + widthToCenter + ", 20)");
 
+
+    function getBranchForNode(node) {
+
+      $scope.branchFiltered = _.select($scope.results, function(ancestor){
+        return node.ancestors.indexOf(ancestor._id) != -1 || ancestor._id == node._id;
+      });
+
+      // Do apply to update the view.
+      // $scope.$apply();
+    };
 
   	function update(source) {
   	  var duration = d3.event && d3.event.altKey ? 5000 : 500;
@@ -182,73 +193,69 @@ angular.module('storyHubApp')
             $scope.$apply();
   	      });
 
-      function getBranchForNode(node) {
-
-        $scope.branchFiltered = _.select($scope.results, function(ancestor){
-          return node.ancestors.indexOf(ancestor._id) != -1 || ancestor._id == node._id;
-        });
-
-        // Do apply to update the view.
-        $scope.$apply();
-      };
+      
 
   	  nodeEnter.append("svg:circle")
   	      .attr("r", 1e-6)
-  	      .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+  	      .style("fill", function(d) { return "black"; });
 
-  	  // nodeEnter.append("svg:text")
-  	  //     .attr("x", function(d) { return d.children || d._children ? -100 : 10; })
-  	  //     .attr("dy", ".35em")
-  	  //     .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-  	  //     .text(function(d) { return "some text here"; })
-  	  //     .style("fill-opacity", 1e-6);
+
 function updateNode() {
   	  // Transition nodes to their new position.
   	  var nodeUpdate = node.transition()
   	      .duration(duration)
   	      .attr("transform", function(d) { return "translate(" + d.x / horizontalPadding + "," + d.y + ")"; });//
 
+      var getNodeStatusForStyle = function(nodeToGetStatus) {
+        if(typeof $scope.branchFiltered !== 'undefined' && $scope.branchFiltered.length > 0) {
+          var endOfBranchNode = $scope.branchFiltered[$scope.branchFiltered.length - 1];
+          if(nodeToGetStatus._id === endOfBranchNode._id) {
+            return 'selected';//Larger size for selected node.
+          } 
+        } 
+        return 'default';
+      }
+
+
   	  nodeUpdate.select("circle")
   	      .attr("r", function(d){
-            if(typeof $scope.branchFiltered === 'undefined' || $scope.branchFiltered.length == 0) {
-              return 4.5;
-            } else {
-              var endOfBranchNode = $scope.branchFiltered[$scope.branchFiltered.length - 1];
-              if(d._id === endOfBranchNode._id) {
-                return 7;//Larger size for selected node.
-              } else {
-                return 4.5;//Default size.
-              }
+            switch(getNodeStatusForStyle(d)) {
+              case 'default':
+                return 4.5;
+              break;
+              case 'selected':
+                return 7;
+              break;
+              default:
+                return 4.5;
             }
-
           })
-  	      .style("fill", function(d) {
-            // Perform custom logic to determine color of the circles.
-  	        // if(d.author._id == $scope.userId) {
-  	        //   return "lightgreen";
-  	        // }
-  	        // else if(d._children || d.children) {
-  	        //   return "red";// Has children.
-  	        // } else {
-  	        //   return "lightsteelblue";// No children.
-  	        // }
-            if(typeof $scope.branchFiltered === 'undefined' || $scope.branchFiltered.length == 0) {
-              return "blue";// Default color.
-            } else {
+  	      .style("fill", function(d) {                        
+            if(typeof $scope.branchFiltered !== 'undefined' && $scope.branchFiltered.length > 0) {
               var endOfBranchNode = $scope.branchFiltered[$scope.branchFiltered.length - 1];
               var ance = endOfBranchNode.ancestors;
 
               if(ance.indexOf(d._id) !== -1 || d._id === endOfBranchNode._id){
-                return "lightgreen";// Current selected branch.
-              } else {
-                return "blue"; // Anything else.
-              }
+                return "#42f6ce";// Current selected branch.
+              } 
             }
-  	      });
+            return "black";// Default color.
+  	      })
+          .style("stroke", function(d) {
+            if(typeof $scope.branchFiltered !== 'undefined' && $scope.branchFiltered.length > 0) {
+              var endOfBranchNode = $scope.branchFiltered[$scope.branchFiltered.length - 1];
+              var ance = endOfBranchNode.ancestors;
 
-  	  nodeUpdate.select("text")
-  	      .style("fill-opacity", 1);
-    }
+              if(ance.indexOf(d._id) !== -1 || d._id === endOfBranchNode._id){
+                return "#42f6ce";// Current selected branch.
+              } 
+            }
+            return "black";// Default color.
+          });
+
+  	  // nodeUpdate.select("text")
+  	  //     .style("fill-opacity", 1);
+}
     updateNode();
 
   	  // Transition exiting nodes to the parent's new position.
