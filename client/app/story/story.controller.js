@@ -9,7 +9,11 @@ angular.module('storyHubApp')
 
 
     $scope.nodes = NodeService;
+
+    //story id is stored 
     $scope.story = StoryService;
+
+    //wire up by retrieving the current story id -- StoryService.id 
 
     $scope.userId = Auth.getCurrentUser()._id
   });

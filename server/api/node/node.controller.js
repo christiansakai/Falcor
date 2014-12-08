@@ -72,7 +72,10 @@ exports.getNodes = function(req, res) {
 
 // Get list of storys that match keywords
 exports.findKeyword = function(req, res) {
-  Node.find({$text: {$search: req.params.keyword}}, function (err, stories) {
+  console.log('keywords: ', req.params.keyword)
+  Node.find({$text: {$search: req.params.keyword}})
+    .populate('storyId')
+    .exec(function (err, stories) {
     if(err) { return handleError(res, err); }
     return res.json(200, stories);
   });
