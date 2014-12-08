@@ -84,15 +84,9 @@ angular.module('storyHubApp')
         for (var i = 0; i < arrayOfObjects.length; i++){
           this.sentiments.push(arrayOfObjects[i][0])
         }
-
-
-
         
         $log.debug( 'Saved to sentiments to stats: from factory', this.sentiments );
           
-        
-      
-
       }
     }
 

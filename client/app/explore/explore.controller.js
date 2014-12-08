@@ -6,15 +6,14 @@ angular.module('storyHubApp')
     // cons
     $scope.stories = ExploreStories.getStories.query({ firstNode: true, isPrivate: false });
     // api/nodes?firstNode=true&isPrivate=false
-    console.log($scope.stories)
+    // console.log($scope.stories)
     $scope.username = Auth.getCurrentUser().name
 
     $scope.keywords = "";
 
-
     //final cut of function will pass in the roomId
   	$scope.joinStory = function(story){
-      console.log(story)
+      // console.log(story)
       // ExploreStories.storiesInfo.storyId = storyId
 
       StoryService.id = story._id;

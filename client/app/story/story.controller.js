@@ -9,6 +9,7 @@ angular.module('storyHubApp')
 
 
 
+
     //story id is stored 
     $scope.story = StoryService;
 

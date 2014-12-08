@@ -3,7 +3,6 @@
 angular.module('storyHubApp')
   .controller('BranchanalysisCtrl', function ($scope, $log, ParseAlchemy) {
     
-  	console.log('al: ', ParseAlchemy.data.keywords)
   	 $scope.options = {
                 chart: {
                     type: 'scatterChart',

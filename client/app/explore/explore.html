@@ -6,10 +6,9 @@
  <input type="text" name='keywords' ng-model='keywords' ng-enter="submitKeywords()" placeholder='keyword search'>
 
 </div> 	
-<!-- </div>
- -->
-<!--git merge master -->
+
 <div class="col-lg-9 col-md-9 col-sm-9 exploreBox">
+
 	<div ng-repeat="story in stories" class="clearfix exploreRow">
 		<a ng-click="joinStory(story.storyId)">
 			<span class="exploreTitle">{{story.storyId.name}}</span>
@@ -24,4 +23,8 @@
 		<hr ng-show="!$last" />
 	</div>
 </div>
-<div class="col-lg-3 col-md-3 col-sm-3 hidden-xs">dsfjkndsfkjn</div>
+
+<div class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
+	TOP STORIES
+	<top-Stories></top-Stories>
+</div>
