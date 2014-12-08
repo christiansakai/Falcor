@@ -163,18 +163,21 @@ angular.module('storyHubApp')
   	    verticalPadding = 25, // Fixed value in px
   	    horizontalPadding = 3;// Ratio
 
+
+
   	var d3Tree = d3.layout.tree()
   	    .size([h, w]);
-
+ // debugger
   	var diagonal = d3.svg.diagonal().projection(function(d) { return [d.x / horizontalPadding, d.y]; });
 
   	var vis = d3.select("#graphBox").append("svg:svg")
   	    // .attr("width", w + m[1] + m[3])
-        .attr("width", "100%")
+        // .attr("width", "100%")
   	    // .attr("height", h + m[0] + m[2])
-        .attr("height", "1000px")
+        // .attr("height", "100%")
   	    .append("svg:g")
         .attr("transform", "translate(" + widthToCenter + ", 20)");
+        // .attr('id', 'treesvg');
 
 
     function getBranchForNode(node) {
@@ -193,8 +196,20 @@ angular.module('storyHubApp')
   	  // Compute the new tree layout.
   	  var nodes = d3Tree.nodes(root).reverse();
 
+      var maxHeight = 0;
+
   	  // Normalize for fixed-depth.
-  	  nodes.forEach(function(d) { d.y = d.depth * verticalPadding; });
+  	  nodes.forEach(function(d) { 
+        d.y = d.depth * verticalPadding; 
+        
+        if(d.y > maxHeight) {
+          maxHeight = d.y + 60;
+        }
+      });
+
+      document.getElementById('graphBox').style.height= maxHeight < 50 ? 10 : maxHeight + 'px';
+      
+
 
   	  // Update the nodes…
   	  var node = vis.selectAll("g.node").data(nodes, function(d) { return d.id || (d.id = ++i); });
