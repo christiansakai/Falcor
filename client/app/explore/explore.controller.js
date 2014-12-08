@@ -11,7 +11,6 @@ angular.module('storyHubApp')
 
     $scope.keywords = "";
 
-
     //final cut of function will pass in the roomId
   	$scope.joinStory = function(story){
       console.log(story)

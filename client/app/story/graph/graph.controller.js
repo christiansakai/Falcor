@@ -4,14 +4,14 @@ angular.module('storyHubApp')
   .controller('GraphCtrl', function ($scope, $state, $stateParams, ExploreStories, StoryService, Auth, growl, $modal, socket) {
 
     // <TO JOIN ROOM WHEN LOADED>
-    // console.log('state params', $stateParams);
-    // console.log('StoryService', StoryService)
 
     $scope.storyTitle = StoryService.title;
     var data = {
         storyId: $stateParams.storyId,
         username: Auth.getCurrentUser().name
     };
+
+    
 
     socket.socket.emit('joinRoom', data);
     // <TO JOIN ROOM WHEN LOADED>
@@ -128,8 +128,18 @@ angular.module('storyHubApp')
     StoryService.getNodes(function(results){      
       $scope.results = results;
 
-      // When results are retrieved, set the first node as selected.
-      getBranchForNode($scope.results[0]);
+
+      if($stateParams.nodeId) {
+        // console.log('Has nodeId. Most likely redirect from top stories or use of deep linked url.');
+        var deeplinkNode = _.find($scope.results, {'_id': $stateParams.nodeId });
+        getBranchForNode(deeplinkNode);
+      } else {
+        // console.log('Does not have nodeId. Handle as normal.');
+        // When results are retrieved, set the first node as selected.
+        getBranchForNode($scope.results[0]);
+      }
+
+      
     })
 
     var box = document.getElementById('graphBox');
