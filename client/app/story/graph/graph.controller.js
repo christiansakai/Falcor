@@ -4,14 +4,14 @@ angular.module('storyHubApp')
   .controller('GraphCtrl', function ($scope, $state, $stateParams, ExploreStories, StoryService, Auth, growl, $modal, socket) {
 
     // <TO JOIN ROOM WHEN LOADED>
-    // console.log('state params', $stateParams);
-    // console.log('StoryService', StoryService)
 
     $scope.storyTitle = StoryService.title;
     var data = {
         storyId: $stateParams.storyId,
         username: Auth.getCurrentUser().name
     };
+
+    
 
     socket.socket.emit('joinRoom', data);
     // <TO JOIN ROOM WHEN LOADED>
@@ -40,8 +40,8 @@ angular.module('storyHubApp')
 
 
     $scope.selectNode = function(node) {
-      console.log(node);
-      console.log('hi')
+      // console.log(node);
+      // console.log('hi')
       var size = 'md';// Empty : default, lg :large, sm : small
       var modalInstance = $modal.open({
         templateUrl: 'nodeModal.html',
@@ -115,21 +115,34 @@ angular.module('storyHubApp')
     });
 
     socket.socket.on('addNodeToDom', function(node){
-      console.log('added node', node);
+      // console.log('added node', node);
 
       // !! Store results array in service. Push data to array in service.
       $scope.results.push(node);
 
-      // Set the new node as the selected node in the graph.
       getBranchForNode(node);
+           
+      StoryService.getTree($scope.results, function(tree){
+          buildTree(tree)
+      });
     });
 
 
     StoryService.getNodes(function(results){      
       $scope.results = results;
 
-      // When results are retrieved, set the first node as selected.
-      getBranchForNode($scope.results[0]);
+
+      if($stateParams.nodeId) {
+        // console.log('Has nodeId. Most likely redirect from top stories or use of deep linked url.');
+        var deeplinkNode = _.find($scope.results, {'_id': $stateParams.nodeId });
+        getBranchForNode(deeplinkNode);
+      } else {
+        // console.log('Does not have nodeId. Handle as normal.');
+        // When results are retrieved, set the first node as selected.
+        getBranchForNode($scope.results[0]);
+      }
+
+      
     })
 
     var box = document.getElementById('graphBox');
@@ -184,8 +197,6 @@ angular.module('storyHubApp')
   	      .attr("class", "node")
   	      .attr("transform", function(d) { return "translate(" + source.x0 / horizontalPadding + "," + source.y0 + ")"; })//
   	      .on("click", function(d) {
-  	        // toggle(d);
-  	        // update(d);
             getBranchForNode(d);
             $scope.showAddLine = false;
             updateNode();
@@ -351,10 +362,10 @@ function updateNode() {
 
 
     // #########################################################################
-    function buildTree(treeJSON) {
+    function buildTree(rootNode) {
         // debugger;
-        console.log('treeJSON', treeJSON)
-        root = treeJSON;
+        // console.log('rootNode', rootNode)
+        root = rootNode;
         root.x0 = h / 2;
         root.y0 = 0;
 

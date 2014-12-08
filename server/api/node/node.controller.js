@@ -70,6 +70,26 @@ exports.getNodes = function(req, res) {
       });
 };
 
+// Get list of the top nodes. Most liked nodes.
+exports.getTopNodes = function(req, res) {
+  Node.find({})
+      .sort('-likes.numLikes')
+      .populate('author','name')
+      .populate('storyId')
+      .limit(5)
+      .exec(function(err, nodes) {
+        console.log('############################################');
+        if(err) { return handleError(res, err); }
+        
+        console.log('err', err);
+        console.log('nodes', nodes);
+
+        console.log('############################################');
+
+        return res.json(200, nodes);
+      });
+};
+
 // Get list of storys that match keywords
 exports.findKeyword = function(req, res) {
   Node.find({$text: {$search: req.params.keyword}}, function (err, stories) {

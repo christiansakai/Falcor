@@ -1,0 +1,6 @@
+<div ng-repeat="topStory in topStories">
+	<strong>{{topStory.storyId.name}}</strong>
+	<p>{{topStory.text}}</p>
+	<p>Number of likes: {{topStory.likes.numLikes}}</p>
+	<a ng-click="goToThisStoryBranch(topStory)">Go To This Story</a>
+</div>

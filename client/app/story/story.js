@@ -15,5 +15,12 @@ angular.module('storyHubApp')
         templateUrl: 'app/story/graph.html',
         controller: 'GraphCtrl as graph',
         authenticate: true
+        })
+      .state('story.graph2', {
+        // params: ['storyTitle'],
+        url: '/graph/:nodeId',
+        templateUrl: 'app/story/graph.html',
+        controller: 'GraphCtrl as graph',
+        authenticate: true
         });
   });

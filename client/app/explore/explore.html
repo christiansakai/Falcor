@@ -6,8 +6,7 @@
  <input type="text" name='keywords' ng-model='keywords' ng-enter="submitKeywords()" placeholder='keyword search'>
 
 </div> 	
-<!-- </div>
- -->
+
 <div class="col-lg-9 exploreBox">
 	<div ng-repeat="story in stories" class="clearfix exploreRow">
 		<a ng-click="joinStory(story.storyId)">
@@ -23,4 +22,7 @@
 		<hr ng-show="!$last" />
 	</div>
 </div>
-<div class="col-lg-3">dsfjkndsfkjn</div>
+<div class="col-lg-3">
+	TOP STORIES
+	<top-Stories></top-Stories>
+</div>
