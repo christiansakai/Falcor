@@ -40,8 +40,8 @@ angular.module('storyHubApp')
 
 
     $scope.selectNode = function(node) {
-      console.log(node);
-      console.log('hi')
+      // console.log(node);
+      // console.log('hi')
       var size = 'md';// Empty : default, lg :large, sm : small
       var modalInstance = $modal.open({
         templateUrl: 'nodeModal.html',
@@ -115,13 +115,16 @@ angular.module('storyHubApp')
     });
 
     socket.socket.on('addNodeToDom', function(node){
-      console.log('added node', node);
+      // console.log('added node', node);
 
       // !! Store results array in service. Push data to array in service.
       $scope.results.push(node);
 
-      // Set the new node as the selected node in the graph.
       getBranchForNode(node);
+           
+      StoryService.getTree($scope.results, function(tree){
+          buildTree(tree)
+      });
     });
 
 
@@ -194,8 +197,6 @@ angular.module('storyHubApp')
   	      .attr("class", "node")
   	      .attr("transform", function(d) { return "translate(" + source.x0 / horizontalPadding + "," + source.y0 + ")"; })//
   	      .on("click", function(d) {
-  	        // toggle(d);
-  	        // update(d);
             getBranchForNode(d);
             $scope.showAddLine = false;
             updateNode();
@@ -361,10 +362,10 @@ function updateNode() {
 
 
     // #########################################################################
-    function buildTree(treeJSON) {
+    function buildTree(rootNode) {
         // debugger;
-        console.log('treeJSON', treeJSON)
-        root = treeJSON;
+        // console.log('rootNode', rootNode)
+        root = rootNode;
         root.x0 = h / 2;
         root.y0 = 0;
 

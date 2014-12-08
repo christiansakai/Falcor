@@ -18,7 +18,7 @@ angular.module('storyHubApp')
         
 
         $scope.goToThisStoryBranch = function(topStory) {
-    		console.log('Redirecting user to top story:', topStory)
+    		// console.log('Redirecting user to top story:', topStory)
 
 	    	var storyId = topStory.storyId._id;
 	    	var nodeId = topStory._id;
