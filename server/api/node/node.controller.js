@@ -1,4 +1,4 @@
-'use strict';
+  'use strict';
 
 var _ = require('lodash');
 var Node = require('./node.model');
@@ -10,6 +10,20 @@ exports.index = function(req, res) {
   var findCriteria = {
     firstNode: JSON.parse(req.query.firstNode),
     isPrivate: JSON.parse(req.query.isPrivate)
+  };
+
+  Node.find(findCriteria)
+    .populate('storyId').populate('author')
+    .exec(function (err, nodes) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, nodes);
+  });
+};
+
+exports.getUserNodes = function(req, res) {
+  console.log(req.query.id);
+  var findCriteria = {
+    author: req.query.id,
   };
 
   Node.find(findCriteria)

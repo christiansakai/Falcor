@@ -6,13 +6,15 @@
 
 #graphBox{
 	/*position: absolute;*/
+	height: 80vh;
+	overflow-y:auto;
 }
 
 
 #storyText{
 	font-family: freight-text-pro, Georgia, Cambria, 'Times New Roman', Times, serif;
 	font-size: 22px;
-	height: 70vh;
+	height: 65vh;
 	overflow-y:auto;
 	.storyNode{
 		line-height: 1.5em;

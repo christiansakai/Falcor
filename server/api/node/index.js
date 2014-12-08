@@ -13,9 +13,10 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/getNodes/', controller.getNodes);
+router.get('/getUserNodes/', auth.isAuthenticated(), controller.getUserNodes);
 router.get('/getNodesForStories/', controller.getNodesForStories);
 router.get('/getChildlessNodes/', controller.getChildlessNodes); 
-router.get('/:keyword/', controller.findKeyword);
+router.get('/keywordSearch/:keyword/', controller.findKeyword);
 router.get('/:id', controller.show);
 router.post('/', controller.create);
 router.put('/rateNodes/:nodeId/', controller.rateNodes);

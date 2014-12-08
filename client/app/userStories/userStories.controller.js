@@ -5,6 +5,14 @@ angular.module('storyHubApp')
 
     var vm = this; 
 
+    $scope.currentPage = 0;
+
+    $scope.setPage = function (pageNo) {
+      $scope.currentPage = pageNo - 1;
+    };
+
+    $scope.pageSize = 10;
+
     $scope.username = Auth.getCurrentUser().name
     $scope.userId = Auth.getCurrentUser()._id
 
@@ -13,10 +21,22 @@ angular.module('storyHubApp')
         id: $scope.userId
       }
     	ExploreStories.getUserNodes(obj, function(results){
-    		$scope.myStories = results.stories
-        $scope.nodes = results
+        console.log('result', results)
+    		$scope.stories = results;
+        $scope.currentStories = $scope.stories.slice(0, 10)
+        // $scope.nodes = results
     		console.log('results: ', results)
     	})
+    }
+
+
+    $scope.changePage = function(){
+      console.log($scope.currentPage)
+        var currentIndex = $scope.currentPage - 1;
+        var start = currentIndex*10;
+        var end = start + 10
+       $scope.currentStories = $scope.stories.slice(start, end)
+       console.log($scope.currentStories)
     }
 
     $scope.goToStory = function(storyId){

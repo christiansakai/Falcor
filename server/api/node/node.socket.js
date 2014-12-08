@@ -30,26 +30,35 @@ exports.register = function(socketio) {
 					socket.leave(room)
 				})
 			}
+			var storyName = ''
 			// console.log('io', socketio.to)
 			socket.nickname = data.username;
 			socket.join(data.storyId);
+			Story.findById(data.storyId, function (err, story) {
+			  if(err) { return handleError(res, err); }
+			  storyName = story.name;
+			  console.log(story)
+			  console.log(storyName)
+
+			  			var currentUsers = [];
+
+			  			findClientsSocketByRoomId(data.storyId, function(sockets){
+			  					sockets.forEach(function(socket){
+			  						console.log(socket.nickname)
+			  						currentUsers.push({
+			  							name: socket.nickname,
+			  							id: socket.id}
+			  							)
+			  					})
+			  				})
+
+
+
+
+			      	socketio.to(data.storyId).emit('joinedRoom', {currentUsers:currentUsers, storyName: storyName, 'announcement': data.username + ' joined!'});
+			});
 			// console.log('finding clients--------------', findClientsSocketByRoomId(data.storyId))
-			var currentUsers = [];
 
-			findClientsSocketByRoomId(data.storyId, function(sockets){
-					sockets.forEach(function(socket){
-						console.log(socket.nickname)
-						currentUsers.push({
-							name: socket.nickname,
-							id: socket.id}
-							)
-					})
-				})
-
-
-
-
-    	socketio.to(data.storyId).emit('joinedRoom', {currentUsers:currentUsers, 'announcement': data.username + ' joined!'});
 		})
 
 

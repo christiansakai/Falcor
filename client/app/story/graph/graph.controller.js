@@ -8,6 +8,12 @@ angular.module('storyHubApp')
     // console.log('state params', $stateParams);
     // console.log('StoryService', StoryService)
 
+
+    socket.socket.on('joinedRoom', function(data){
+      console.log('controller', data)
+      $scope.storyTitle = data.storyName;
+    })
+
     $scope.storyTitle = StoryService.title;
     var data = {
         storyId: $stateParams.storyId,
