@@ -24,7 +24,7 @@ angular.module('storyHubApp')
         }, 
 
         submitKeywords: function(keyword, callback){
-          $http.get('/api/nodes/keywordSearch' + keyword + '/').success(callback)
+          $http.get('/api/nodes/keywordSearch/' + keyword + '/').success(callback)
         },
 
         getTopNodes: function( callback) {
