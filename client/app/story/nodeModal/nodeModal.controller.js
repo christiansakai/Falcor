@@ -1,5 +1,8 @@
 angular.module('storyHubApp')
-  .controller('nodeModalController', function ($scope, $modalInstance, $modal, node, Auth) {
+  .controller('nodeModalController', function ($scope, $modalInstance, $http, $q, $state, alchemize, $modal, node, Auth, ParseAlchemy) {
+
+
+    var vm = this; 
 
   	$scope.cancel = function () {
   	  $modalInstance.dismiss('cancel');
@@ -35,6 +38,42 @@ angular.module('storyHubApp')
         // console.log('liked node: ', result)
       })
     }
+
+    $scope.analyzeBranch = function(){
+      console.log('node: ', node)
+
+      var obj = {
+        nodeId: node._id
+      }
+
+      return $http.get('api/nodes/getSingleBranch/', {params: obj}).then(function(response){
+        return response.data; 
+      })
+    }
+
+
+    vm.fetchAlchemyDataForBranch = function(){
+      $scope.analyzeBranch()
+      .then(function(nodes){
+        console.log('childless nodes here: ', nodes)
+        var textArr = nodes.map(function(childlessNode){
+          return childlessNode.text + childlessNode.ancestors.map(function(ancestors){
+            return ancestors.text + 'hate ugly wrong bad';
+          })
+        })
+        var text = textArr.join(" ")
+        console.log('text to be sent: ', text)
+        return alchemize.sendToAlchemy(text)
+      }).then(function assessAlchemyData(analysis){
+        ParseAlchemy.parseAlchemyData(analysis)
+      })
+      setTimeout(function(){
+        $state.go('d3Keywords')
+      }, 1000)
+    }
+
+    vm.fetchAlchemyDataForBranch();
+
 
 
 

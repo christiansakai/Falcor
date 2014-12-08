@@ -5,6 +5,7 @@ angular.module('storyHubApp')
 
     // <TO JOIN ROOM WHEN LOADED>
 
+
     $scope.storyTitle = StoryService.title;
     var data = {
         storyId: $stateParams.storyId,

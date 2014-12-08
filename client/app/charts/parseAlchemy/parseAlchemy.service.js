@@ -37,8 +37,58 @@ angular.module('storyHubApp')
         };
         // console.log('statsObj: ', statObj, 'data: ', _stats.data)
         $log.debug( 'Saved to stats: from factory', this.data );
+      }, 
+      keywords: [],
+      sentiments: [],
+      parseAlchemyBranchData: function(analysis){
+        console.log('first: ', analysis[0])
+
+        var Branches = function(sentiment, keyword){
+          this.sentiment = sentiment; 
+          this.keyword = keyword; 
+        }
+
+        var branch = {
+          keywords: '', 
+          sentiment: ''
+        } 
+
+        var numBranches = analysis[0].length; 
+        var sentiment = analysis[0]; 
+        var keywords = analysis[2]; 
+        var singleBranchArr = []
+
+        var arrayOfObjects = []
+
+        for (var k = 0; k < sentiment.length; k++){
+          branch.sentiment = sentiment[k].docSentiment; 
+          branch.keywords = keywords[k]
+          singleBranchArr.push(branch.sentiment, branch.keywords)
+          arrayOfObjects.push(singleBranchArr)
+          branch.sentiment = ''; 
+          branch.keywords = ''; 
+          singleBranchArr = []
+        }
+
+        console.log('arr: ', arrayOfObjects)
+
+        //parses the keywords data for rendering
+        for (var i = 0; i < arrayOfObjects.length; i++){
+            this.keywords.push(arrayOfObjects[i][1].keywords)
+        }
+
+        $log.debug( 'Saved to keywords to stats: from factory', this.keywords );
+
+
+        //parses the sentiments data for rendering 
+        for (var i = 0; i < arrayOfObjects.length; i++){
+          this.sentiments.push(arrayOfObjects[i][0])
+        }
+        
+        $log.debug( 'Saved to sentiments to stats: from factory', this.sentiments );
+          
       }
-    };
+    }
 
     return ParseAlchemy;
 

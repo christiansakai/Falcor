@@ -1,4 +1,3 @@
-<img src="/assets/images/forest-sm.jpg" id="bg">
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 
@@ -7,19 +6,19 @@
   <form class="form" name="form" novalidate>
     <div>
 
-      <div class="form-group  text-center">
+      <div class="form-group clearfix center text-center">
 
-        <input type="name" name="name" placeholder="name" class="text-center col-lg-12" ng-model="user.name" required>
+        <input type="name" name="name" placeholder="name" autofocus class="text-center col-lg-12 clearfix" ng-model="user.name" required>
       </div>
 
-      <div class="form-group  text-center">
+      <div class="form-group center text-center">
 
-        <input type="email" name="email" placeholder="email" class="text-center col-lg-12" ng-model="user.email" required>
+        <input type="email" name="email" placeholder="email" class="text-center col-lg-12 clearfix" ng-model="user.email" required>
       </div>
 
-      <div class="form-group text-center">
+      <div class="form-group center text-center">
 
-        <input type="password" name="password" placeholder="password" class="text-center col-lg-12" ng-model="user.password" required ng-keyup="$event.keyCode == 13 && register(form)">
+        <input type="password" name="password" placeholder="password" class="text-center clearfix col-lg-12" ng-model="user.password" required ng-keyup="$event.keyCode == 13 && register(form)">
       </div>
 
       <div class="form-group has-error">
@@ -33,6 +32,9 @@
         <p class="help-block">{{ errors.other }}</p>
       </div>
     </div>
+    <br>
+    <br>
+    <br>
     <div class="text-center loginbuttons">
 <!--       <button class="btn1" type="submit">
         Login
@@ -41,9 +43,10 @@
         Register
       </button>
  -->
+      <button type="submit" class="submitButton loginButton" ng-click="register(form)">Sign Up</button>
 
-      <a ng-click="register(form)">Sign Up</a>
-    </div>
+<!--       <a ng-click="register(form)">Sign Up</a>
+ -->    </div>
 
 
 

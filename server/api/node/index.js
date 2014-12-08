@@ -16,6 +16,7 @@ router.get('/getNodes/', controller.getNodes);
 router.get('/getTopNodes/', controller.getTopNodes);
 router.get('/getNodesForStories/', controller.getNodesForStories);
 router.get('/getChildlessNodes/', controller.getChildlessNodes); 
+router.get('/getSingleBranch/', controller.getSingleBranch); 
 router.get('/:keyword/', controller.findKeyword);
 router.get('/:id', controller.show);
 router.post('/', controller.create);
