@@ -5,6 +5,18 @@ angular.module('storyHubApp')
     $scope.menu = [{
       'title': 'Home',
       'link': '/landing'
+    }, 
+    {
+      'title': 'Create a Story',
+      'link': '/createStory'
+    },
+    {
+      'title': 'Your Stories',
+      'link': '/userStories'
+    },
+    {
+      'title': 'Explore Stories',
+      'link': '/explore'
     }];
 
     $scope.isCollapsed = true;
