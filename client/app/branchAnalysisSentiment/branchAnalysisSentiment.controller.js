@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('BranchanalysissentimentCtrl', function ($scope, $log, ParseAlchemy) {
+    .controller('BranchanalysissentimentCtrl', function ($scope, $log, ParseAlchemy) {
     
 
-  	  $scope.options = {
+        $scope.options = {
             chart: {
                 type: 'pieChart',
                 height: 600,
@@ -53,20 +53,7 @@ angular.module('storyHubApp')
         	}
 
         // console.log('all Sentiments Data: ', allData)
-				return allData;         	
+			return allData;         	
         
         }
-        // $scope.data = [
-        //     {
-        //         key: "Positive",
-        //         y: (1 + Number((ParseAlchemy.data.sentiment.score)))/2
-        //     },
-        //     {
-        //         key: "Negative",
-        //         y: (2 - (1 + Number(ParseAlchemy.data.sentiment.score)))/2
-        //     }
-        // ];
-
-
-
-  });
+    });

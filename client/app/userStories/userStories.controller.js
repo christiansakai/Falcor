@@ -35,6 +35,16 @@ angular.module('storyHubApp')
       $state.go('story.graph2', {storyId: storyId, nodeId: nodeId})
     }
 
+    $scope.submitKeywords = function(){
+      // console.log('im hit! keywords: ', $scope.keywords)
+      ExploreStories.submitKeywords($scope.keywords, function(results){
+        $scope.stories = results;
+        $scope.currentStories = $scope.stories.slice(0, 10);
+        console.log('keyword results: ', results)
+      })
+    }
+
+
 
     $scope.changePage = function(){
       console.log($scope.currentPage)
