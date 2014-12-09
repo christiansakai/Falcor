@@ -31,21 +31,25 @@ angular.module('storyHubApp')
         	var data = []; 
 
         	for (var i = 0; i < ParseAlchemy.sentiments.length; i++){
+                if (typeof ParseAlchemy.sentiments[i].score === 'undefined'){
+                    // console.log('undefined score type: ', ParseAlchemy.sentiments[i])
+                    ParseAlchemy.sentiments[i].score = '0.50000';
+                }
         		data.push(
         		{
-        			key: "Positive",
-              y: (1 + Number((ParseAlchemy.sentiments[i].score)))/2
+        		key: "Positive",
+                y: (1 + Number((ParseAlchemy.sentiments[i].score)))/2
         		}, 
         		{
                 key: "Negative",
                 y: (2 - (1 + Number(ParseAlchemy.sentiments[i].score)))/2
-            }
+                }
         		)
         		allData.push(data); 
         		data = []; 
         	}
 
-        console.log('all Sentiments Data: ', allData)
+        // console.log('all Sentiments Data: ', allData)
 				return allData;         	
         
         }

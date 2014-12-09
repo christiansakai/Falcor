@@ -3,6 +3,7 @@
 angular.module('storyHubApp')
   .controller('D3keywordsCtrl', function ($scope, $log, ParseAlchemy) {
     
+    console.log('service loaded: ', ParseAlchemy.data.keywords)
 
   	 $scope.options = {
                 chart: {

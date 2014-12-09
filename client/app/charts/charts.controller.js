@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('ChartsCtrl', function ($scope, StoryService, ExploreStories, NodeService, $q, $http, alchemize, ParseAlchemy, $log) {
+  .controller('ChartsCtrl', function ($scope, $state, StoryService, ExploreStories, NodeService, $q, $http, alchemize, ParseAlchemy, $log) {
     
   	var vm = this; 
 
@@ -17,7 +17,7 @@ angular.module('storyHubApp')
 
       return $http.get('/api/nodes/getNodes/', {params: obj}).then(function(results){
       	return results.data; 
-        })
+      })
     }
 
     vm.getStoryIdsForCount = function(){
@@ -38,13 +38,16 @@ angular.module('storyHubApp')
 
     //////////////////////////// CHART JS GRAPHS //////////////////////////////////////////
 
-    //compares word count per story 
+    //retrieves all stories, whether public or private, and compares word count per story 
     vm.wordStoryCount = function(){
     	var storyIdsArr = []; 
       var wordsPerStoryArr = []; 
       $scope.wordCountStoryLabels = []; 
     	vm.getStoryIdsForCount()
     	.then(function(stories){
+        $scope.wordCountStoryLabels = stories.map(function(story){
+          return story.name; 
+        })
     		storyIdsArr = stories.map(function(story){
     			return story._id;
     		});
@@ -55,12 +58,10 @@ angular.module('storyHubApp')
         var count = 0; 
     		$http.get('/api/nodes/getNodesForStories/', {params: obj})
     			.success(function(storyNodes){
-            // console.log('All STORY nodes: ', storyNodes)
-    				storyNodes.forEach(function(story){
+            storyNodes.forEach(function(story){
               story.forEach(function(node){
                 // console.log('nodes for words per story!!!: ', node)
                 count += node.text.split(" ").length; 
-                $scope.wordCountStoryLabels.push(node.text.substring(0, 30))
               })
               wordsPerStoryArr.push(count)
               count = 0
@@ -72,7 +73,7 @@ angular.module('storyHubApp')
     }
 
 
-    //compares word count of nodes within a single story
+    //retrieves all nodes per story and compares word count of nodes within a single story
     vm.wordCount = function(){
     	var wordCountArr = []; 
       $scope.wordCountByNodeLabels = []; 
@@ -107,6 +108,42 @@ angular.module('storyHubApp')
       return numLikesArr; 
     }
 
+
+    //displays number of likes per story, whether public or private
+    vm.numLikesAcrossStories = function(){
+      var storyIdsArr = []; 
+      var likesPerStoryArr = []; 
+      vm.getStoryIdsForCount()
+      .then(function(stories){
+        // console.log('story objs: ', stories)
+        $scope.likesCountStoryLabels = stories.map(function(story){
+          return story.name; 
+        })
+        storyIdsArr = stories.map(function(story){
+          return story._id;
+        });
+        // console.log('story id array: ', storyIdsArr)
+        var obj = {
+          storyIds: storyIdsArr
+        }
+        var count = 0; 
+        $http.get('/api/nodes/getNodesForStories/', {params: obj})
+          .success(function(storyNodes){
+            storyNodes.forEach(function(story){
+              story.forEach(function(node){
+                // console.log('node obj: ', node)
+                count += node.likes.numLikes; 
+              })
+              likesPerStoryArr.push(count)
+              count = 0
+            })
+          });
+      })
+      return likesPerStoryArr;
+    }
+
+
+    //compares authors of a story by word count 
     vm.authorCount = function(){
       var obj = {};
       $scope.authorCountLabels = []; 
@@ -138,14 +175,15 @@ angular.module('storyHubApp')
   ///////////////////// SENTIMENT FOR A SINGLE STORY /////////////////////
   //join nodes for a single story 
   //receive sentiment analysis on single story 
-  vm.fetchAlchemyDataforStory = function(){
+  vm.fetchAlchemyDataforStory = function(string){
+    console.log('fetching data!')
     var nodeTextArr = []
     vm.getNodesPerStory()
     .then(function(story){
       nodeTextArr = story.map(function(node){
         return node.text;
       });
-      nodeTextArr.unshift('Politics angry existentialism life pissed nihilism');
+      // nodeTextArr.unshift('Politics angry existentialism life pissed nihilism');
       var text = nodeTextArr.join(" ");
       console.log('text to be sent: ', text)
       return alchemize.sendToAlchemy(text)
@@ -153,6 +191,18 @@ angular.module('storyHubApp')
       ParseAlchemy.parseAlchemyData(analysis)
       console.log("this is from chart controller", ParseAlchemy.data);
     })
+
+    if (string === 'keywords'){
+      setTimeout(function(){
+        $state.go('d3Keywords')
+      }, 600)
+    }
+
+    else if (string === 'sentiment'){
+      setTimeout(function(){
+        $state.go('d3Sentiment')
+      }, 600)
+    }
   }
 
   $scope.test = function() {
@@ -178,13 +228,13 @@ angular.module('storyHubApp')
 
 
   //gets the entire branch of text per story 
-  vm.fetchAlchemyDataForBranch = function(){
+  vm.fetchAlchemyDataForBranch = function(string){
     vm.getNodesForBranch()
     .then(function(nodes){
       console.log('childless nodes here: ', nodes)
       var textArr = nodes.map(function(childlessNode){
         return childlessNode.text + childlessNode.ancestors.map(function(ancestors){
-          return ancestors.text + 'hate ugly wrong bad';
+          return ancestors.text;
         })
       })
       var obj = {
@@ -195,6 +245,18 @@ angular.module('storyHubApp')
     }).then(function assessAlchemyBranchData(analysis){
       ParseAlchemy.parseAlchemyBranchData(analysis)
     })
+
+    if (string === 'keywords'){
+      setTimeout(function(){
+        $state.go('branchAnalysis')
+      }, 1200)
+    }
+
+    else if (string === 'sentiment'){
+      setTimeout(function(){
+        $state.go('branchAnalysisSentiment')
+      }, 1200)
+    }
   }
 
   // vm.fetchAlchemyDataForBranch();
@@ -247,6 +309,18 @@ angular.module('storyHubApp')
           pointHighlightFill: '#fff',
           pointHighlightStroke: 'rgba(220,220,220,1)',
           data: vm.authorCount()
+        }]
+      }, 
+      likesPerStory: {
+        labels:  $scope.likesCountStoryLabels,
+        datasets: [{
+          fillColor : 'rgba(129, 183, 26, 0.5)',
+          strokeColor : 'rgba(129, 183, 26, 1)',
+          pointColor : 'rgba(129, 183, 26, 1)',
+          pointStrokeColor : "#fff",
+          pointHighlightFill: '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data: vm.numLikesAcrossStories()
         }]
       }
     }
