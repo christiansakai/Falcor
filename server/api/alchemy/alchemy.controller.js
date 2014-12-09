@@ -41,7 +41,6 @@ exports.keywords = function(req, res) {
 exports.sentimentsArray = function(req, res){
   // console.log('text: ', req.body)
   var sentimentsArr = [];
-  var conceptsArr = []; 
   var keywordsArr = [];  
   var finalArr = []
   var branchText = req.body.branchText; 
@@ -64,23 +63,23 @@ exports.sentimentsArray = function(req, res){
       })
     }
 
+    // var apiCallTwo = function(doneAPICallTwo){
+    //   console.log('inside apiCallTwo');
+    //   alchemy.concepts(oneText, {}, function(err, response) {
+    //     conceptsArr.push(response)
+    //     doneAPICallTwo(err, 'done with two')
+    //   });
+    // }
+
     var apiCallTwo = function(doneAPICallTwo){
       console.log('inside apiCallTwo');
-      alchemy.concepts(oneText, {}, function(err, response) {
-        conceptsArr.push(response)
+      alchemy.keywords(oneText, {}, function(err, response) {
+        keywordsArr.push(response)
         doneAPICallTwo(err, 'done with two')
       });
     }
 
-    var apiCallThree = function(doneAPICallThree){
-      console.log('inside apiCallThree');
-      alchemy.keywords(oneText, {}, function(err, response) {
-        keywordsArr.push(response)
-        doneAPICallThree(err, 'done with three')
-      });
-    }
-
-    async.series([apiCallOne, apiCallTwo, apiCallThree], function(err, results) {
+    async.series([apiCallOne, apiCallTwo], function(err, results) {
       console.log('inside alchemyForOneItem');
       doneAlchemyForOneItem(err);
     });
@@ -88,7 +87,7 @@ exports.sentimentsArray = function(req, res){
   };
 
   var doneAlchemyForAllItem = function(err) {
-    finalArr.push(sentimentsArr, conceptsArr, keywordsArr);
+    finalArr.push(sentimentsArr, keywordsArr);
     console.log(finalArr);
     res.json(200, finalArr);
   };

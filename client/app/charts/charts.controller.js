@@ -235,6 +235,9 @@ angular.module('storyHubApp')
       var labelArr = nodes.map(function(childlessNode){
         return childlessNode.text.substring(0, 30)
       })
+      if (ParseAlchemy.branchLabels.length > 0){
+        ParseAlchemy.branchLabels = []
+      }
       ParseAlchemy.branchLabels = labelArr; 
       console.log('branch labels: ', ParseAlchemy.branchLabels)
       var textArr = nodes.map(function(childlessNode){

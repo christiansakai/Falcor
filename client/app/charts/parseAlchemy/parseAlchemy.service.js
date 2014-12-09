@@ -23,15 +23,7 @@ angular.module('storyHubApp')
             analysis.keywords[i].text = analysis.keywords[i].text.slice(0, 15) + '…';
           }
         }
-        // var statObj = {
-        //   // concepts: analysis.concepts,
-        //   keywords: analysis.keywords,
-        //   sentiment: analysis.sentiment
-        // };
-
-
-        // angular.copy(statObj, this.data);
-
+     
         this.data = {
           keywords: analysis.keywords,
           sentiment: analysis.sentiment
@@ -44,21 +36,13 @@ angular.module('storyHubApp')
       parseAlchemyBranchData: function(analysis){
         console.log('first: ', analysis[0])
 
-        var Branches = function(sentiment, keyword){
-          this.sentiment = sentiment; 
-          this.keyword = keyword; 
-        }
-
         var branch = {
           keywords: '', 
           sentiment: ''
         } 
-
-        var numBranches = analysis[0].length; 
         var sentiment = analysis[0]; 
-        var keywords = analysis[2]; 
+        var keywords = analysis[1]; 
         var singleBranchArr = []
-
         var arrayOfObjects = []
 
         for (var k = 0; k < sentiment.length; k++){
@@ -74,6 +58,9 @@ angular.module('storyHubApp')
         // console.log('arr: ', arrayOfObjects)
 
         //parses the keywords data for rendering
+        if (this.keywords.length > 0){
+          this.keywords = []; 
+        }
         for (var i = 0; i < arrayOfObjects.length; i++){
             this.keywords.push(arrayOfObjects[i][1].keywords)
         }
@@ -81,6 +68,9 @@ angular.module('storyHubApp')
         $log.debug( 'Saved to keywords to stats: from factory', this.keywords );
 
 
+        if (this.sentiments.length > 0){
+          this.sentiments = [];
+        }
         //parses the sentiments data for rendering 
         for (var i = 0; i < arrayOfObjects.length; i++){
           this.sentiments.push(arrayOfObjects[i][0])
