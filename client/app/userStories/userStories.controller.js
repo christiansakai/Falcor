@@ -21,30 +21,39 @@ angular.module('storyHubApp')
         id: $scope.userId
       }
     	ExploreStories.getUserNodes(obj, function(results){
-        console.log('result', results)
     		$scope.stories = results;
         $scope.currentStories = $scope.stories.slice(0, 10)
         // $scope.nodes = results
-    		console.log('results: ', results)
+    		// console.log('results: ', results)
     	})
     }
 
-      $scope.joinStory = function(story){
-        console.log(story)
-                var storyId = story.storyId._id;
-                var nodeId = story._id;
+    $scope.joinStory = function(story){
+      console.log(story)
+      var storyId = story.storyId._id;
+      var nodeId = story._id;
+      $state.go('story.graph2', {storyId: storyId, nodeId: nodeId})
+    }
 
-                $state.go('story.graph2', {storyId: storyId, nodeId: nodeId})
-      }
+    $scope.submitKeywords = function(){
+      // console.log('im hit! keywords: ', $scope.keywords)
+      ExploreStories.submitKeywords($scope.keywords, function(results){
+        $scope.stories = results;
+        $scope.currentStories = $scope.stories.slice(0, 10);
+        console.log('keyword results: ', results)
+      })
+    }
+
 
 
     $scope.changePage = function(){
       console.log($scope.currentPage)
-        var currentIndex = $scope.currentPage - 1;
-        var start = currentIndex*10;
-        var end = start + 10
-       $scope.currentStories = $scope.stories.slice(start, end)
-       console.log($scope.currentStories)
+      var currentIndex = $scope.currentPage - 1;
+      var start = currentIndex*10;
+      var end = start + 10
+      $scope.currentStories = $scope.stories.slice(start, end)
+      window.scrollTo(0, 0)
+      console.log($scope.currentStories)
     }
 
     $scope.goToStory = function(storyId){

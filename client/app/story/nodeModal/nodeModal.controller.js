@@ -1,5 +1,5 @@
 angular.module('storyHubApp')
-  .controller('nodeModalController', function ($scope, $modalInstance, $http, $q, $state, alchemize, $modal, node, Auth, ParseAlchemy) {
+  .controller('nodeModalController', function ($scope, ExploreStories, $modalInstance, $http, $q, $state, alchemize, $modal, node, Auth, ParseAlchemy) {
 
 
     var vm = this; 
