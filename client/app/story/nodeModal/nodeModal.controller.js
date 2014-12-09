@@ -1,5 +1,5 @@
 angular.module('storyHubApp')
-  .controller('nodeModalController', function ($scope, $modalInstance, $http, $q, $state, alchemize, $modal, node, Auth, ParseAlchemy) {
+  .controller('nodeModalController', function ($scope, $modalInstance, $http, $q, $state, alchemize, $modal, node, Auth, ParseAlchemy, ExploreStories) {
 
 
     var vm = this; 
@@ -38,7 +38,10 @@ angular.module('storyHubApp')
       // console.log('sent obj: ', obj.userId)
       ExploreStories.rateNodes(nodeId, obj, function(result){
         // console.log('liked node: ', result)
+        $modalInstance.close('liked ' + result);
+
       })
+
     }
 
     $scope.analyzeBranch = function(){

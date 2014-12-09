@@ -3,8 +3,8 @@
 angular.module('storyHubApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('branchAnalysis', {
-        url: '/branchAnalysis',
+      .state('story.charts.branchKeywords', {
+        url: '/branchKeywords',
         templateUrl: 'app/branchAnalysis/branchAnalysis.html',
         controller: 'BranchanalysisCtrl'
       });
