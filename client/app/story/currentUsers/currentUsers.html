@@ -1,6 +1,7 @@
 <ul class="nav nav-pills nav-justified" id="storyNav">
 	<li role="presentation"><a ng-click="leaveStory()">Leave Story</a></li>
-	 <li role="presentation"><a ui-sref="story.charts.landing">Story Statistics</a></li>
+	 <li role="presentation" ng-if="!onCharts()"><a ui-sref="story.charts.landing">Story Statistics</a></li>
+	 <li role="presentation" ng-if="onCharts()"><a ui-sref="story.graph">Return to Story</a></li>
 	 <li role="presentation" class="dropdown">
 	   <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
 	     Current Users ({{currentUsers.length}}) <span class="caret"></span>

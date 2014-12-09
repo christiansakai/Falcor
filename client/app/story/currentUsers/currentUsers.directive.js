@@ -5,20 +5,8 @@ angular.module('storyHubApp')
     return {
       templateUrl: 'app/story/currentUsers/currentUsers.html',
       restrict: 'E',
-      controller: function($scope, $state, socket, StoryService, Auth) {
-        // console.log("this is directive", Playlist);
-        // socket.socket.on('joinedRoom', function(data){
-        //   console.log('JOINED ROOM', data)
-          // console.log('hi there', data.currentUsers)
+      controller: function($scope, $state, socket, StoryService, Auth, $location) {
 
-          $scope.$watch(function () { return StoryService.currentUsers }, function (newVal, oldVal) {
-              if (typeof newVal !== 'undefined') {
-                  $scope.currentUsers = StoryService.currentUsers;
-              }
-          });
-          // $scope.currentUsers = StoryService.currentUsers;
-          // $scope.$apply();
-        // })
         $scope.leaveStory = function(){
           console.log(StoryService.id)
 
@@ -33,7 +21,6 @@ angular.module('storyHubApp')
         };
 
         socket.socket.on('leftRoom', function(data){
-          // console.log('disconnect test', data)
           $scope.currentUsers = data.currentUsers;
         })
 
@@ -44,10 +31,14 @@ angular.module('storyHubApp')
         })
 
         socket.socket.on('joinedRoom', function(data){
-          // console.log('hitting StoryService', data)
             $scope.currentUsers = data.currentUsers;  
-          // console.log('Story.title', Story.title)
         })
+
+        $scope.onCharts = function(route) {
+          return ($location.path().indexOf('chart') !== -1)
+          // console.log($location.path())
+          // return route === $location.path();
+        };
 
       }
     };

@@ -4,6 +4,30 @@ angular.module('storyHubApp')
 
     var vm = this; 
 
+    $scope.exportPDF = function() {
+      console.log('Exporting PDF.');
+      
+      var doc = new jsPDF();
+
+      // We'll make our own renderer to skip this editor
+      var specialElementHandlers = {
+        '#exportBtn': function(element, renderer){
+          return true;
+        }
+      };
+      // All units are in the set measurement for the document
+      // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
+      doc.fromHTML($('#storyBox').get(0), 15, 15, {
+        'width': 170, 
+        'elementHandlers': specialElementHandlers
+      });
+
+        doc.save('FalcorExport.pdf');
+        $modalInstance.close('exported file');
+
+
+    }
+
     $scope.node = node;
 
   	$scope.cancel = function () {
@@ -80,7 +104,7 @@ angular.module('storyHubApp')
         ParseAlchemy.parseAlchemyData(analysis)
       })
       setTimeout(function(){
-        $state.go('d3Keywords')
+        $state.go('story.branchCharts.landing')
       }, 400)
     }
 
