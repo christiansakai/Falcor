@@ -115,6 +115,7 @@ exports.findKeyword = function(req, res) {
   console.log('keywords: ', req.params.keyword)
   Node.find({$text: {$search: req.params.keyword}})
     .populate('storyId')
+    .populate('author', 'name')
     .exec(function (err, stories) {
     if(err) { return handleError(res, err); }
     return res.json(200, stories);
