@@ -16,6 +16,18 @@
 	font-size: 18px;
 }
 
+div#scrollBox {
+        height: 65vh;
+        /*width: 400px;*/
+        /*border: 2px solid #000;*/
+        overflow: scroll;
+      }
+svg#treesvg {
+height: 1100px;
+width: 100px;
+border:1px dotted #ccc;
+background-color: #ccc;
+}  
 
 #storyText{
 	font-family: freight-text-pro, Georgia, Cambria, 'Times New Roman', Times, serif;

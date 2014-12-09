@@ -1,6 +1,6 @@
 <section class='dashboardSection center boxText'>
 		<h4>Your Sentiments By Branch:</h4>
-		<button class='right' ui-sref="branchAnalysis">Keywords Analysis</button>
+
 	<div ng-repeat='data in allData'>
 		<h3>Branch Title: {{labels[$index]}}</h3> 
 		<nvd3 options="options" data="data"></nvd3>

@@ -194,13 +194,13 @@ angular.module('storyHubApp')
 
     if (string === 'keywords'){
       setTimeout(function(){
-        $state.go('d3Keywords')
+        $state.go('story.charts.storyKeywords')
       }, 600)
     }
 
     else if (string === 'sentiment'){
       setTimeout(function(){
-        $state.go('d3Sentiment')
+        $state.go('story.charts.sentiment')
       }, 600)
     }
   }
@@ -256,13 +256,13 @@ angular.module('storyHubApp')
 
     if (string === 'keywords'){
       setTimeout(function(){
-        $state.go('branchAnalysis')
+        $state.go('story.charts.branchKeywords')
       }, 1200)
     }
 
     else if (string === 'sentiment'){
       setTimeout(function(){
-        $state.go('branchAnalysisSentiment')
+        $state.go('story.charts.branchSentiment')
       }, 1200)
     }
   }

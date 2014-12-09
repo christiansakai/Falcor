@@ -1,19 +1,4 @@
 
-<style type="text/css">
-div#scrollBox {
-        height: 400px;
-        /*width: 400px;*/
-        /*border: 2px solid #000;*/
-        overflow: scroll;
-      }
-  svg#treesvg {
-    height: 1100px;
-    width: 100px;
-    border:1px dotted #ccc;
-    background-color: #ccc;
-  }  
-</style>
-
 <div id="scrollBox" class="col-lg-6 clearfix">
 <div id="graphBox" >
 </div>
@@ -24,6 +9,9 @@ div#scrollBox {
   <div class="text-center" id="storyTitle"><h1>{{storyTitle}}</h1></div>
       <div class="col-lg-10 center" id="storyText">
         <span ng-repeat="node in branchFiltered" class="storyNode"><a ng-click="selectNode(node)">{{ node.text }}</a><span>&nbsp;</span></span>
+      </div>
+      <div class="col-lg-10 center" >
+        <button class="btn1" id="exportBtn" ng-click="exportPDF()">Export AS PDF</button>
       </div>
 </div>
 
