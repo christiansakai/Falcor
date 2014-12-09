@@ -67,11 +67,11 @@ angular.module('storyHubApp')
         console.log('childless nodes here: ', nodes)
         var textArr = nodes.map(function(childlessNode){
           return childlessNode.text + childlessNode.ancestors.map(function(ancestors){
-            return ancestors.text + 'hate ugly wrong bad';
+            return ancestors.text;
           })
         })
         var text = textArr.join(" ")
-        console.log('text to be sent: ', text)
+        // console.log('text to be sent: ', text)
         return alchemize.sendToAlchemy(text)
       }).then(function assessAlchemyData(analysis){
         ParseAlchemy.parseAlchemyData(analysis)

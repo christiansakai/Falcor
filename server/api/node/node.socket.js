@@ -161,40 +161,40 @@ exports.register = function(socketio) {
 			})
 		})
 
-		socket.on('invitingToStory', function(obj){
+		// socket.on('invitingToStory', function(obj){
 
-			User.findOne({'email': obj.email}, function(err, user){
-				if (err) {return; }
-				if (!user) {return; }
-				//if the email address given matches that of a user, add the story to the
-				//user's stories array
-				user.stories.push(obj.storyId)
-			})
+		// 	User.findOne({'email': obj.email}, function(err, user){
+		// 		if (err) {return; }
+		// 		if (!user) {return; }
+		// 		//if the email address given matches that of a user, add the story to the
+		// 		//user's stories array
+		// 		user.stories.push(obj.storyId)
+		// 	})
 
-			var options = {
-          from: 'falkorapp@gmail.com',
-          to: obj.email,
-          subject: 'You have been invited to join a story',
-          text: 'Use this id to access the story and join in on the fun: ' + obj.storyId
-        }
-      console.log('nodemailerConfig', options)
-      nodemailerConfig.transporter.sendMail(options, function(error, info){
+		// 	var options = {
+  //         from: 'falkorapp@gmail.com',
+  //         to: obj.email,
+  //         subject: 'You have been invited to join a story',
+  //         text: 'Use this id to access the story and join in on the fun: ' + obj.storyId
+  //       }
+  //     console.log('nodemailerConfig', options)
+  //     nodemailerConfig.transporter.sendMail(options, function(error, info){
 
-        var success = false;
-        if(error){
-          success = false;
-          console.log(error);
-        }else{
-          success = true;
-          console.log('Message sent: ' + info.response);
-        }
-        // nodemailerConfig.transporter.close();
-        obj.success = success;
-        // socketio.to(obj.storyId).emit('sentInvite', obj)
-        socket.emit('sentInvite', obj)
-        console.log('obj', obj)
-        });
-	  })
+  //       var success = false;
+  //       if(error){
+  //         success = false;
+  //         console.log(error);
+  //       }else{
+  //         success = true;
+  //         console.log('Message sent: ' + info.response);
+  //       }
+  //       // nodemailerConfig.transporter.close();
+  //       obj.success = success;
+  //       // socketio.to(obj.storyId).emit('sentInvite', obj)
+  //       socket.emit('sentInvite', obj)
+  //       console.log('obj', obj)
+  //       });
+	 //  })
 	})
 }
 

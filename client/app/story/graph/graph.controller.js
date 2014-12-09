@@ -30,16 +30,6 @@ angular.module('storyHubApp')
     };
 
 
-    $scope.rateNode = function(nodeId) {
-      var obj = {
-        userId: $scope.userId
-      };
-      // console.log('sent obj: ', obj.userId)
-      ExploreStories.rateNodes(nodeId, obj, function(result){
-        // console.log('liked node: ', result)
-      })
-    }
-
 
     $scope.writing = {
       text: ''

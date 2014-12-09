@@ -70,7 +70,7 @@ angular.module('storyHubApp')
           singleBranchArr = []
         }
 
-        console.log('arr: ', arrayOfObjects)
+        // console.log('arr: ', arrayOfObjects)
 
         //parses the keywords data for rendering
         for (var i = 0; i < arrayOfObjects.length; i++){

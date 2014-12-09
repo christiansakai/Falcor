@@ -2,13 +2,14 @@
 <div class="col-lg-6 center text-center">
 	<h3>Word Count</h3>
 	<button class='btn1' ng-click="test()">Load Data</button>
-	<button class='btn1' ui-sref="d3Sentiment">D3 Sentiment</button>
-	<button class='btn1' ui-sref="d3Keywords">D3 Keywords</button>
-	<button class='btn1' ui-sref="branchAnalysis">Branch Analysis - Keywords</button>
-	<button class='btn1' ui-sref="branchAnalysisSentiment">Branch Analysis - Sentiments</button>
+	<button class='btn1' ng-click="chart.fetchAlchemyDataforStory('sentiment')">D3 Sentiment</button>
+	<button class='btn1' ng-click="chart.fetchAlchemyDataforStory('keywords')">D3 Keywords</button>
+	<button class='btn1' ng-click="chart.fetchAlchemyDataForBranch('keywords')">Branch Analysis - Keywords</button>
+	<button class='btn1' ng-click="chart.fetchAlchemyDataForBranch('sentiment')">Branch Analysis - Sentiments</button>
 	<button class='btn1' ui-sref=".numLikes">Likes Per Node</button>
 	<button class='btn1' ui-sref=".wordsPerNode">Words Per Node</button>
 	<button class='btn1' ui-sref=".wordsPerStory">Words Per Story</button>
+	<button class='btn1' ui-sref=".likesPerStory">Story Popularity</button>
 	<button class='btn1' ui-sref=".authorsByWordCount">Author By Word Count</button>
 
 	<!-- 	<canvas tc-chartjs-line chart-options="options" chart-data="data.words" width="800" height="500"></canvas> -->
@@ -23,4 +24,6 @@
  -->	
 </div>
 
-<div ui-view>
+<!-- 
+ -->
+ <div ui-view>
