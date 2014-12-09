@@ -35,21 +35,6 @@ angular.module('storyHubApp')
                 var nodeId = story._id;
 
                 $state.go('story.graph2', {storyId: storyId, nodeId: nodeId})
-        // console.log(story)
-        // ExploreStories.storiesInfo.storyId = storyId
-
-        // StoryService.id = story._id;
-        // StoryService.title = story.name;
-        // var data = {
-
-        //   storyId: StoryService.id,
-        //   username: Auth.getCurrentUser().name
-        // }
-        // // socket.socket.emit('joinRoom', data)
-      
-
-        // $state.go('story.graph', {storyId: data.storyId, storyTitle: StoryService.title})
-
       }
 
 

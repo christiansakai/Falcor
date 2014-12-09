@@ -10,7 +10,13 @@ angular.module('storyHubApp')
         // socket.socket.on('joinedRoom', function(data){
         //   console.log('JOINED ROOM', data)
           // console.log('hi there', data.currentUsers)
-          $scope.currentUsers = StoryService.currentUsers
+
+          $scope.$watch(function () { return StoryService.currentUsers }, function (newVal, oldVal) {
+              if (typeof newVal !== 'undefined') {
+                  $scope.currentUsers = StoryService.currentUsers;
+              }
+          });
+          // $scope.currentUsers = StoryService.currentUsers;
           // $scope.$apply();
         // })
         $scope.leaveStory = function(){
@@ -35,6 +41,12 @@ angular.module('storyHubApp')
           $scope.currentUsers = $scope.currentUsers.filter(function(user){
             return user.id !== data.res.id
           })
+        })
+
+        socket.socket.on('joinedRoom', function(data){
+          // console.log('hitting StoryService', data)
+            $scope.currentUsers = data.currentUsers;  
+          // console.log('Story.title', Story.title)
         })
 
       }

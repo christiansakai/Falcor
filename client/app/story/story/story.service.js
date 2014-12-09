@@ -38,10 +38,7 @@ angular.module('storyHubApp')
 
     socket.socket.on('joinedRoom', function(data){
       // console.log('hitting StoryService', data)
-      // Story.currentUsers = [];
-      // Story.currentUsers = data.currentUsers;
-      // Story.title = ''
-      // angular.copy(data.storyName, Story.title);
+
       angular.copy(data.currentUsers, Story.currentUsers);
       // console.log('Story.title', Story.title)
     })
