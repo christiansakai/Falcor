@@ -9,15 +9,39 @@
   left: 0;
 }
 
+/* Navbar styling */
+
 .navTitle{
 	font-family: 'Museo Sans', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-weight: lighter;
 	font-size: 140%;
 }
 
+.navbar-default .navbar-brand{
+	color: black;
+}
+.navbar-default .navbar-brand:hover{
+	color: black;
+}
+
+
 .nav li{
 	font-family: 'Museo Sans', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif;	
 }
+
+.navbar-default .navbar-nav > li > a{
+	color: black;
+}
+
+.navbar-default .navbar-text{
+	color: black;
+}
+
+/*.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus{
+	color: black;
+}*/
+
+/* Home Page title and buttons styling*/
 
 .mainTitle{
 	padding-top: 7%;
