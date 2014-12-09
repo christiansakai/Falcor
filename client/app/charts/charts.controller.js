@@ -232,6 +232,11 @@ angular.module('storyHubApp')
     vm.getNodesForBranch()
     .then(function(nodes){
       console.log('childless nodes here: ', nodes)
+      var labelArr = nodes.map(function(childlessNode){
+        return childlessNode.text.substring(0, 30)
+      })
+      ParseAlchemy.branchLabels = labelArr; 
+      console.log('branch labels: ', ParseAlchemy.branchLabels)
       var textArr = nodes.map(function(childlessNode){
         return childlessNode.text + childlessNode.ancestors.map(function(ancestors){
           return ancestors.text;

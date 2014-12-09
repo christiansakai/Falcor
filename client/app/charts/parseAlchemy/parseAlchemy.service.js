@@ -13,6 +13,7 @@ angular.module('storyHubApp')
       doTest: function() {
         this.test = "hello";
       },
+      branchLabels: [],
       parseAlchemyData: function (analysis) {
         if ( analysis.keywords.length > 50 ) {
           analysis.keywords = analysis.keywords.slice( 0, 50 );

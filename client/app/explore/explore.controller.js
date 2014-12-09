@@ -21,11 +21,7 @@ angular.module('storyHubApp')
         $scope.stories = results;
         $scope.currentStories = $scope.stories.slice(0, 10)
       })
-
     }
-
-    // $scope.currentStories = $scope.stories.slice(0, 10)
-    console.log('current stories: ', $scope.currentStories)
 
     $scope.username = Auth.getCurrentUser().name
 
@@ -43,7 +39,7 @@ angular.module('storyHubApp')
       var start = currentIndex*10;
       var end = start + 10
       $scope.currentStories = $scope.stories.slice(start, end)
-       window.scrollTo(0, 0)
+      window.scrollTo(0, 0)
       console.log($scope.currentStories)
     }
 

@@ -41,6 +41,11 @@ angular.module('storyHubApp')
        //receives an array of keywords arrays with objects of text and relevance 
       $scope.allData = generateData(1, ParseAlchemy.keywords.length);
 
+      console.log('all data: ', $scope.allData)
+
+      console.log('branch labels: ', ParseAlchemy.branchLabels)
+      $scope.labels = ParseAlchemy.branchLabels; 
+
       /* Random Data Generator (took from nvd3.org) */
       function generateData (groups, points) {
           var allData = [],

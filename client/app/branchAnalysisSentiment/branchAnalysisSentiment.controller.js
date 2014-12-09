@@ -24,7 +24,10 @@ angular.module('storyHubApp')
             }
         };
 
-        $scope.allData  = generateData()
+        $scope.allData = generateData();
+
+        console.log('branch labels: ', ParseAlchemy.branchLabels)
+        $scope.labels = ParseAlchemy.branchLabels; 
 
         function generateData(){
         	var allData = []; 

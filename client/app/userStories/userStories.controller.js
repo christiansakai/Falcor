@@ -21,21 +21,19 @@ angular.module('storyHubApp')
         id: $scope.userId
       }
     	ExploreStories.getUserNodes(obj, function(results){
-        console.log('result', results)
     		$scope.stories = results;
         $scope.currentStories = $scope.stories.slice(0, 10)
         // $scope.nodes = results
-    		console.log('results: ', results)
+    		// console.log('results: ', results)
     	})
     }
 
-      $scope.joinStory = function(story){
-        console.log(story)
-                var storyId = story.storyId._id;
-                var nodeId = story._id;
-
-                $state.go('story.graph2', {storyId: storyId, nodeId: nodeId})
-      }
+    $scope.joinStory = function(story){
+      console.log(story)
+      var storyId = story.storyId._id;
+      var nodeId = story._id;
+      $state.go('story.graph2', {storyId: storyId, nodeId: nodeId})
+    }
 
 
     $scope.changePage = function(){
