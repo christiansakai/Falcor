@@ -4,6 +4,8 @@ angular.module('storyHubApp')
 
     var vm = this; 
 
+    $scope.node = node;
+
   	$scope.cancel = function () {
   	  $modalInstance.dismiss('cancel');
   	};
