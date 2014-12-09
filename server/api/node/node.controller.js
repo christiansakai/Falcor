@@ -88,6 +88,7 @@ exports.getNodes = function(req, res) {
 // Get list of the top nodes. Most liked nodes.
 exports.getTopNodes = function(req, res) {
   Node.find({})
+      .where({'isPrivate': false})
       .sort('-likes.numLikes')
       .populate('author','name')
       .populate('storyId')
