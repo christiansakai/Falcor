@@ -22,5 +22,19 @@ angular.module('storyHubApp')
         templateUrl: 'app/story/graph.html',
         controller: 'GraphCtrl as graph',
         authenticate: true
-        });
+        })
+      .state('story.charts', {
+        // params: ['storyTitle'],
+        url: '/charts',
+        templateUrl: 'app/story/charts/charts.html',
+        controller: 'ChartsCtrl as chart',
+        authenticate: true
+        })
+      .state('story.charts.landing', {
+        // params: ['storyTitle'],
+        url: '/home',
+        templateUrl: 'app/story/charts/chartHome.html',
+        controller: 'ChartsCtrl as chart',
+        authenticate: true
+        })
   });

@@ -8,7 +8,7 @@ angular.module('storyHubApp')
   	 $scope.options = {
                 chart: {
                     type: 'scatterChart',
-                    height: 600,
+                    height: 500,
                     color: d3.scale.category10().range(),
                     scatter: {
                         onlyCircles: true

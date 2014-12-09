@@ -1,0 +1,25 @@
+<ul class="nav nav-pills nav-justified" id="storyChartNav">
+	<li role="presentation"><a ng-click="chart.fetchAlchemyDataforStory('sentiment')">Story Sentiment</a></li>
+	<li role="presentation"><a ng-click="chart.fetchAlchemyDataforStory('keywords')">Story Keywords</a></li>
+	<li role="presentation"><a ng-click="chart.fetchAlchemyDataForBranch('sentiment')">Branch Sentiment</a></li>
+	<li role="presentation"><a ng-click="chart.fetchAlchemyDataForBranch('keywords')">Branch Keywords</a></li>
+	<li role="presentation"><a ui-sref="story.charts.numLikes">Popular Submissions</a></li>
+	<li role="presentation"><a ui-sref="story.charts.authorsByWordCount">Words Per Author</a></li>
+</ul>
+
+<!-- 
+<div class="col-lg-6 center text-center">
+	<button class='btn1' ng-click="chart.fetchAlchemyDataforStory('sentiment')">D3 Sentiment</button>
+	<button class='btn1' ng-click="chart.fetchAlchemyDataforStory('keywords')">D3 Keywords</button>
+	<button class='btn1' ng-click="chart.fetchAlchemyDataForBranch('keywords')">Branch Analysis - Keywords</button>
+	<button class='btn1' ng-click="chart.fetchAlchemyDataForBranch('sentiment')">Branch Analysis - Sentiments</button>
+	<button class='btn1' ui-sref=".numLikes">Likes Per Node</button>
+	<button class='btn1' ui-sref=".likesPerStory">Story Popularity</button>
+	<button class='btn1' ui-sref=".authorsByWordCount">Author By Word Count</button>
+
+
+</div> -->
+
+<!-- 
+ -->
+ <div ui-view></div>
