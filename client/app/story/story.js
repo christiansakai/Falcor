@@ -37,4 +37,18 @@ angular.module('storyHubApp')
         controller: 'ChartsCtrl as chart',
         authenticate: true
         })
+      .state('story.branchCharts', {
+        // params: ['storyTitle'],
+        url: '/branchCharts',
+        templateUrl: 'app/story/charts/branchCharts.html',
+        controller: 'ChartsCtrl as chart',
+        authenticate: true
+        })
+      .state('story.branchCharts.landing', {
+        // params: ['storyTitle'],
+        url: '/branchCharts/home',
+        templateUrl: 'app/story/charts/branchChartsHome.html',
+        controller: 'ChartsCtrl as chart',
+        authenticate: true
+        })
   });
