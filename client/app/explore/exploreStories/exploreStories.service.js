@@ -7,11 +7,14 @@ angular.module('storyHubApp')
 
     var ExploreStories = {
 
-  	    getStories: $resource('/api/nodes'),
+  	 //    getStories: $resource('/api/nodes'),
 
   	    storiesInfo: {
   	    	storyId: ''
   	    },
+        getStories: function(obj, callback){
+          $http.get('/api/nodes', {params: obj}).success(callback)
+        }, 
   	    getNodes: function(obj, callback){
   		    $http.get('/api/nodes/getNodes/', {params: obj}).success(callback)    	
   	    },  

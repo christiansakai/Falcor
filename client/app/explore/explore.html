@@ -9,7 +9,7 @@
 
 <div class="col-lg-8 col-md-8 col-sm-8 exploreBox">
 
-	<div ng-repeat="story in stories" class="clearfix exploreRow">
+	<div ng-repeat="story in currentStories" class="clearfix exploreRow">
 		<a ng-click="joinStory(story.storyId)">
 			<span class="exploreTitle">{{story.storyId.name}}</span>
 			<br />
@@ -22,8 +22,9 @@
 
 		<hr ng-show="!$last" />
 	</div>
+	<pagination total-items="stories.length" ng-model="currentPage" ng-change="changePage()"></pagination>
 </div>
-
 <div class="col-lg-4 col-md-4 col-sm-4 hidden-xs topStories">
+
 	<top-Stories></top-Stories>
 </div>
