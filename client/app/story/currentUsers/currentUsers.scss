@@ -37,3 +37,15 @@ ul.nav-pills{
 .nav > li > a:hover, .nav > li > a:focus{
 	background-color: black;
 }
+
+.dropdown-menu{
+	border-radius: 0;
+	min-width: 50%;
+	box-shadow: none;
+	.dropdown-text{
+		font-family: 'Museo Sans', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		font-size: 14px;
+		font-weight: lighter;
+		margin-left: 10px;
+	}
+}
