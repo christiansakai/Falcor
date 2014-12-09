@@ -46,7 +46,7 @@ angular.module('storyHubApp')
         })
       .state('story.branchCharts.landing', {
         // params: ['storyTitle'],
-        url: '/branchCharts/home',
+        url: '/home',
         templateUrl: 'app/story/charts/branchChartsHome.html',
         controller: 'ChartsCtrl as chart',
         authenticate: true
