@@ -134,3 +134,9 @@ angular.module('storyHubApp')
   	
 
   })
+  .controller('helpModalController', function ($scope, $modalInstance) {
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+
+    })

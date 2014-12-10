@@ -5,7 +5,7 @@ angular.module('storyHubApp')
     return {
       templateUrl: 'app/story/currentUsers/currentUsers.html',
       restrict: 'E',
-      controller: function($scope, $state, socket, StoryService, Auth, $location) {
+      controller: function($scope, $state, socket, StoryService, Auth, $location, $modal) {
 
         $scope.leaveStory = function(){
           console.log(StoryService.id)
@@ -38,6 +38,17 @@ angular.module('storyHubApp')
           return ($location.path().indexOf('chart') !== -1 || $location.path().indexOf('branchChart') !== -1)
           // console.log($location.path())
           // return route === $location.path();
+        };
+
+        $scope.helpModal = function() {
+          // console.log(node);
+          // console.log('hi')
+          var size = 'md';// Empty : default, lg :large, sm : small
+          var modalInstance = $modal.open({
+            templateUrl: 'helpModal.html',
+            controller: 'helpModalController',
+            size: size
+          });
         };
 
       }

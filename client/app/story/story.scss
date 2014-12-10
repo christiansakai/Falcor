@@ -10,11 +10,7 @@
 	overflow-y:auto;*/
 }
 
-.modalDate{
-	color:white;
-	font-family: 'Museo Sans', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	font-size: 18px;
-}
+
 
 div#scrollBox {
         height: 65vh;
@@ -72,6 +68,17 @@ background-color: #ccc;
 
 }
 
+.modalDate{
+	color:white;
+	font-family: 'Museo Sans', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 18px;
+}
+
+.modalHeading{
+	font-family: 'Museo Sans', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-weight: 400;
+}
+
 .modal-content{
 	padding-top: 18%;
 	border: none;
@@ -83,8 +90,12 @@ background-color: #ccc;
 .writingModal{
 	background-color: white;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-	margin: 8px;
+	padding: 40px 20px;;
 };
+
+.thatsit{
+	margin-top: 20px;
+}
 
 textarea {
     resize: none;

@@ -2,6 +2,8 @@
 	<li role="presentation"><a ng-click="leaveStory()">Leave Story</a></li>
 	 <li role="presentation" ng-if="!onCharts()"><a ui-sref="story.charts.landing">Story Statistics</a></li>
 	 <li role="presentation" ng-if="onCharts()"><a ui-sref="story.graph">Return to Story</a></li>
+	 <li role="presentation"><a ng-click="helpModal()">How to Use Falcor</a></li>
+
 	 <li role="presentation" class="dropdown" ng-if="currentUsers.length">
 	   <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
 	     Current Users ({{currentUsers.length}}) <span class="caret"></span>
@@ -10,6 +12,7 @@
 	     <li class="col-lg-12 dropdown-text" ng-repeat="user in currentUsers">{{user.name}}</li>
 	   </ul>
 	 </li>
+
 </ul>
 <!-- 
 <li ng-repeat="user in currentUsers">{{user.name}}</li> -->
