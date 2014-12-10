@@ -1,6 +1,7 @@
 <section class='dashboardSection center boxText chartText'>
 	<div ng-if='data.length > 0'>
-		<h4 class='graphHeader'>Your keywords</h4>
+		<h3 class='graphHeader'>Your Keywords</h3>
+		<br>
 		<nvd3 options="options" data="data"></nvd3>
 	</div>
 	<div ng-show='data.length === 0'>

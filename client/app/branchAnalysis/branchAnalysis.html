@@ -1,8 +1,9 @@
 <section class='dashboardSection center boxText chartText'>
-		<h4>Your Keywords By Branch:</h4>
 	<div ng-if='allData.length > 0'>
+		<h3>Your Keywords By Branch</h3>
+		<br>
 		<div ng-repeat='data in allData'>
-			<h3>Branch Title: {{labels[$index]}}</h3> 
+			<h4>Branch Ending With: "{{labels[$index]}}"</h4> 
 			<nvd3 options="options" data="data"></nvd3>
 		</div>
 	</div>
