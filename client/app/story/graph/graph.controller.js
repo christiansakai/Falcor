@@ -117,11 +117,17 @@ angular.module('storyHubApp')
       // !! Store results array in service. Push data to array in service.
       $scope.results.push(node);
 
-      getBranchForNode(node);
-           
+      if(node.author === Auth.getCurrentUser()._id) {
+        console.log('a')
+        getBranchForNode(node);  
+      } else {
+        console.log('b')
+        getBranchForNode($scope.branchFiltered[$scope.branchFiltered.length - 1]);
+      }
+      
       StoryService.getTree($scope.results, function(tree){
           buildTree(tree)
-      });
+      });      
     });
 
 
