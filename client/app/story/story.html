@@ -35,11 +35,45 @@
 <!-- <HTML TEMPLATE> -->
 
 
+<script type="text/ng-template" id="helpModal.html">
+<div class="col-lg-12 center writingModal clearfix">
+
+  <div>
+    <h2 class="modalHeading">How To Use Falcor</h2>
+    <h3 class="modalHeading">Click on a node of the tree to see the branch's text.</h4>
+    <h3 class="modalHeading">Click on a node of text and you can:</h4>
+    <div class="col-lg-10 center">
+    <ul class="text-left">
+    	<li><h4 class="modalHeading">Like that submission</h4></li>
+    	<li><h4 class="modalHeading">Analyze sentiment or keywords of the branch</h4></li>
+    	<li><h4 class="modalHeading">Export the branch to PDF</h4></li>
+    	<li><h4 class="modalHeading">Extend that branch with a new submission</h4></li>
+    </ul>
+    </div>
+    <h3 class="modalHeading thatsit">That's it.</h3>
+
+  </div>
+
+  <div class="col-lg-12 center clearfix">
+
+    <div class="center text-center">
+
+      <button type="submit" class="submitButton submitButtonSmall" ng-click="cancel()">OK</button>
+
+    </div>
+
+  </div>
+
+
+</div>
+</script>
+
+
 <script type="text/ng-template" id="writingModal.html">
 <div class="col-lg-12 center writingModal">
 
   <div>
-    <h2>Keep the story going</h2>
+    <h2 class="modalHeading">Keep the story going</h2>
     <textarea msd-elastic autofocus placeholder="Enter text here" class="form-control beginStory createNode" rows="1" ng-model="writing" ng-enter="submitWriting()" ></textarea>
   </div>
 
