@@ -5,8 +5,8 @@
 </div>
 
 <div id="storyBox" class="col-lg-6">
-  <div class="text-center" id="storyTitle"><h1>{{storyTitle}}</h1></div>
-      <div class="col-lg-10 center" id="storyText">
+  <div id="storyTitle"><h1>{{storyTitle}}</h1></div>
+      <div class="col-lg-10" style='text-align:justified' id="storyText">
         <span ng-repeat="node in branchFiltered" class="storyNode"><a ng-click="selectNode(node)">{{ node.text }}</a><span>&nbsp;</span></span>
       </div>
 
