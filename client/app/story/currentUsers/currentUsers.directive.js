@@ -35,7 +35,7 @@ angular.module('storyHubApp')
         })
 
         $scope.onCharts = function(route) {
-          return ($location.path().indexOf('chart') !== -1)
+          return ($location.path().indexOf('chart') !== -1 || $location.path().indexOf('branchChart') !== -1)
           // console.log($location.path())
           // return route === $location.path();
         };
