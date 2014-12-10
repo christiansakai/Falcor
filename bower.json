@@ -34,5 +34,19 @@
     "angular": "~1.2",
     "d3": "~3.4.13",
     "jquery": "~1.11.0"
+  },
+  "overrides": {
+    "ng-chartjs": {
+      "dependencies": {
+        "chartjs": ">=v1.0.1-beta.3",
+        "angular": "~1.2.21"
+      }
+    },
+    "tc-angular-chartjs": {
+       "dependencies": {
+        "angular": "~1.x",
+        "chartjs": "^1.0.0-beta"
+      }
+    }
   }
 }

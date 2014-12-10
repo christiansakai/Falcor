@@ -6,6 +6,7 @@ angular.module('storyHubApp')
       .state('joinStory', {
         url: '/joinStory',
         templateUrl: 'app/joinStory/joinStory.html',
-        controller: 'JoinstoryCtrl'
+        controller: 'JoinstoryCtrl',
+        authenticate: true
       });
   });
