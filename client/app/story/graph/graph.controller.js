@@ -198,12 +198,21 @@ angular.module('storyHubApp')
   	  nodes.forEach(function(d) { 
         d.y = d.depth * verticalPadding; 
         
+        // console.log('d.y', d.y)
+
         if(d.y > maxHeight) {
-          maxHeight = d.y + 60;
+          maxHeight = d.y;
         }
       });
 
-      document.getElementById('graphBox').style.height= maxHeight < 50 ? 10 : maxHeight + 'px';
+      var graphbox = document.getElementById('graphBox');
+
+      // console.log('Resizing graphbox')
+      // console.log('Current heigth:',graphbox.style.height);
+      // console.log('New Max height:', maxHeight);
+      // console.log('Height after set:',graphbox.style.height);
+
+      graphbox.style.height= (maxHeight < 50 ? 100 : (maxHeight + 60)) + 'px';
       
 
 
