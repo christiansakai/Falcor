@@ -266,29 +266,29 @@ angular.module('storyHubApp')
   ////////////////////////////  DATA FOR CHART JS RENDERING /////////////////////////////////////////
 
     $scope.data = {
-    	wordsPerNode: {
-	    	labels: $scope.wordCountByNodeLabels,
-	    	datasets: [{
-	    		fillColor : 'rgba(129, 183, 26, 0.5)',
-	        strokeColor : 'rgba(129, 183, 26, 1)',
-	        pointColor : 'rgba(129, 183, 26, 1)',
-	        pointStrokeColor : "#fff",
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-		    	data: vm.wordCount()
-    		}]
-    	},
-      wordsPerStory: {
-        labels: $scope.wordCountStoryLabels,
-        datasets: [{
-          fillColor : 'rgba(129, 183, 26, 0.5)',
-          strokeColor : 'rgba(129, 183, 26, 1)',
-          pointColor : 'rgba(129, 183, 26, 1)',
-          pointStrokeColor : "#fff",
-          pointHighlightFill: '#fff',
-          data: vm.wordStoryCount()
-        }]
-      }, 
+    	// wordsPerNode: {
+	    // 	labels: $scope.wordCountByNodeLabels,
+	    // 	datasets:gitgit  [{
+	    // 		fillColor : 'rgba(129, 183, 26, 0.5)',
+	    //     strokeColor : 'rgba(129, 183, 26, 1)',
+	    //     pointColor : 'rgba(129, 183, 26, 1)',
+	    //     pointStrokeColor : "#fff",
+     //      pointHighlightFill: '#fff',
+     //      pointHighlightStroke: 'rgba(220,220,220,1)',
+		   //  	data: vm.wordCount()
+    	// 	}]
+    	// },
+     //  wordsPerStory: {
+     //    labels: $scope.wordCountStoryLabels,
+     //    datasets: [{
+     //      fillColor : 'rgba(129, 183, 26, 0.5)',
+     //      strokeColor : 'rgba(129, 183, 26, 1)',
+     //      pointColor : 'rgba(129, 183, 26, 1)',
+     //      pointStrokeColor : "#fff",
+     //      pointHighlightFill: '#fff',
+     //      data: vm.wordStoryCount()
+     //    }]
+     //  }, 
   		numLikes: {
     		labels: $scope.likesLabels,
     		datasets: [{
@@ -311,19 +311,19 @@ angular.module('storyHubApp')
           pointHighlightStroke: 'rgba(220,220,220,1)',
           data: vm.authorCount()
         }]
-      }, 
-      likesPerStory: {
-        labels:  $scope.likesCountStoryLabels,
-        datasets: [{
-          fillColor : 'rgba(129, 183, 26, 0.5)',
-          strokeColor : 'rgba(129, 183, 26, 1)',
-          pointColor : 'rgba(129, 183, 26, 1)',
-          pointStrokeColor : "#fff",
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data: vm.numLikesAcrossStories()
-        }]
       }
+      // likesPerStory: {
+      //   labels:  $scope.likesCountStoryLabels,
+      //   datasets: [{
+      //     fillColor : 'rgba(129, 183, 26, 0.5)',
+      //     strokeColor : 'rgba(129, 183, 26, 1)',
+      //     pointColor : 'rgba(129, 183, 26, 1)',
+      //     pointStrokeColor : "#fff",
+      //     pointHighlightFill: '#fff',
+      //     pointHighlightStroke: 'rgba(220,220,220,1)',
+      //     data: vm.numLikesAcrossStories()
+      //   }]
+      // }
     }
 
 
