@@ -23,8 +23,6 @@ angular.module('storyHubApp')
     	ExploreStories.getUserNodes(obj, function(results){
     		$scope.stories = results;
         $scope.currentStories = $scope.stories.slice(0, 10)
-        // $scope.nodes = results
-    		// console.log('results: ', results)
     	})
     }
 
@@ -36,7 +34,6 @@ angular.module('storyHubApp')
     }
 
     $scope.submitKeywords = function(){
-      // console.log('im hit! keywords: ', $scope.keywords)
       ExploreStories.submitKeywords($scope.keywords, function(results){
         $scope.stories = results;
         $scope.currentStories = $scope.stories.slice(0, 10);
@@ -58,7 +55,6 @@ angular.module('storyHubApp')
 
     $scope.goToStory = function(storyId){
     	StoryService.id = storyId; 
-    	// console.log('id: ', StoryService.getData())
       var data = {
         storyId: storyId, 
         username: $scope.username 

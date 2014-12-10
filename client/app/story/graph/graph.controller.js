@@ -45,7 +45,6 @@ angular.module('storyHubApp')
 
     //This function allows user to leave a story
     $scope.leaveStory = function(){
-      console.log(StoryService.id)
 
       var obj = {
         storyId: StoryService.id,
@@ -58,13 +57,11 @@ angular.module('storyHubApp')
 
 
     $scope.submitWriting = function(){
-      console.log($scope.parentId)
       var obj = {
         text: $scope.writing.text,
         author: Auth.getCurrentUser()._id,
         parentId: this.parentId
       }
-      console.log(obj)
       socket.socket.emit('nodeAdded', obj)
     };
 
@@ -226,9 +223,7 @@ function updateNode() {
   	      .duration(duration)
   	      .attr("transform", function(d) { return "translate(" + d.x / horizontalPadding + "," + d.y + ")"; });//
 
-      console.log('nodeUpdate', nodeUpdate);
-      console.log('node', node)
-
+      
   	  nodeUpdate.select("circle")
   	      .attr("r", function(d){
             if(typeof $scope.branchFiltered !== 'undefined' && $scope.branchFiltered.length > 0) {
@@ -240,7 +235,6 @@ function updateNode() {
             return 4.5;
           })
   	      .style("fill", function(d) {                        
-            console.log('fill',d);
             if(typeof $scope.branchFiltered !== 'undefined' && $scope.branchFiltered.length > 0) {
               var endOfBranchNode = $scope.branchFiltered[$scope.branchFiltered.length - 1];
               var ance = endOfBranchNode.ancestors;
@@ -249,7 +243,6 @@ function updateNode() {
 
               if(ance.indexOf(d._id) !== -1 || d._id === endOfBranchNode._id){
                 // console.log('greener fill for', d)
-                console.log('green', d)
                 return "#42f6ce";// Current selected branch.
               } 
             }
@@ -341,34 +334,9 @@ function updateNode() {
       })
     }
 
-      // $scope.getNodesPerStory = function(){
-      //   var obj = {
-      //     storyId: StoryService.id
-      //   }
-
-      //   // console.log('params obj', obj)
-      //   if($stateParams.newStory !== true){
-      //     ExploreStories.getNodes(obj, function(results){
-      //         console.log('results', results);
-      //         $scope.results = results;
-
-      //         var tree = StoryService.getTree(results)
-      //         // NodeService.nodes = tree
-      //         console.log('tree: ', tree)
-      //         buildTree(tree)
-      //     })
-      //   }
-      //   else {
-      //     //something
-      //   }
-      // }();
-
-
-
     // #########################################################################
     function buildTree(rootNode) {
         // debugger;
-        // console.log('rootNode', rootNode)
         root = rootNode;
         root.x0 = h / 2;
         root.y0 = 0;
@@ -422,7 +390,6 @@ angular.module('storyHubApp').controller('shareStoryModalInstanceCtrl', function
   $scope.recipientEmail = '';
 
   $scope.ok = function () {
-    console.log('clicked ok')
 
     //this function requires the story id, and the email address
     //of the user invited

@@ -27,15 +27,10 @@ angular.module('storyHubApp')
 
         $scope.allData = generateData();
 
-        console.log('branch labels: ', ParseAlchemy.branchLabels)
         $scope.labels = ParseAlchemy.branchLabels; 
 
         var colorArray = ['#4089FF', '#FF4545'];
-        // $scope.colorFunction = function(){
-        //     return function(d, i){
-        //         return colorArray[i];
-        //     };
-        // }
+    
 
         function generateData(){
         	var allData = []; 

@@ -18,7 +18,6 @@ angular.module('storyHubApp')
     $scope.story = {
         title: '',
         input: ''
-        // userId: Auth.getCurrentUser()._id
     }
 
 
@@ -34,9 +33,6 @@ angular.module('storyHubApp')
     }
 
 
-    // $scope.username = Auth.getCurrentUser().name
-    // $scope.userId = Auth.getCurrentUser()._id
-
     vm.startStory = function(){
       CreateService.input = $scope.story.input
       console.log(CreateService);
@@ -51,7 +47,6 @@ angular.module('storyHubApp')
       console.log('created!')
       NodeService.nodes.push(data.firstNode);
       StoryService.title = data.story.name;
-      //StoryService.setData(data.story._id)
       StoryService.id = data.story._id;
       console.log(data)
       console.log(StoryService)

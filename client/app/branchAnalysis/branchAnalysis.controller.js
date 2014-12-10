@@ -15,9 +15,6 @@ angular.module('storyHubApp')
                     showDistY: false,
                     interactive: true,
                     tooltips: true,
-                    // tooltipContent: function(key) {
-                    //   return '<h3>' + data.key + '</h3>';
-                    // },
                     transitionDuration: 1000,
                     forceSize: 0,
                     xAxis: {
@@ -41,9 +38,7 @@ angular.module('storyHubApp')
        //receives an array of keywords arrays with objects of text and relevance 
       $scope.allData = generateData(1, ParseAlchemy.keywords.length);
 
-      // console.log('all data: ', $scope.allData)
-
-      // console.log('branch labels: ', ParseAlchemy.branchLabels)
+    
       $scope.labels = ParseAlchemy.branchLabels; 
 
       /* Random Data Generator (took from nvd3.org) */
@@ -71,12 +66,8 @@ angular.module('storyHubApp')
           	allData.push(data)
           	data = []
           }
-          $log.debug('Stat keywords: ', ParseAlchemy.keywords);
-          // if (!data.key) {
-          //   alert("Your data has timed out.");
-          // }
-          console.log('data: ',  data)
-          console.log('allData: ', allData)
+          // $log.debug('Stat keywords: ', ParseAlchemy.keywords);
+      
           return allData;
       }
         

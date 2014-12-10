@@ -11,13 +11,6 @@ exports.index = function(req, res) {
   });
 };
 
-// // Get list of storys that match keywords
-// exports.findKeyword = function(req, res) {
-//   Story.find({$text: {$search: req.params.keyword}}, function (err, stories) {
-//     if(err) { return handleError(res, err); }
-//     return res.json(200, stories);
-//   });
-// };
 
 // Get a single story
 exports.show = function(req, res) {
@@ -33,8 +26,6 @@ exports.create = function(req, res) {
   Story.create(req.body, function(err, story) {
     if(err) { return handleError(res, err); }
     return res.json(201, story);
-
-    //socket.room = story._id
   });
 };
 

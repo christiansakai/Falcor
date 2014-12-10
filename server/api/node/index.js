@@ -7,10 +7,6 @@ var auth = require('../../auth/auth.service');
 
 var router = express.Router();
 
-// router.use(auth.isAuthenticated(), function(req, res, next) {
-//     next();
-// });
-
 router.get('/', controller.index);
 router.get('/getNodes/', controller.getNodes);
 router.get('/getUserNodes/', auth.isAuthenticated(), controller.getUserNodes);

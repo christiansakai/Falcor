@@ -11,11 +11,8 @@ var async = require('async');
 
 // Get list of alchemys
 exports.sentiment = function(req, res) {
-  console.log('HITTTTTT!!!!!!')
-  console.log('body: ', req.body.text)
   alchemy.sentiment(req.body.text, {}, function (err, response) {
     if(err) throw err;
-    console.log('res: ', response)
     res.json(response.docSentiment);
   });
 };
@@ -30,7 +27,6 @@ exports.keywords = function(req, res) {
 
 //figure out how to execute all api calls 
 exports.sentimentsArray = function(req, res){
-  // console.log('text: ', req.body)
   var sentimentsArr = [];
   var keywordsArr = [];  
   var finalArr = []
@@ -39,7 +35,6 @@ exports.sentimentsArray = function(req, res){
 
   var alchemyForOneItem = function(oneText, doneAlchemyForOneItem) {
     var apiCallOne = function(doneAPICallOne){
-      console.log('inside apiCallOne');
       alchemy.sentiment(oneText, {}, function(err, response){
         sentimentsArr.push(response)
         doneAPICallOne(err, 'done with one')
@@ -47,7 +42,6 @@ exports.sentimentsArray = function(req, res){
     }
 
     var apiCallTwo = function(doneAPICallTwo){
-      console.log('inside apiCallTwo');
       alchemy.keywords(oneText, {}, function(err, response) {
         keywordsArr.push(response)
         doneAPICallTwo(err, 'done with two')
@@ -55,7 +49,6 @@ exports.sentimentsArray = function(req, res){
     }
 
     async.series([apiCallOne, apiCallTwo], function(err, results) {
-      console.log('inside alchemyForOneItem');
       doneAlchemyForOneItem(err);
     });
 
@@ -63,7 +56,6 @@ exports.sentimentsArray = function(req, res){
 
   var doneAlchemyForAllItem = function(err) {
     finalArr.push(sentimentsArr, keywordsArr);
-    console.log(finalArr);
     res.json(200, finalArr);
   };
 

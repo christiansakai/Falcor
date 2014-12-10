@@ -13,8 +13,6 @@ angular.module('storyHubApp')
       branchLabels: [],
       parseAlchemyData: function (analysis) {
 
-        console.log('sentiments array: ', analysis.sentiment)
-
         if ( analysis.keywords.length > 50 ) {
           analysis.keywords = analysis.keywords.slice( 0, 50 );
         }
@@ -36,12 +34,11 @@ angular.module('storyHubApp')
           sentiment: analysis.sentiment
         };
         // console.log('statsObj: ', statObj, 'data: ', _stats.data)
-        $log.debug( 'Saved to stats: from factory', this.data );
+        // $log.debug( 'Saved to stats: from factory', this.data );
       }, 
       keywords: [],
       sentiments: [],
       parseAlchemyBranchData: function(analysis){
-        console.log('first: ', analysis[0])
 
         var branch = {
           keywords: '', 
@@ -72,7 +69,7 @@ angular.module('storyHubApp')
             this.keywords.push(arrayOfObjects[i][1].keywords)
         }
 
-        $log.debug( 'Saved to keywords to stats: from factory', this.keywords );
+        // $log.debug( 'Saved to keywords to stats: from factory', this.keywords );
 
 
         if (this.sentiments.length > 0){
@@ -83,7 +80,7 @@ angular.module('storyHubApp')
           this.sentiments.push(arrayOfObjects[i][0])
         }
         
-        $log.debug( 'Saved to sentiments to stats: from factory', this.sentiments );
+        // $log.debug( 'Saved to sentiments to stats: from factory', this.sentiments );
           
       }
     }
