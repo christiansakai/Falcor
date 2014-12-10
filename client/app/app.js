@@ -86,11 +86,18 @@ angular.module('storyHubApp', [
 
   .run(function ($rootScope, $location, Auth) {
     // Redirect to login if route requires auth and you're not logged in
-    $rootScope.$on('$stateChangeStart', function (event, next) {
+    $rootScope.$on('$stateChangeStart', function (event, next, current) {
       Auth.isLoggedInAsync(function(loggedIn) {
         if (next.authenticate && !loggedIn) {
           $location.path('/login');
         }
       });
+      if (typeof(current) !== 'undefined'){
+        window.nv.charts = {};
+        window.nv.graphs = [];
+        window.nv.logs = {};
+        // remove resize listeners
+        window.onresize = null;
+      }
     });
   });
