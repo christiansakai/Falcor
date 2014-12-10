@@ -55,7 +55,9 @@ exports.register = function(socketio) {
 
 
 
-			      	socketio.to(data.storyId).emit('joinedRoom', {currentUsers:currentUsers, storyName: storyName, 'announcement': data.username + ' joined!'});
+			      	setTimeout(function(){
+			      		socketio.to(data.storyId).emit('joinedRoom', {currentUsers:currentUsers, storyName: storyName, 'announcement': data.username + ' joined!'});
+			      	}, 300);
 			});
 			// console.log('finding clients--------------', findClientsSocketByRoomId(data.storyId))
 
