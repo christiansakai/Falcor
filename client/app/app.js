@@ -16,39 +16,6 @@ angular.module('storyHubApp', [
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider.otherwise('/');
-    // $stateProvider
-    //   .state('admin', {
-    //      url: '/admin',
-    //      templateUrl: 'app/admin/admin.html',
-    //      controller: 'AdminCtrl'
-    //   })
-    //   .state('createStory', {
-    //     url: '/createStory',
-    //     templateUrl: 'app/createStory/createStory.html',
-    //     controller: 'CreatestoryCtrl as create'
-    //   })
-    //   .state('explore', {
-    //     url: '/explore',
-    //     templateUrl: 'app/explore/explore.html',
-    //     controller: 'ExploreCtrl'
-    //   })
-    //   .state('landing', {
-    //     url: '/landing',
-    //     templateUrl: 'app/landing/landing.html',
-    //     controller: 'LandingCtrl as write'
-    //     // authenticate: true
-    //   })
-    //   .state('main', {
-    //     url: '/',
-    //     templateUrl: 'app/main/main.html',
-    //     controller: 'MainCtrl'
-    //   })
-    //   .state('story', {
-    //     url: '/story',
-    //     templateUrl: 'app/story/story.html',
-    //     controller: 'StoryCtrl',
-    //     authenticate: true
-    //   });
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
