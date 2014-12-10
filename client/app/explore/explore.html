@@ -22,9 +22,11 @@
 
 		<hr ng-show="!$last" />
 	</div>
-	<pagination total-items="stories.length" ng-model="currentPage" ng-change="changePage()"></pagination>
 </div>
 <div class="col-lg-4 col-md-4 col-sm-4 hidden-xs topStories">
 
 	<top-Stories></top-Stories>
+</div>
+<div class="text-center col-lg-12 col-md-12 clearfix paginationBox">
+	<pagination  ng-if="stories.length" class="center" total-items="stories.length" ng-model="currentPage" ng-change="changePage()"></pagination>
 </div>
