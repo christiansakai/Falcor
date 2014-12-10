@@ -1,4 +1,4 @@
-'use strict';
+  'use strict';
 
 angular.module('storyHubApp')
   .controller('ChartsCtrl', function ($scope, $state, StoryService, ExploreStories, NodeService, $q, $http, alchemize, ParseAlchemy, $log) {
