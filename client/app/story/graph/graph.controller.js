@@ -4,11 +4,8 @@ angular.module('storyHubApp')
   .controller('GraphCtrl', function ($scope, $state, $stateParams, ExploreStories, StoryService, Auth, growl, $modal, socket) {
 
     // <TO JOIN ROOM WHEN LOADED>
-
-
-
     socket.socket.on('joinedRoom', function(data){
-      console.log('controller', data)
+      // console.log('controller', data)
       $scope.storyTitle = data.storyName;
     })
 
@@ -17,18 +14,13 @@ angular.module('storyHubApp')
         storyId: $stateParams.storyId,
         username: Auth.getCurrentUser().name
     };
-
     
-
     socket.socket.emit('joinRoom', data);
     // <TO JOIN ROOM WHEN LOADED>
 
-    $scope.showAddLine = false;
     $scope.setParent = function(parentId) {
       $scope.parentId = parentId;
-      $scope.showAddLine = true;
     };
-
 
 
     $scope.writing = {
@@ -37,8 +29,6 @@ angular.module('storyHubApp')
 
 
     $scope.selectNode = function(node) {
-      // console.log(node);
-      // console.log('hi')
       var size = 'md';// Empty : default, lg :large, sm : small
       var modalInstance = $modal.open({
         templateUrl: 'nodeModal.html',
@@ -98,8 +88,7 @@ angular.module('storyHubApp')
         growl.info('Sending Invitation to ' + inviteObj.email);
         socket.socket.emit('invitingToStory', inviteObj)
       }, function () {
-        // Modal cancel.
-        // $log.info('Modal dismissed at: ' + new Date());
+        // Modal cancel.        
       });
     };
 
@@ -112,28 +101,26 @@ angular.module('storyHubApp')
     });
 
     socket.socket.on('addNodeToDom', function(node){
-      // console.log('added node', node);
-
-      // !! Store results array in service. Push data to array in service.
+      
       $scope.results.push(node);
 
       if(node.author === Auth.getCurrentUser()._id) {
-        console.log('a')
+        // User is author of new node. Set it selected.
         getBranchForNode(node);  
       } else {
-        console.log('b')
-        getBranchForNode($scope.branchFiltered[$scope.branchFiltered.length - 1]);
+        // New node was added by someone else.
+        // getBranchForNode($scope.branchFiltered[$scope.branchFiltered.length - 1]);
       }
       
       StoryService.getTree($scope.results, function(tree){
           buildTree(tree)
-      });      
+      }); 
+
     });
 
 
     StoryService.getNodes(function(results){      
       $scope.results = results;
-
 
       if($stateParams.nodeId) {
         // console.log('Has nodeId. Most likely redirect from top stories or use of deep linked url.');
@@ -144,8 +131,6 @@ angular.module('storyHubApp')
         // When results are retrieved, set the first node as selected.
         getBranchForNode($scope.results[0]);
       }
-
-      
     })
 
     var box = document.getElementById('graphBox');
@@ -161,41 +146,44 @@ angular.module('storyHubApp')
 
 
 
-  	var d3Tree = d3.layout.tree()
-  	    .size([h, w]);
- // debugger
-  	var diagonal = d3.svg.diagonal().projection(function(d) { return [d.x / horizontalPadding, d.y]; });
+  	var d3Tree = d3.layout.tree().size([h, w]);
 
-  	var vis = d3.select("#graphBox").append("svg:svg")
-  	    // .attr("width", w + m[1] + m[3])
-        // .attr("width", "100%")
-  	    // .attr("height", h + m[0] + m[2])
-        // .attr("height", "100%")
+  	var diagonal = d3.svg.diagonal().projection(function(d) { 
+      return [d.x / horizontalPadding, d.y]; 
+    });
+
+  	var vis = d3.select("#graphBox").append("svg:svg")  	    
   	    .append("svg:g")
         .attr("transform", "translate(" + widthToCenter + ", 20)");
-        // .attr('id', 'treesvg');
-
+        
 
     function getBranchForNode(node) {
 
       $scope.branchFiltered = _.select($scope.results, function(ancestor){
-        return node.ancestors.indexOf(ancestor._id) != -1 || ancestor._id == node._id;
+        return node.ancestors.indexOf(ancestor._id) !== -1 || ancestor._id === node._id;
       });
 
-      // Do apply to update the view.
-      // $scope.$apply();
     };
 
-  	function update(source) {
-  	  var duration = d3.event && d3.event.altKey ? 5000 : 500;
+    var node;
+    var duration = d3.event && d3.event.altKey ? 5000 : 500;
+    var nodes;
 
-  	  // Compute the new tree layout.
-  	  var nodes = d3Tree.nodes(root).reverse();
+  	function update(source) {
+  	  
+
+
+function updateNode() {
+//##################
+
+
+      // Compute the new tree layout.
+      nodes = d3Tree.nodes(root).reverse();
 
       var maxHeight = 0;
 
-  	  // Normalize for fixed-depth.
-  	  nodes.forEach(function(d) { 
+      // Normalize for fixed-depth.
+      nodes.forEach(function(d) { 
         d.y = d.depth * verticalPadding; 
         
         // console.log('d.y', d.y)
@@ -205,75 +193,63 @@ angular.module('storyHubApp')
         }
       });
 
-      var graphbox = document.getElementById('graphBox');
-
-      // console.log('Resizing graphbox')
-      // console.log('Current heigth:',graphbox.style.height);
-      // console.log('New Max height:', maxHeight);
-      // console.log('Height after set:',graphbox.style.height);
-
-      graphbox.style.height= (maxHeight < 50 ? 100 : (maxHeight + 60)) + 'px';
+      
+      document.getElementById('graphBox').style.height= (maxHeight < 50 ? 100 : (maxHeight + 60)) + 'px';
       
 
+      // Update the nodes…
+      node = vis.selectAll("g.node").data(nodes, function(d) { return d.id || (d.id = ++i); });
 
-  	  // Update the nodes…
-  	  var node = vis.selectAll("g.node").data(nodes, function(d) { return d.id || (d.id = ++i); });
-
-  	  // Enter any new nodes at the parent's previous position.
-  	  var nodeEnter = node.enter().append("svg:g")
-  	      .attr("class", "node")
-  	      .attr("transform", function(d) { return "translate(" + source.x0 / horizontalPadding + "," + source.y0 + ")"; })//
-  	      .on("click", function(d) {
+      // Enter any new nodes at the parent's previous position.
+      var nodeEnter = node.enter().append("svg:g")
+          .attr("class", "node")
+          .attr("transform", function(d) { 
+            return "translate(" + source.x0 / horizontalPadding + "," + source.y0 + ")"; 
+          })
+          .on("click", function(d) {
             getBranchForNode(d);
             $scope.showAddLine = false;
             updateNode();
             // Do apply to update the view.
             $scope.$apply();
-  	      });
+          });
 
       
 
-  	  nodeEnter.append("svg:circle")
-  	      .attr("r", 1e-6)
-  	      .style("fill", function(d) { return "black"; });
+      nodeEnter.append("svg:circle")
+          .attr("r", 1e-6)
+          .style("fill", function(d) { return "black"; });
+//####################
 
-
-function updateNode() {
   	  // Transition nodes to their new position.
   	  var nodeUpdate = node.transition()
   	      .duration(duration)
   	      .attr("transform", function(d) { return "translate(" + d.x / horizontalPadding + "," + d.y + ")"; });//
 
-      var getNodeStatusForStyle = function(nodeToGetStatus) {
-        if(typeof $scope.branchFiltered !== 'undefined' && $scope.branchFiltered.length > 0) {
-          var endOfBranchNode = $scope.branchFiltered[$scope.branchFiltered.length - 1];
-          if(nodeToGetStatus._id === endOfBranchNode._id) {
-            return 'selected';//Larger size for selected node.
-          } 
-        } 
-        return 'default';
-      }
-
+      console.log('nodeUpdate', nodeUpdate);
+      console.log('node', node)
 
   	  nodeUpdate.select("circle")
   	      .attr("r", function(d){
-            switch(getNodeStatusForStyle(d)) {
-              case 'default':
-                return 4.5;
-              break;
-              case 'selected':
+            if(typeof $scope.branchFiltered !== 'undefined' && $scope.branchFiltered.length > 0) {
+              var endOfBranchNode = $scope.branchFiltered[$scope.branchFiltered.length - 1];
+              if(d._id === endOfBranchNode._id) {
                 return 7;
-              break;
-              default:
-                return 4.5;
-            }
+              } 
+            } 
+            return 4.5;
           })
   	      .style("fill", function(d) {                        
+            console.log('fill',d);
             if(typeof $scope.branchFiltered !== 'undefined' && $scope.branchFiltered.length > 0) {
               var endOfBranchNode = $scope.branchFiltered[$scope.branchFiltered.length - 1];
               var ance = endOfBranchNode.ancestors;
 
+
+
               if(ance.indexOf(d._id) !== -1 || d._id === endOfBranchNode._id){
+                // console.log('greener fill for', d)
+                console.log('green', d)
                 return "#42f6ce";// Current selected branch.
               } 
             }
@@ -285,6 +261,7 @@ function updateNode() {
               var ance = endOfBranchNode.ancestors;
 
               if(ance.indexOf(d._id) !== -1 || d._id === endOfBranchNode._id){
+                // console.log('greener border for', d)
                 return "#42f6ce";// Current selected branch.
               } 
             }
@@ -402,10 +379,6 @@ function updateNode() {
             toggle(d);
           }
         }
-
-        // Initialize the display to show a few nodes.
-        // root.children.forEach(toggleAll);
-        // toggle(root.children[1]);
 
         update(root);
     }
