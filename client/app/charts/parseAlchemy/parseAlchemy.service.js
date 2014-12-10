@@ -12,6 +12,9 @@ angular.module('storyHubApp')
       },
       branchLabels: [],
       parseAlchemyData: function (analysis) {
+
+        console.log('sentiments array: ', analysis.sentiment)
+
         if ( analysis.keywords.length > 50 ) {
           analysis.keywords = analysis.keywords.slice( 0, 50 );
         }
@@ -20,6 +23,13 @@ angular.module('storyHubApp')
             analysis.keywords[i].text = analysis.keywords[i].text.slice(0, 15) + '…';
           }
         }
+
+          //quick fix for neutral sentiments, which contain no score value
+          if (typeof analysis.sentiment.score === 'undefined'){
+              // console.log('undefined score type: ', ParseAlchemy.sentiments[i])
+              analysis.sentiment.score = '0.50000';
+          }
+        
      
         this.data = {
           keywords: analysis.keywords,
