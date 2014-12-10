@@ -29,7 +29,6 @@ NodeSchema.methods = {
       callback(this);
     }
     else {
-      console.log("you've already rated this node")
       callback(this)
     }
   }

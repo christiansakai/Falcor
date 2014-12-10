@@ -23,22 +23,18 @@ exports.register = function(socketio) {
 	socketio.on('connection', function(socket) {
 		//subscribe to a room
 		socket.on('joinRoom', function(data){
-			console.log('-------------------', data)
 			if (socket.rooms.length){
 				socket.rooms.forEach(function(room){
-					// if(room !== data.storyId)
 					socket.leave(room)
 				})
 			}
 			var storyName = ''
-			// console.log('io', socketio.to)
 			socket.nickname = data.username;
 			socket.join(data.storyId);
 			Story.findById(data.storyId, function (err, story) {
 			  if(err) { return handleError(res, err); }
 			  storyName = story.name;
-			  console.log(story)
-			  console.log(storyName)
+		
 
 			  			var currentUsers = [];
 
@@ -65,7 +61,6 @@ exports.register = function(socketio) {
 
 
 		socket.on('leaveRoom', function(data){
-			// console.log('data', data);
 			socket.leave(data.storyId);
 
 			var currentUsers = []
@@ -76,7 +71,6 @@ exports.register = function(socketio) {
 					})
 				})
 
-			// console.log('currentUsers', currentUsers)
 
 
 
@@ -86,13 +80,11 @@ exports.register = function(socketio) {
 		//create a story as well as the first node in the story on this single submit action
 		socket.on('newStory', function(obj){
 
-			console.log(obj)
+		
 			//then want to create a story here
 			Story.create(obj, function(err, story){
-				console.log('storyID: ', story._id)
 				story.name = obj.title;
 				story.save();
-				console.log(story)
 				var firstNode = {};
 				firstNode.text = obj.input;
 				firstNode.author = obj.userId;
@@ -100,7 +92,6 @@ exports.register = function(socketio) {
 				firstNode.firstNode = true;
 				firstNode.isPrivate = obj.isPrivate;
 				Node.create(firstNode, function(err, firstNode){
-					// console.log('firstnode', firstNode)
 					var data = {
 						story: story,
 						firstNode: firstNode
@@ -111,13 +102,9 @@ exports.register = function(socketio) {
 						id: story._id,
 						title: obj.title
 					}
-					//User.findByIdAndUpdate(obj.userId, {$push: {stories: userStory}})
 					User.findByIdAndUpdate(obj.userId, {$push: {stories: userStory}}, function(err, user){
-						console.log('id: ', obj.userId)
 						if (err) {console.log('error!: ', err)}
-						// user.stories.push(userStory)
 						user.save(function (err, newUser, numModified){
-							// console.log('user: ', user, 'story: ', userStory, 'saved?: ', numModified)
 						})
 					})
 					socket.join(story._id)
@@ -146,7 +133,6 @@ exports.register = function(socketio) {
 			obj._id = mongoose.Types.ObjectId();
 
 			Node.findByIdAndUpdate(obj.parentId, {$push: {children: obj._id}}, function(err, parentNode){
-				console.log('parentnode', parentNode)
 				obj.ancestors = parentNode.ancestors;
 				obj.ancestors.push(parentNode._id);
 				obj.parentId = parentNode._id;
@@ -154,10 +140,7 @@ exports.register = function(socketio) {
 				obj.storyId = parentNode.storyId;
 				obj.firstNode = false;
 				obj.isPrivate = parentNode.isPrivate;
-				console.log('setting obj', obj)
 				Node.create(obj, function(err, newNode){
-					console.log('created node', newNode)
-          console.log('Rooms', socket.rooms)
 					socketio.to(obj.storyId).emit('addNodeToDom', newNode)
 				})
 			})

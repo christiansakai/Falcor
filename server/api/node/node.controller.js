@@ -56,11 +56,9 @@ exports.getNodesForStories = function(req, res) {
 
 //get nodes with no children for alchemy branch analysis 
 exports.getChildlessNodes = function(req, res){
-  console.log('in here')
   Node.find({storyId: req.query.storyId})
     .populate('ancestors', 'text')
     .exec(function(err, nodes){
-    console.log('nodes: ', nodes)
     var childlessNodesArr = nodes.reduce(function(childlessNodes, currentNode){
 
       if(currentNode.children.length === 0){
@@ -79,7 +77,6 @@ exports.getNodes = function(req, res) {
       .populate('author','name')
       .exec(function(err, nodes) {
         if(err) { return handleError(res, err); }
-        // console.log('here2', nodes)
         return res.json(200, nodes);
       });
 };
@@ -113,7 +110,6 @@ exports.getSingleBranch = function(req, res) {
 
 // Get list of storys that match keywords
 exports.findKeyword = function(req, res) {
-  console.log('keywords: ', req.params.keyword)
   Node.find({$text: {$search: req.params.keyword}})
     .populate('storyId')
     .populate('author', 'name')
@@ -145,8 +141,6 @@ exports.rateNodes = function(req, res) {
 
 // Creates a new node in the DB.
 exports.create = function(req, res) {
-  //amend this create
-  console.log(req.body);
   Node.create(req.body, function(err, node) {
     var node = new Node();
     node.text = req.body.story.input;

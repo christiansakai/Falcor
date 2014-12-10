@@ -7,12 +7,9 @@ angular.module('storyHubApp')
 
   	$scope.results; 
 
-    console.log('storyID: ', StoryService.id)
-
   	vm.getNodesPerStory = function(){
       var obj = { 
         storyId: StoryService.id
-        // storyId: "547fb98a382686674d78b276"           //storyId: StoryService.id
       }
 
       return $http.get('/api/nodes/getNodes/', {params: obj}).then(function(results){
@@ -49,13 +46,11 @@ angular.module('storyHubApp')
     			.success(function(storyNodes){
             storyNodes.forEach(function(story){
               story.forEach(function(node){
-                // console.log('nodes for words per story!!!: ', node)
                 count += node.text.split(" ").length; 
               })
               wordsPerStoryArr.push(count)
               count = 0
             })
-            // console.log('FINAL!! arr: ', wordsPerStoryArr)
     			});
     	})
       return wordsPerStoryArr;
@@ -86,13 +81,10 @@ angular.module('storyHubApp')
       $scope.likesLabels = []; 
       vm.getNodesPerStory()
       .then(function(story){
-        // console.log('res: ', results)
         story.forEach(function(node){
-          // console.log('element: ', element)
           numLikesArr.push(node.likes.numLikes)
           $scope.likesLabels.push(node.text.substring(0, 30))
         })
-      // console.log('numLikes: ', numLikesArr)
       })
       return numLikesArr; 
     }
@@ -104,14 +96,12 @@ angular.module('storyHubApp')
       var likesPerStoryArr = []; 
       vm.getStoryIdsForCount()
       .then(function(stories){
-        // console.log('story objs: ', stories)
         $scope.likesCountStoryLabels = stories.map(function(story){
           return story.name; 
         })
         storyIdsArr = stories.map(function(story){
           return story._id;
         });
-        // console.log('story id array: ', storyIdsArr)
         var obj = {
           storyIds: storyIdsArr
         }
@@ -120,7 +110,6 @@ angular.module('storyHubApp')
           .success(function(storyNodes){
             storyNodes.forEach(function(story){
               story.forEach(function(node){
-                // console.log('node obj: ', node)
                 count += node.likes.numLikes; 
               })
               likesPerStoryArr.push(count)
@@ -176,7 +165,6 @@ angular.module('storyHubApp')
       nodeTextArr = story.map(function(node){
         return node.text;
       });
-      // nodeTextArr.unshift('Politics angry existentialism life pissed nihilism');
       var text = nodeTextArr.join(" ");
       console.log('text to be sent: ', text)
       return alchemize.sendToAlchemy(text)
@@ -212,7 +200,6 @@ angular.module('storyHubApp')
   vm.getNodesForBranch = function(){
     var obj = {
       storyId: StoryService.id
-      // storyId: "547fbab6fcbe35714dc28f4f"
     }
     return $http.get('/api/nodes/getChildlessNodes/', {params: obj}).then(function(response){
       return response.data;
@@ -224,7 +211,6 @@ angular.module('storyHubApp')
   vm.fetchAlchemyDataForBranch = function(string){
     vm.getNodesForBranch()
     .then(function(nodes){
-      console.log('childless nodes here: ', nodes)
       var labelArr = nodes.map(function(childlessNode){
         return childlessNode.text.substring(0, 30)
       })
@@ -232,7 +218,6 @@ angular.module('storyHubApp')
         ParseAlchemy.branchLabels = []
       }
       ParseAlchemy.branchLabels = labelArr; 
-      console.log('branch labels: ', ParseAlchemy.branchLabels)
       var textArr = nodes.map(function(childlessNode){
         return childlessNode.text + childlessNode.ancestors.map(function(ancestors){
           return ancestors.text;
@@ -241,7 +226,6 @@ angular.module('storyHubApp')
       var obj = {
         branchText: textArr
       }; 
-      console.log('textArr: ', obj)
       return alchemize.sendArrayToAlchemy(obj)
     }).then(function assessAlchemyBranchData(analysis){
       ParseAlchemy.parseAlchemyBranchData(analysis)

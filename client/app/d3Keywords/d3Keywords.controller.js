@@ -3,7 +3,6 @@
 angular.module('storyHubApp')
   .controller('D3keywordsCtrl', function ($scope, $log, ParseAlchemy) {
     
-    // console.log('service loaded: ', ParseAlchemy.data.keywords)
 
   	 $scope.options = {
                 chart: {
@@ -17,9 +16,6 @@ angular.module('storyHubApp')
                     showDistY: false,
                     interactive: true,
                     tooltips: true,
-                    // tooltipContent: function(key) {
-                    //   return '<h3>' + data.key + '</h3>';
-                    // },
                     transitionDuration: 1000,
                     forceSize: 0,
                     xAxis: {
@@ -53,7 +49,7 @@ angular.module('storyHubApp')
                         values: []
                     });
 
-                    console.log('i: ', ParseAlchemy.data.keywords[i].text, 'value: ', ParseAlchemy.data.keywords[i].relevance)
+                    // console.log('i: ', ParseAlchemy.data.keywords[i].text, 'value: ', ParseAlchemy.data.keywords[i].relevance)
                         data[i].values.push({
                             x: i,
                             y: ParseAlchemy.data.keywords[i].relevance,
@@ -61,11 +57,7 @@ angular.module('storyHubApp')
                             shape: shapes[i % 6]
                         });
                 }
-                $log.debug('Stat keywords: ', ParseAlchemy.data.keywords);
-                // if (!data.key) {
-                //   alert("Your data has timed out.");
-                // }
-                console.log('data: ',  data)
+                // $log.debug('Stat keywords: ', ParseAlchemy.data.keywords);    
                 return data;
             }
         
