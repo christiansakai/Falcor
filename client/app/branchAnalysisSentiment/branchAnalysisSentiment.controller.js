@@ -10,6 +10,7 @@ angular.module('storyHubApp')
                 height: 500,
                 x: function(d){return d.key;},
                 y: function(d){return d.y;},
+                color: function (d, i) {return colorArray[i]},
                 showLabels: true,
                 transitionDuration: 1000,
                 labelThreshold: 0.01,
@@ -29,11 +30,19 @@ angular.module('storyHubApp')
         console.log('branch labels: ', ParseAlchemy.branchLabels)
         $scope.labels = ParseAlchemy.branchLabels; 
 
+        var colorArray = ['#4089FF', '#FF4545'];
+        // $scope.colorFunction = function(){
+        //     return function(d, i){
+        //         return colorArray[i];
+        //     };
+        // }
+
         function generateData(){
         	var allData = []; 
         	var data = []; 
 
         	for (var i = 0; i < ParseAlchemy.sentiments.length; i++){
+                //quick fix for neutral sentiments, which contain no score value
                 if (typeof ParseAlchemy.sentiments[i].score === 'undefined'){
                     // console.log('undefined score type: ', ParseAlchemy.sentiments[i])
                     ParseAlchemy.sentiments[i].score = '0.50000';

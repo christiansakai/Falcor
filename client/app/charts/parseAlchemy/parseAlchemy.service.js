@@ -4,9 +4,6 @@ angular.module('storyHubApp')
   .factory('ParseAlchemy', function ($log) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
-    //  var _stats = this;
-    // var data;
-
     var ParseAlchemy = {
       data: {},
       test: "",

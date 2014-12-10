@@ -1,8 +1,13 @@
 <section class='dashboardSection center boxText'>
 		<h4>Your Keywords By Branch:</h4>
-	<div ng-repeat='data in allData'>
-		<h3>Branch Title: {{labels[$index]}}</h3> 
-		<nvd3 options="options" data="data"></nvd3>
+	<div ng-if='allData.length > 0'>
+		<div ng-repeat='data in allData'>
+			<h3>Branch Title: {{labels[$index]}}</h3> 
+			<nvd3 options="options" data="data"></nvd3>
+		</div>
+	</div>
+	<div ng-if='allData.length === 0'>
+		<h3>Please Reselect Your Story Before Loading The Graph</h3>
 	</div>
 </section>
 

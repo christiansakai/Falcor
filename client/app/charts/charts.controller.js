@@ -21,16 +21,6 @@ angular.module('storyHubApp')
     }
 
     vm.getStoryIdsForCount = function(){
-
-    	// var deferredObj = $q.defer()
-    	// $http.get('/api/stories/').success(function(results){
-    	// 	deferredObj.resolve(results)
-    	// })
-    	// .error(function(status, err){
-    	// 	deferredObj.reject(status)
-    	// })
-    	// return deferredObj.promise
-
     	return $http.get('/api/stories/').then(function(response){
     		return response.data;
     	});
@@ -51,7 +41,6 @@ angular.module('storyHubApp')
     		storyIdsArr = stories.map(function(story){
     			return story._id;
     		});
-
     		var obj = {
     			storyIds: storyIdsArr
     		}
@@ -148,7 +137,6 @@ angular.module('storyHubApp')
       var obj = {};
       $scope.authorCountLabels = []; 
       var countPerAuthor = []; 
-      var count; 
       vm.getNodesPerStory()
       .then(function(story){
         story.forEach(function(node){
@@ -161,11 +149,16 @@ angular.module('storyHubApp')
         })
         for (var key in obj){
           countPerAuthor.push(obj[key])
-          $scope.authorCountLabels.push(key)
+          if ($scope.authorCountLabels.indexOf(key) === -1){
+            $scope.authorCountLabels.push(key)            
+          }
         }
       })
+      console.log('returned: ', countPerAuthor)
       return countPerAuthor;
     }
+
+
 
 ////////////////////////////// END OF CHART JS GRAPHS ///////////////////////////////////////////
 
