@@ -4,6 +4,9 @@
 	<li role="presentation"><a ng-click="chart.fetchAlchemyDataForBranch('sentiment')">Branch Sentiment</a></li>
 	<li role="presentation"><a ng-click="chart.fetchAlchemyDataForBranch('keywords')">Branch Keywords</a></li>
 	<li role="presentation"><a ui-sref="story.charts.numLikes">Popular Submissions</a></li>
+	<div ng-if='authorCountLabels.length > 2'>
+		<li role="presentation" class='col-md-6 col-md-push-5 centered'><a ui-sref="story.charts.authorsByWordCount">Author Word Count</a></li>
+	</div>
 </ul>
 
 

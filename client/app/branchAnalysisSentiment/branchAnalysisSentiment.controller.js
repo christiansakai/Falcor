@@ -34,6 +34,7 @@ angular.module('storyHubApp')
         	var data = []; 
 
         	for (var i = 0; i < ParseAlchemy.sentiments.length; i++){
+                //quick fix for neutral sentiments, which contain no score value
                 if (typeof ParseAlchemy.sentiments[i].score === 'undefined'){
                     // console.log('undefined score type: ', ParseAlchemy.sentiments[i])
                     ParseAlchemy.sentiments[i].score = '0.50000';
