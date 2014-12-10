@@ -292,9 +292,9 @@ angular.module('storyHubApp')
   		numLikes: {
     		labels: $scope.likesLabels,
     		datasets: [{
-    			fillColor : 'rgba(129, 183, 26, 0.5)',
-          strokeColor : 'rgba(129, 183, 26, 1)',
-          pointColor : 'rgba(129, 183, 26, 1)',
+    		  fillColor : 'rgba(192, 192, 192, 0.5)',
+          strokeColor : 'rgba(192, 192, 192, 1)',
+          pointColor : 'rgba(192, 192, 192, 1)',
           pointStrokeColor : "#fff",
           pointHighlightFill: '#fff',
 	    		data: vm.numLikes()
@@ -303,9 +303,9 @@ angular.module('storyHubApp')
       authorsByWordCount: {
         labels:  $scope.authorCountLabels,
         datasets: [{
-          fillColor : 'rgba(129, 183, 26, 0.5)',
-          strokeColor : 'rgba(129, 183, 26, 1)',
-          pointColor : 'rgba(129, 183, 26, 1)',
+          fillColor : 'rgba(192, 192, 192, 0.5)',
+          strokeColor : 'rgba(192, 192, 192, 1)',
+          pointColor : 'rgba(192, 192, 192, 1)',
           pointStrokeColor : "#fff",
           pointHighlightFill: '#fff',
           pointHighlightStroke: 'rgba(220,220,220,1)',
