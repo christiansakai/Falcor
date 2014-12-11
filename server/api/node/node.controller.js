@@ -86,10 +86,10 @@ exports.getNodes = function(req, res) {
 exports.getTopNodes = function(req, res) {
   Node.find({})
       .where({'isPrivate': false})
-      .sort('-numLikes')
+      // .sort('-numLikes')
       .populate('author','name')
       .populate('storyId')
-      // .limit(5)
+      .limit(5)
       .exec(function(err, nodes) {
         if(err) { return handleError(res, err); }
 

@@ -37,7 +37,7 @@ NodeSchema.set('toJSON', {
 
 NodeSchema.virtual('numLikes').set(function(){
   return this.likes.length;
-}).get(function(){
+}).gt(function(){
   return this.likes.length;
 }); 
 

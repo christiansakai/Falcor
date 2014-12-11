@@ -18,7 +18,7 @@ angular.module('storyHubApp')
           console.log('res: ', results)
         });
         
-
+        
         $scope.goToThisStoryBranch = function(topStory) {
     		// console.log('Redirecting user to top story:', topStory)
 
@@ -32,4 +32,4 @@ angular.module('storyHubApp')
       }
       // </CONTROLLER>
     };
-  });
+  })
