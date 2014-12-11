@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .factory('NodeService', function ($http) {
+  .factory('NodeService', function () {
     
   	var Node = {
   		nodes: [], 
