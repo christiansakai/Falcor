@@ -2,6 +2,11 @@
  * Broadcast updates to client when the model changes
  */
 
+/*
+ * zn: this file is pretty hard to digest. It doesn't pass my 15 second test.
+ * that test is basically: after glancing at this file for 15 seconds, do I 
+ * know what it is for
+* */
 
 'use strict';
 
@@ -79,8 +84,8 @@ exports.register = function(socketio) {
 
 		//create a story as well as the first node in the story on this single submit action
 		socket.on('newStory', function(obj){
-
-		
+    //zn: it feels like this should be done with http not sockets. I'm open to being convinced on this
+	  //zn: it also feels like much of this logic should be cuppled together in a mongoose method
 			//then want to create a story here
 			Story.create(obj, function(err, story){
 				story.name = obj.title;
@@ -114,7 +119,7 @@ exports.register = function(socketio) {
 		})
 
 
-
+    // zn: I don't think you need callbacks here. no async io
 		function findClientsSocketByRoomId(roomId, cb) {
 		var res = []
 		, room = socketio.sockets.adapter.rooms[roomId];

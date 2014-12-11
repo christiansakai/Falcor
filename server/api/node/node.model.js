@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 var NodeSchema = new Schema({
   text: String,
   likes: {
-    numLikes: {type: Number, default: 0}, 
+    numLikes: {type: Number, default: 0}, //is there a reason for this field? do you query by it? can't you just access length of the likedBy array
     likedBy: [{type: Schema.Types.ObjectId, ref: 'User'}]
   },
   children: [{type: Schema.Types.ObjectId, ref: 'Node'}],
@@ -25,8 +25,7 @@ NodeSchema.methods = {
     if (this.likes.likedBy.indexOf(obj.userId) === -1){
       this.likes.likedBy.push(obj.userId)
       this.likes.numLikes = this.likes.likedBy.length; 
-      this.save()
-      callback(this);
+      this.save(callback) //this will likely break things because err will be param 1. you'll have to refactor whatever uses this method
     }
     else {
       callback(this)

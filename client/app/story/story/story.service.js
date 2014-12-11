@@ -3,6 +3,14 @@
 angular.module('storyHubApp')
   .factory('StoryService', function (ExploreStories, socket) {
 
+    /*
+     *  zn: this feels a little iffy to me because factories are singletons
+     *  this means that your angular app only has one of them. I think if your
+     *  factory returned a class whos instances had these properties, that would be better
+     *  With this method, your user can only look at one story at once. While this may be
+     *  fine for now, you could imagine schenarios in which your angular app had to think 
+     *  about two stories
+     */
 
     var Story = {
       currentUsers: [],
