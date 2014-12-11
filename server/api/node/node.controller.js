@@ -81,7 +81,7 @@ exports.getNodes = function(req, res) {
       });
 };
 
-// .sort('-likes.numLikes')
+//cannot sort by virtuals for obvious reasons so sorting on front end
 // Get list of the top nodes. Most liked nodes.
 exports.getTopNodes = function(req, res) {
   Node.find({})

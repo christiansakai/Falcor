@@ -20,12 +20,10 @@ NodeSchema.methods = {
 
   likeNodes: function(obj, callback){
     if (this.likes.indexOf(obj.userId) === -1){
-      console.log('in here, liking a node')
       this.likes.push(obj.userId)
       this.save(callback)
     }
     else {
-      console.log('already in the likes array')
       callback(this)
     }
   }
@@ -35,9 +33,11 @@ NodeSchema.set('toJSON', {
   virtuals: true
 });
 
+
+//cannot sort by virtuals for obvious reasons so sorting on front end
 NodeSchema.virtual('numLikes').set(function(){
   return this.likes.length;
-}).gt(function(){
+}).get(function(){
   return this.likes.length;
 }); 
 
