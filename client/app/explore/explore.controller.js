@@ -26,13 +26,11 @@ angular.module('storyHubApp')
     $scope.pageSize = 10;
 
     $scope.changePage = function(){
-      console.log($scope.currentPage)
       var currentIndex = $scope.currentPage - 1;
       var start = currentIndex*10;
       var end = start + 10
       $scope.currentStories = $scope.stories.slice(start, end)
       window.scrollTo(0, 0)
-      console.log($scope.currentStories)
     }
 
 

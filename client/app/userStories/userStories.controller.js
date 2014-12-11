@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('UserstoriesCtrl', function ($scope, ExploreStories, socket, $state, Auth, StoryService) {
+  .controller('UserstoriesCtrl', function ($scope, $timeout, ExploreStories, socket, $state, Auth, StoryService) {
 
     var vm = this; 
 
@@ -27,7 +27,6 @@ angular.module('storyHubApp')
     }
 
     $scope.joinStory = function(story){
-      console.log(story)
       var storyId = story.storyId._id;
       var nodeId = story._id;
       $state.go('story.graph2', {storyId: storyId, nodeId: nodeId})
@@ -37,20 +36,17 @@ angular.module('storyHubApp')
       ExploreStories.submitKeywords($scope.keywords, function(results){
         $scope.stories = results;
         $scope.currentStories = $scope.stories.slice(0, 10);
-        console.log('keyword results: ', results)
       })
     }
 
 
 
     $scope.changePage = function(){
-      console.log($scope.currentPage)
       var currentIndex = $scope.currentPage - 1;
       var start = currentIndex*10;
       var end = start + 10
       $scope.currentStories = $scope.stories.slice(start, end)
       window.scrollTo(0, 0)
-      console.log($scope.currentStories)
     }
 
     $scope.goToStory = function(storyId){
@@ -60,7 +56,7 @@ angular.module('storyHubApp')
         username: $scope.username 
       }
       socket.socket.emit('joinRoom', data)
-      setTimeout(function(){
+      $timeout(function(){
         $state.go('story.graph', {storyId: storyId})
       }, 0) 
 
@@ -68,7 +64,7 @@ angular.module('storyHubApp')
 
     //register those who have joined the room
     socket.socket.on('joinedRoom', function(data) {
-      console.log(data)
+      // console.log(data)
     })
 
     vm.getMyNodes()
