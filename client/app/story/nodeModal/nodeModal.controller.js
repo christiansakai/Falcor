@@ -61,7 +61,7 @@ angular.module('storyHubApp')
       console.log('obj', obj)
       // console.log('sent obj: ', obj.userId)
       ExploreStories.rateNodes(nodeId, obj, function(result){
-        // console.log('liked node: ', result)
+        console.log('liked node: ', result)
         $modalInstance.close('liked ' + result);
 
       })

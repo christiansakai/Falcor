@@ -81,12 +81,12 @@ exports.getNodes = function(req, res) {
       });
 };
 
-
+// .sort('-likes.numLikes')
 // Get list of the top nodes. Most liked nodes.
 exports.getTopNodes = function(req, res) {
   Node.find({})
       .where({'isPrivate': false})
-      .sort('-likes.numLikes')
+      // .sort('-numLikes')
       .populate('author','name')
       .populate('storyId')
       .limit(5)
@@ -133,8 +133,9 @@ exports.rateNodes = function(req, res) {
   Node.findById(req.params.nodeId, {'likes':1}, function (err, node) {
     if(err) { return handleError(res, err); }
     if(!node) { return res.send(404); }
-    node.likeNodes(req.body, function(ratedNode){
-      return res.json(node);
+    node.likeNodes(req.body, function(err, ratedNode){
+      if(err) {console.log(err)}
+      return res.json(ratedNode);
     })
   });
 };
