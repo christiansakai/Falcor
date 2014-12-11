@@ -3,7 +3,8 @@
 <div ng-repeat="topStory in topStories" class="popBox">
 	<a ng-click="goToThisStoryBranch(topStory)"><div class="popTitle">{{$index + 1}}. {{topStory.storyId.name}}</div>
 	<p class="popText">{{topStory.text | limitTo:140}}...</p>
-	<p class="popLikes">{{topStory.likes.numLikes}} Likes</p></a>
+<!-- 	<p class="popLikes">{{topStory.likes.numLikes}} Likes</p></a>
+ -->	<p class="popLikes">{{topStory.numLikes}} Likes</p></a>
 	<hr ng-show="!$last" />
 <!-- 	<a ng-click="goToThisStoryBranch(topStory)">Go To This Story</a> -->
 </div>

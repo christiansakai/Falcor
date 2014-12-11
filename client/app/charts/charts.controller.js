@@ -1,7 +1,7 @@
   'use strict';
 
 angular.module('storyHubApp')
-  .controller('ChartsCtrl', function ($scope, $state, StoryService, ExploreStories, NodeService, $q, $http, alchemize, ParseAlchemy, $log) {
+  .controller('ChartsCtrl', function ($scope, $timeout, $state, StoryService, ExploreStories, NodeService, $q, $http, alchemize, ParseAlchemy, $log) {
     
   	var vm = this; 
 
@@ -174,13 +174,13 @@ angular.module('storyHubApp')
     })
 
     if (string === 'keywords'){
-      setTimeout(function(){
+      $timeout(function(){
         $state.go('story.charts.storyKeywords')
       }, 600)
     }
 
     else if (string === 'sentiment'){
-      setTimeout(function(){
+      $timeout(function(){
         $state.go('story.charts.sentiment')
       }, 600)
     }
@@ -232,13 +232,13 @@ angular.module('storyHubApp')
     })
 
     if (string === 'keywords'){
-      setTimeout(function(){
+      $timeout(function(){
         $state.go('story.charts.branchKeywords')
       }, 1200)
     }
 
     else if (string === 'sentiment'){
-      setTimeout(function(){
+      $timeout(function(){
         $state.go('story.charts.branchSentiment')
       }, 1200)
     }

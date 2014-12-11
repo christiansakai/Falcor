@@ -5,10 +5,7 @@ var mongoose = require('mongoose'),
 
 var NodeSchema = new Schema({
   text: String,
-  likes: {
-    numLikes: {type: Number, default: 0}, 
-    likedBy: [{type: Schema.Types.ObjectId, ref: 'User'}]
-  },
+  likes: [{type: Schema.Types.ObjectId, ref: 'User'}],
   children: [{type: Schema.Types.ObjectId, ref: 'Node'}],
   ancestors: [{type: Schema.Types.ObjectId, ref: 'Node'}],
   author: {type: Schema.Types.ObjectId, ref: 'User'},
@@ -22,18 +19,27 @@ var NodeSchema = new Schema({
 NodeSchema.methods = {
 
   likeNodes: function(obj, callback){
-    if (this.likes.likedBy.indexOf(obj.userId) === -1){
-      this.likes.likedBy.push(obj.userId)
-      this.likes.numLikes = this.likes.likedBy.length; 
+    if (this.likes.indexOf(obj.userId) === -1){
+      console.log('in here, liking a node')
+      this.likes.push(obj.userId)
       this.save(callback)
     }
     else {
+      console.log('already in the likes array')
       callback(this)
     }
   }
 }
 
+NodeSchema.set('toJSON', {
+  virtuals: true
+});
 
+NodeSchema.virtual('numLikes').set(function(){
+  return this.likes.length;
+}).get(function(){
+  return this.likes.length;
+}); 
 
 NodeSchema.index({ text: 'text'}, {weights: {name: 1}});
 

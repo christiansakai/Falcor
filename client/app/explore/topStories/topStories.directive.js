@@ -14,6 +14,8 @@ angular.module('storyHubApp')
 
         ExploreStories.getTopNodes(function(results) {
         	$scope.topStories = results;	
+
+          console.log('res: ', results)
         });
         
 
