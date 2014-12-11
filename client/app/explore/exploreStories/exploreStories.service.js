@@ -19,7 +19,7 @@ angular.module('storyHubApp')
   		    $http.get('/api/nodes/getNodes/', {params: obj}).success(callback)    	
   	    },  
         getUserNodes: function(obj, callback){
-          $http.get('/api/nodes/getUserNodes/', {params: obj}).success(callback)
+          $http.get('/api/users/nodes/', {params: obj}).success(callback)
         }, 
 
         rateNodes: function(nodeId, obj, callback){

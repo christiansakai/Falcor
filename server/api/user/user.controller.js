@@ -4,6 +4,7 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var Node = require('../node/node.model');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -25,11 +26,17 @@ exports.index = function(req, res) {
  * 
  */
 exports.getUserNodes = function(req, res) {
-  console.log('id', req.query.id)
-  User.findById(req.query.id, function (err, users) {
-    console.log('userHERE: ', users)
-    if(err) return res.send(500, err);
-    res.json(200, users);
+  console.log('in here: ', req.query.id);
+  var findCriteria = {
+    author: req.query.id,
+  };
+
+  Node.find(findCriteria)
+    .populate('storyId').populate('author')
+    .exec(function (err, nodes) {
+    if(err) { return handleError(res, err); }
+    console.log('nodes: ', nodes)
+    return res.json(200, nodes);
   });
 };
 
