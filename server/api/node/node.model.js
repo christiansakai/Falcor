@@ -25,14 +25,15 @@ NodeSchema.methods = {
     if (this.likes.likedBy.indexOf(obj.userId) === -1){
       this.likes.likedBy.push(obj.userId)
       this.likes.numLikes = this.likes.likedBy.length; 
-      this.save()
-      callback(this);
+      this.save(callback)
     }
     else {
       callback(this)
     }
   }
 }
+
+
 
 NodeSchema.index({ text: 'text'}, {weights: {name: 1}});
 
