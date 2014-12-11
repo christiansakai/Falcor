@@ -20,20 +20,6 @@ exports.index = function(req, res) {
   });
 };
 
-exports.getUserNodes = function(req, res) {
-  console.log(req.query.id);
-  var findCriteria = {
-    author: req.query.id,
-  };
-
-  Node.find(findCriteria)
-    .populate('storyId').populate('author')
-    .exec(function (err, nodes) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, nodes);
-  });
-};
-
 // Get list of nodes
 exports.getNodesForStories = function(req, res) {
   var promiseForNodesArr = [];

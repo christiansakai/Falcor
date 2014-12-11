@@ -9,7 +9,7 @@ var router = express.Router();
 
 
 // router.get('/', auth.hasRole('admin'), controller.index);
-router.get('/getUserNodes/', auth.isAuthenticated(), controller.getUserNodes)
+router.get('/nodes/', auth.isAuthenticated(), controller.getUserNodes)
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 router.get('/me', auth.isAuthenticated(), controller.me);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);

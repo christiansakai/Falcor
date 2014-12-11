@@ -9,7 +9,6 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/getNodes/', controller.getNodes);
-router.get('/getUserNodes/', auth.isAuthenticated(), controller.getUserNodes);
 router.get('/keywordSearch/:keyword/', controller.findKeyword);
 router.get('/getTopNodes/', controller.getTopNodes);
 router.get('/getNodesForStories/', controller.getNodesForStories);
