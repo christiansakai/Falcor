@@ -23,6 +23,7 @@ exports.register = function(socketio) {
 	socketio.on('connection', function(socket) {
 		//subscribe to a room
 		socket.on('joinRoom', function(data){
+			console.log(data)
 			console.log('-------------------', data)
 			if (socket.rooms.length){
 				socket.rooms.forEach(function(room){
@@ -70,15 +71,14 @@ exports.register = function(socketio) {
 
 			var currentUsers = []
 			findClientsSocketByRoomId(data.storyId, function(sockets){
-					sockets.forEach(function(socket){
-						console.log(socket.nickname)
-						currentUsers.push(socket.nickname)
+				sockets.forEach(function(socket){
+					console.log(socket.nickname)
+					currentUsers.push({
+						name: socket.nickname,
+						id: socket.id
 					})
 				})
-
-			// console.log('currentUsers', currentUsers)
-
-
+			})
 
 		socketio.to(data.storyId).emit('leftRoom', {currentUsers:currentUsers, 'announcement': data.username + ' left the room!'});
 		})	

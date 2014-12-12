@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('storyHubApp')
-  .controller('GraphCtrl', function ($scope, $state, $stateParams, ExploreStories, StoryService, Auth, growl, $modal, socket) {
+  .controller('GraphCtrl', function ($scope, $state, $timeout, $rootScope, $stateParams, ExploreStories, StoryService, Auth, growl, $modal, socket) {
 
     // <TO JOIN ROOM WHEN LOADED>
     socket.socket.on('joinedRoom', function(data){
@@ -10,12 +10,33 @@ angular.module('storyHubApp')
     })
 
     $scope.storyTitle = StoryService.title;
-    var data = {
-        storyId: $stateParams.storyId,
-        username: Auth.getCurrentUser().name
-    };
+
+
+    var foo = function() {
+      if(Auth.getCurrentUser().name) {
+        console.log('hitting foo', Auth.getCurrentUser().name)
+        var data = {
+            storyId: $stateParams.storyId,
+            username: Auth.getCurrentUser().name
+        };
+        console.log(data, '------------')
+        socket.socket.emit('joinRoom', data);
+      }
+    }
+
+
+    foo();
+
+
+    $rootScope.$on('user:loggedIn',function() {
+      console.log('------------------------------------')
+      foo();
+    })
     
-    socket.socket.emit('joinRoom', data);
+
+
+    
+
     // <TO JOIN ROOM WHEN LOADED>
 
     $scope.setParent = function(parentId) {
@@ -240,7 +261,7 @@ function updateNode() {
             return 4.5;
           })
   	      .style("fill", function(d) {                        
-            console.log('fill',d);
+            // console.log('fill',d);
             if(typeof $scope.branchFiltered !== 'undefined' && $scope.branchFiltered.length > 0) {
               var endOfBranchNode = $scope.branchFiltered[$scope.branchFiltered.length - 1];
               var ance = endOfBranchNode.ancestors;

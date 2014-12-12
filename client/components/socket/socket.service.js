@@ -13,6 +13,8 @@ angular.module('storyHubApp')
 
     var socket = socketFactory({
       ioSocket: ioSocket
+      //for using redis with two dynos
+      //transports: ['websocket']
     });
 
     return {

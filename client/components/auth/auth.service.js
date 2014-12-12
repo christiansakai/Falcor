@@ -4,7 +4,9 @@ angular.module('storyHubApp')
   .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q) {
     var currentUser = {};
     if($cookieStore.get('token')) {
-      currentUser = User.get();
+      currentUser = User.get(function() {
+        $rootScope.$emit('user:loggedIn')
+      });
     }
 
     return {
@@ -28,6 +30,7 @@ angular.module('storyHubApp')
           $cookieStore.put('token', data.token);
           currentUser = User.get();
           deferred.resolve(data);
+          $rootScope.$emit('user:loggedIn')
           return cb();
         }).
         error(function(err) {
